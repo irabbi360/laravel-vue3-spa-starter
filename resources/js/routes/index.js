@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import AuthenticatedLayout from "../layouts/Authenticated";
-import GuestLayout from "../layouts/Guest";
+import AuthenticatedLayout from "../layouts/Authenticated.vue";
+import GuestLayout from "../layouts/Guest.vue";
 
-import PostsIndex from '../components/Posts/Index'
-import PostsCreate from '../components/Posts/Create'
-import PostsEdit from '../components/Posts/Edit'
-import Login from '../components/Login'
+import PostsIndex from '../components/Posts/Index.vue'
+import PostsCreate from '../components/Posts/Create.vue'
+import PostsEdit from '../components/Posts/Edit.vue'
+import Login from '../components/Login.vue'
 
 function auth(to, from, next) {
     if (JSON.parse(localStorage.getItem('loggedIn'))) {
