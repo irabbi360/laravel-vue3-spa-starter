@@ -18,7 +18,7 @@ Route::post('login', [
 Route::post('logout', [
     \App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::view('/{any?}', 'dashboard')
