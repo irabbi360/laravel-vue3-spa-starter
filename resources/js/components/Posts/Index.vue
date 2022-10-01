@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-hidden overflow-x-auto p-6 bg-white border-gray-200">
+    <div class="">
         <div class="min-w-full align-middle">
             <div class="mb-4 grid lg:grid-cols-4 gap-4">
                 <input v-model="search_global" type="text" placeholder="Search..." class="inline-block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -14,12 +14,7 @@
                         <input v-model="search_title" type="text" class="inline-block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Filter by Title">
                     </th>
                     <th class="px-6 py-3 bg-gray-50 text-left">
-                        <select v-model="search_category" class="inline-block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option value="" selected>-- all categories --</option>
-                            <option v-for="category in categories" :value="category.id">
-                                {{ category.name }}
-                            </option>
-                        </select>
+                        <v-select v-model="search_category" :options="categories" :reduce="category => category.id" label="text" class="form-control" />
                     </th>
                     <th class="px-6 py-3 bg-gray-50 text-left">
                         <input v-model="search_content" type="text" class="inline-block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Filter by Content">
@@ -128,6 +123,7 @@ import { ref, onMounted, watch } from "vue";
 import usePosts from "../../composables/posts";
 import useCategories from "../../composables/categories";
 import { useAbility } from '@casl/vue'
+
 export default {
     setup() {
         const search_category = ref('')

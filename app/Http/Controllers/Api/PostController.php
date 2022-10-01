@@ -48,6 +48,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
+        dd($request->all());
         $this->authorize('posts.create');
         if ($request->hasFile('thumbnail')) {
             $filename = $request->file('thumbnail')->getClientOriginalName();

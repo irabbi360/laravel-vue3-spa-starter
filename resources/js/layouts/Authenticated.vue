@@ -52,6 +52,7 @@
 
 <script>
 import useAuth from "../composables/auth";
+
 export default {
     setup() {
         const { user, processing, logout } = useAuth()

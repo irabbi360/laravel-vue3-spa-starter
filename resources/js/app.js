@@ -7,8 +7,9 @@ import VueSweetalert2 from "vue-sweetalert2";
 import useAuth from "./composables/auth";
 import { abilitiesPlugin } from '@casl/vue';
 import ability from './services/ability';
-// import Select2 from 'vue3-select2-component';
+import vSelect from "vue-select";
 
+import 'vue-select/dist/vue-select.css';
 
 const app = createApp({
     setup() {
@@ -25,5 +26,5 @@ app.use(router)
 app.use(VueSweetalert2)
 app.use(abilitiesPlugin, ability)
 app.component('Pagination', LaravelVuePagination)
-// app.component('Select2', Select2)
+app.component("v-select", vSelect);
 app.mount('#app')

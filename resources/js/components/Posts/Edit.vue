@@ -35,7 +35,7 @@
             <label for="post-category" class="block font-medium text-sm text-gray-700">
                 Category
             </label>
-            <select-2 v-model="post.category_id" :options="categories" :settings="{ width: '100%' }"></select-2>
+            <v-select v-model="post.category_id" :options="categories" :reduce="category => category.id" label="text" class="form-control" />
             <div class="text-red-600 mt-1">
                 {{ errors.category_id }}
             </div>
