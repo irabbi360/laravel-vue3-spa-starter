@@ -9,6 +9,7 @@ import { abilitiesPlugin } from '@casl/vue';
 import ability from './services/ability';
 import vSelect from "vue-select";
 
+import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-select/dist/vue-select.css';
 
 const app = createApp({
