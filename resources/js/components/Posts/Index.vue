@@ -35,7 +35,7 @@
                             </tr>
                             <tr>
                                 <th class="px-6 py-3 text-start">
-                                    <div class="d-flex flex-row items-center justify-content-between"
+                                    <div class="flex flex-row"
                                          @click="updateOrdering('id')">
                                         <div class="font-medium text-uppercase"
                                              :class="{ 'font-bold text-blue-600': orderColumn === 'id' }">
@@ -54,7 +54,7 @@
                                     </div>
                                 </th>
                                 <th class="px-6 py-3 text-left">
-                                    <div class="flex flex-row items-center justify-between cursor-pointer"
+                                    <div class="flex flex-row"
                                          @click="updateOrdering('title')">
                                         <div class="font-medium text-uppercase"
                                              :class="{ 'font-bold text-blue-600': orderColumn === 'title' }">
