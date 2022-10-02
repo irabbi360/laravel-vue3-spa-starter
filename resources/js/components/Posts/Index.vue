@@ -121,10 +121,10 @@
                                 </td>
                                 <td class="px-6 py-4 text-sm">
                                     <router-link v-if="can('post-edit')"
-                                                 :to="{ name: 'posts.edit', params: { id: post.id } }">Edit
+                                                 :to="{ name: 'posts.edit', params: { id: post.id } }" class="badge bg-primary">Edit
                                     </router-link>
                                     <a href="#" v-if="can('post-delete')" @click.prevent="deletePost(post.id)"
-                                       class="ml-2">Delete</a>
+                                       class="ml-2 badge bg-danger">Delete</a>
                                 </td>
                             </tr>
                             </tbody>
