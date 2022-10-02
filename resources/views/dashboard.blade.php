@@ -17,6 +17,6 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased" id="app">
-<router-view></router-view>
+    <router-view></router-view>
 </body>
 </html>
