@@ -43,6 +43,7 @@ const store = createStore({
 
     actions: {
         saveToken ({ commit, dispatch }, payload) {
+            console.log('ddddddd');
             commit(SAVE_TOKEN, payload)
           },
         

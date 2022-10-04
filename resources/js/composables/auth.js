@@ -1,7 +1,8 @@
-import { ref, reactive, inject } from 'vue'
+import { ref, reactive, inject, computed } from 'vue'
 import { useRouter } from "vue-router";
 import { AbilityBuilder, Ability } from '@casl/ability';
 import { ABILITY_TOKEN } from '@casl/vue';
+import { useStore } from 'vuex'
 
 const user = reactive({
     name: '',
@@ -10,6 +11,8 @@ const user = reactive({
 })
 
 export default function useAuth() {
+    const store = useStore();
+
     const processing = ref(false)
     const validationErrors = ref({})
     const router = useRouter()
@@ -30,6 +33,7 @@ export default function useAuth() {
 
         axios.post('/login', loginForm)
             .then(async response => {
+                console.log(response.data);
                 loginUser(response)
             })
             .catch(error => {

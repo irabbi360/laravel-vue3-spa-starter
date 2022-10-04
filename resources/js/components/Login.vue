@@ -54,9 +54,12 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import useAuth from '../composables/auth'
+
 export default {
     setup() {
+        const store = useStore();
         const { loginForm, validationErrors, processing, submitLogin } = useAuth()
         return { loginForm, validationErrors, processing, submitLogin }
     }
