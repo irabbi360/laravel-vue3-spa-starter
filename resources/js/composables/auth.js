@@ -6,6 +6,7 @@ import { ABILITY_TOKEN } from '@casl/vue';
 const user = reactive({
     name: '',
     email: '',
+    isLogin: false
 })
 
 export default function useAuth() {
@@ -42,6 +43,7 @@ export default function useAuth() {
     const loginUser = async (response) => {
         user.name = response.data.name
         user.email = response.data.email
+        user.isLogin = true
         localStorage.setItem('loggedIn', JSON.stringify(true))
         await getAbilities()
         await router.push({ name: 'posts.index' })
@@ -50,7 +52,7 @@ export default function useAuth() {
     const getUser = () => {
         axios.get('/api/user')
             .then(response => {
-                // loginUser(response)
+                loginUser(response)
             })
     }
 

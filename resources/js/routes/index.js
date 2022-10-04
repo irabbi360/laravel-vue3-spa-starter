@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-function views (path) {
-    return () => import(/* webpackChunkName: '' */ `../views/${path}`).then(m => m.default || m)
-}
+// function views (path) {
+//     return () => import(/* webpackChunkName: '' */ `../views/${path}`).then(m => m.default || m)
+// }
 
 import AuthenticatedLayout from "../layouts/Authenticated.vue";
 import AdminLayout from "../layouts/Admin.vue";
@@ -26,8 +26,13 @@ const routes = [
     {
         path: '/',
         // redirect: { name: 'login' },
-        component: views('home/index.vue'),// GuestLayout,
+        component: GuestLayout,
         children: [
+            {
+                path: '/',
+                name: 'home',
+                component: () => import('../views/home/index.vue'),
+            },
             {
                 path: '/login',
                 name: 'login',
@@ -36,6 +41,7 @@ const routes = [
         ]
     },
     {
+        path: '/posts',
         component: AuthenticatedLayout,
         beforeEnter: auth,
         children: [
