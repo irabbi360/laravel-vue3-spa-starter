@@ -2,6 +2,7 @@ import './bootstrap';
 
 import { createApp, onMounted } from 'vue';
 import LaravelVuePagination from 'laravel-vue-pagination';
+import store from './store'
 import router from './routes/index'
 import VueSweetalert2 from "vue-sweetalert2";
 import useAuth from "./composables/auth";
@@ -24,6 +25,7 @@ app.component('example-component', ExampleComponent);
 
 
 app.use(router)
+app.use(store)
 app.use(VueSweetalert2)
 app.use(abilitiesPlugin, ability)
 app.component('Pagination', LaravelVuePagination)
