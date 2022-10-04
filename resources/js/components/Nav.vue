@@ -25,11 +25,10 @@
                             <router-link class="nav-link" to="/register">Sign Up</router-link>
                         </li>
                     </ul>
-                    <ul class="navbar-nav mt-2 mt-lg-0 ml-auto" v-if="user">
-                        <li class="nav-item active">
+                    <ul class="navbar-nav mt-2 mt-lg-0 ms-auto" v-if="user">
+                        <li class="nav-item">
                             <a class="nav-link" href="javascript:void(0)" @click="logout"
-                            >Logout <span class="sr-only">(current)</span></a
-                            >
+                            >Logout</a>
                         </li>
                     </ul>
                 </div>
