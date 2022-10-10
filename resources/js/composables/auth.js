@@ -54,10 +54,11 @@ export default function useAuth() {
     }
 
     const getUser = () => {
-        axios.get('/api/user')
-            .then(response => {
-                loginUser(response)
-            })
+        store.dispatch('fetchUser')
+        // axios.get('/api/user')
+        //     .then(response => {
+        //         loginUser(response)
+        //     })
     }
 
     const logout = async () => {

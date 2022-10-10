@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $token = $request->session()->regenerate();
 
         if ($request->wantsJson()) {
             return response()->json($request->user());
