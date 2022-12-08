@@ -10,7 +10,7 @@
                                 Title
                             </label>
                             <input v-model="post.title" id="post-title" type="text" class="form-control">
-                            <div class="text-red-600 mt-1">
+                            <div class="text-danger-600 mt-1">
                                 {{ errors.title }}
                             </div>
                             <div class="invalid-feedback mt-1">
@@ -28,7 +28,7 @@
                             <div class="invalid-feedback mt-1">
                                 {{ errors.content }}
                             </div>
-                            <div class="text-red-600 mt-1">
+                            <div class="text-danger-600 mt-1">
                                 <div v-for="message in validationErrors?.content">
                                     {{ message }}
                                 </div>
@@ -54,7 +54,7 @@
                                 Thumbnail
                             </label>
                             <input @change="post.thumbnail = $event.target.files[0]" type="file" class="form-control" id="thumbnail" />
-                            <div class="text-red-600 mt-1">
+                            <div class="text-danger-600 mt-1">
                                 <div v-for="message in validationErrors?.thumbnail">
                                     {{ message }}
                                 </div>

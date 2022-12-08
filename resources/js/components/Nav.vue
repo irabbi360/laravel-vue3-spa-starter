@@ -1,21 +1,21 @@
 <template>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light nav-fill w-100">
-            <div class="container">
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarTogglerDemo01"
-                    aria-controls="navbarTogglerDemo01"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                    <router-link class="navbar-brand" to="/">Home</router-link>
-                    <ul class="navbar-nav mt-2 mt-lg-0 ml-auto" v-if="!user.isLogin">
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <router-link to="/" class="navbar-brand">Laravel Vue Stater</router-link>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mt-2 mt-lg-0 ms-auto">
+                    <template v-if="!user.isLogin">
                         <li class="nav-item active">
                             <router-link class="nav-link" to="/login"
                             >Login</router-link
@@ -24,17 +24,22 @@
                         <li class="nav-item">
                             <router-link class="nav-link" to="/register">Sign Up</router-link>
                         </li>
-                    </ul>
-                    <ul v-if="user.isLogin" class="navbar-nav mt-2 mt-lg-0 ms-auto" >
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)" @click="logout"
-                            >Logout</a>
-                        </li>
-                    </ul>
-                </div>
+                    </template>
+                    <li v-if="user.isLogin" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ user.name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><router-link class="dropdown-item" to="#">Profile</router-link></li>
+                            <li><router-link to="/posts" class="dropdown-item">Post</router-link></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" @click="logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 </template>
 
 <script>

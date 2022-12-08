@@ -10,10 +10,10 @@
                                 Title
                             </label>
                             <input v-model="post.title" id="post-title" type="text" class="form-control">
-                            <div class="text-red-600 mt-1">
+                            <div class="text-danger mt-1">
                                 {{ errors.title }}
                             </div>
-                            <div class="invalid-feedback mt-1">
+                            <div class="text-danger mt-1">
                                 <div v-for="message in validationErrors?.title">
                                     {{ message }}
                                 </div>
@@ -25,10 +25,10 @@
                                 Content
                             </label>
                             <textarea v-model="post.content" id="post-content" class="form-control"></textarea>
-                            <div class="invalid-feedback mt-1">
+                            <div class="text-danger mt-1">
                                 {{ errors.content }}
                             </div>
-                            <div class="text-red-600 mt-1">
+                            <div class="text-danger mt-1">
                                 <div v-for="message in validationErrors?.content">
                                     {{ message }}
                                 </div>
@@ -40,10 +40,10 @@
                                 Category
                             </label>
                             <v-select v-model="post.category_id" :options="categories" :reduce="category => category.id" label="text" class="form-control" />
-                            <div class="invalid-feedback mt-1">
+                            <div class="text-danger mt-1">
                                 {{ errors.category_id }}
                             </div>
-                            <div class="invalid-feedback mt-1">
+                            <div class="text-danger mt-1">
                                 <div v-for="message in validationErrors?.category_id">
                                     {{ message }}
                                 </div>
@@ -54,7 +54,7 @@
                                 Thumbnail
                             </label>
                             <input @change="post.thumbnail = $event.target.files[0]" type="file" class="form-control" id="thumbnail" />
-                            <div class="text-red-600 mt-1">
+                            <div class="text-danger mt-1">
                                 <div v-for="message in validationErrors?.thumbnail">
                                     {{ message }}
                                 </div>

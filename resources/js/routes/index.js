@@ -36,29 +36,29 @@ const routes = [
             {
                 path: '/login',
                 name: 'login',
-                component: Login
+                component: () => import('../components/Login.vue')
             },
         ]
     },
     {
-        path: '/posts',
+        path: '/admin/posts',
         component: AuthenticatedLayout,
         beforeEnter: auth,
         children: [
             {
-                path: '/posts',
+                path: '/admin/posts',
                 name: 'posts.index',
                 component: PostsIndex,
                 meta: { title: 'Posts' }
             },
             {
-                path: '/posts/create',
+                path: '/admin/posts/create',
                 name: 'posts.create',
                 component: PostsCreate,
                 meta: { title: 'Add new post' }
             },
             {
-                path: '/posts/edit/:id',
+                path: '/admin/posts/edit/:id',
                 name: 'posts.edit',
                 component: PostsEdit,
                 meta: { title: 'Edit post' }
@@ -68,7 +68,7 @@ const routes = [
     /**
      * Admin routes
      */
-    {
+    /*{
         path: '/admin',
         component: AdminLayout,
         beforeEnter: auth,
@@ -86,7 +86,7 @@ const routes = [
                 meta: { title: 'Admin Dashboard' }
             },
         ]
-    },
+    },*/
     {
         path: "/:pathMatch(.*)*",
         name: 'NotFound',
