@@ -1,5 +1,6 @@
 import { ref, reactive, inject } from 'vue'
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import { AbilityBuilder, Ability } from '@casl/ability';
 import { ABILITY_TOKEN } from '@casl/vue';
 import Cookies from 'js-cookie'
@@ -13,6 +14,7 @@ export default function useAuth() {
     const processing = ref(false)
     const validationErrors = ref({})
     const router = useRouter()
+    const store = useStore()
     const swal = inject('$swal')
     const ability = inject(ABILITY_TOKEN)
 
@@ -44,6 +46,7 @@ export default function useAuth() {
     const loginUser = async (response) => {
         user.name = response.data.name
         user.email = response.data.email
+        await store.dispatch('updateUser', response.data)
         Cookies.set('loggedIn', true)
         await getAbilities()
         // await router.push({ name: 'admin.index' })
@@ -62,7 +65,12 @@ export default function useAuth() {
         processing.value = true
 
         axios.post('/logout')
-            .then(response => router.push({ name: 'login' }))
+            .then(response => {
+                user.name = ''
+                user.email = ''
+                store.dispatch('updateUser', null)
+                router.push({ name: 'login' })
+            })
             .catch(error => {
                 swal({
                     icon: 'error',

@@ -15,7 +15,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mt-lg-0 ms-auto">
-                    <template v-if="!user.isLogin">
+                    <template v-if="!user?.name">
                         <li class="nav-item active">
                             <router-link class="nav-link" to="/login"
                             >Login</router-link
@@ -25,7 +25,7 @@
                             <router-link class="nav-link" to="/register">Sign Up</router-link>
                         </li>
                     </template>
-                    <li v-if="user.isLogin" class="nav-item dropdown">
+                    <li v-if="user?.name" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ user.name }}
                         </a>

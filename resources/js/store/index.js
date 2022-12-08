@@ -36,7 +36,7 @@ const store = createStore({
             Cookies.remove('token')
           },
 
-          UPDATE_USER (state, { user }) {
+          UPDATE_USER (state, user) {
             state.user = user
           }
     },
