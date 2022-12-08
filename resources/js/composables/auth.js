@@ -31,6 +31,7 @@ export default function useAuth() {
         axios.post('/login', loginForm)
             .then(async response => {
                 loginUser(response)
+                await router.push({ name: 'admin.index' })
             })
             .catch(error => {
                 if (error.response?.data) {
@@ -45,7 +46,7 @@ export default function useAuth() {
         user.email = response.data.email
         Cookies.set('loggedIn', true)
         await getAbilities()
-        await router.push({ name: 'posts.index' })
+        // await router.push({ name: 'admin.index' })
     }
 
     const getUser = () => {
