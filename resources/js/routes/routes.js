@@ -21,7 +21,7 @@ export default [
             {
                 path: 'login',
                 name: 'login',
-                component: () => import('../components/Login.vue')
+                component: () => import('../views/login/Login.vue')
             },
         ]
     },
@@ -39,7 +39,7 @@ export default [
             {
                 path: '/admin',
                 name: 'admin.index',
-                component: () => import('../views/home/admin/index.vue'),
+                component: () => import('../views/admin/index.vue'),
                 meta: { title: 'Admin' }
             },
             {

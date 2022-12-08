@@ -55,7 +55,7 @@
 
 <script>
 import { useStore } from 'vuex'
-import useAuth from '../composables/auth'
+import useAuth from '../../composables/auth'
 
 export default {
     setup() {
