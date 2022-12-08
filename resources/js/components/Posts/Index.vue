@@ -103,7 +103,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="post in posts.data">
+                            <tr v-for="post in posts.data" :key="post.id">
                                 <td class="px-6 py-4 text-sm">
                                     {{ post.id }}
                                 </td>
