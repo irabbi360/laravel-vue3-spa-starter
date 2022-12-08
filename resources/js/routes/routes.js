@@ -18,6 +18,14 @@ function auth(to, from, next) {
     next('/login')
 }
 
+function guest(to, from, next) {
+    if (Cookies.get('loggedIn')) {
+        next('/')
+    }
+
+    next()
+}
+
 export default [
     {
         path: '/',
@@ -32,7 +40,8 @@ export default [
             {
                 path: 'login',
                 name: 'login',
-                component: () => import('../views/login/Login.vue')
+                component: () => import('../views/login/Login.vue'),
+                beforeEnter: guest,
             },
         ]
     },
