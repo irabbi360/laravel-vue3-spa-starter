@@ -1,18 +1,15 @@
-import { ref, reactive, inject, computed } from 'vue'
+import { ref, reactive, inject } from 'vue'
 import { useRouter } from "vue-router";
 import { AbilityBuilder, Ability } from '@casl/ability';
 import { ABILITY_TOKEN } from '@casl/vue';
-import { useStore } from 'vuex'
+import Cookies from 'js-cookie'
 
 const user = reactive({
     name: '',
     email: '',
-    isLogin: false
 })
 
 export default function useAuth() {
-    const store = useStore();
-
     const processing = ref(false)
     const validationErrors = ref({})
     const router = useRouter()
@@ -33,7 +30,6 @@ export default function useAuth() {
 
         axios.post('/login', loginForm)
             .then(async response => {
-                console.log(response.data);
                 loginUser(response)
             })
             .catch(error => {
@@ -47,14 +43,12 @@ export default function useAuth() {
     const loginUser = async (response) => {
         user.name = response.data.name
         user.email = response.data.email
-        user.isLogin = true
-        localStorage.setItem('loggedIn', JSON.stringify(true))
+        Cookies.set('loggedIn', true)
         await getAbilities()
-        await router.push({ name: 'admin.index' })
+        await router.push({ name: 'posts.index' })
     }
 
     const getUser = () => {
-        store.dispatch('fetchUser')
         axios.get('/api/user')
             .then(response => {
                 loginUser(response)
@@ -77,6 +71,7 @@ export default function useAuth() {
             })
             .finally(() => {
                 processing.value = false
+                Cookies.remove('loggedIn')
             })
     }
 

@@ -1,11 +1,8 @@
 <template>
-<h1>Admin</h1>
+<h1>Admin Panel</h1>
 </template>
 
-<script>
-export default {
-    name: "index"
-}
+<script setup>
 </script>
 
 <style scoped>
