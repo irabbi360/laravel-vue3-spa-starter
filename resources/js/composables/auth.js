@@ -50,15 +50,15 @@ export default function useAuth() {
         user.isLogin = true
         localStorage.setItem('loggedIn', JSON.stringify(true))
         await getAbilities()
-        await router.push({ name: 'posts.index' })
+        await router.push({ name: 'admin.index' })
     }
 
     const getUser = () => {
         store.dispatch('fetchUser')
-        // axios.get('/api/user')
-        //     .then(response => {
-        //         loginUser(response)
-        //     })
+        axios.get('/api/user')
+            .then(response => {
+                loginUser(response)
+            })
     }
 
     const logout = async () => {
