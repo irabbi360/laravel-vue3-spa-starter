@@ -17,8 +17,8 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
-        "@casl/ability": "^6.3.1",
-        "@casl/vue": "^2.2.0",
+        "@casl/ability": "^5.4.3",
+        "@casl/vue": "^2.1.2",
         "js-cookie": "^3.0.1",
         "laravel-vue-pagination": "^3.0.0",
         "vee-validate": "^4.6.10",
