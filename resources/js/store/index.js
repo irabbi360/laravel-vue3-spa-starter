@@ -43,14 +43,12 @@ const store = createStore({
 
     actions: {
         saveToken ({ commit, dispatch }, payload) {
-            console.log('ddddddd');
             commit('SAVE_TOKEN', payload)
           },
 
           async fetchUser ({ commit }) {
             try {
               const { data } = await axios.get('/api/user')
-                console.log(data, 'aaaa')
               commit('FETCH_USER_SUCCESS', { user: data })
             } catch (e) {
               commit('FETCH_USER_FAILURE')
