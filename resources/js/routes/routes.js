@@ -12,6 +12,7 @@ import PostsEdit from '../components/Posts/Edit.vue'
 
 function auth(to, from, next) {
     if (Cookies.get('loggedIn')) {
+        console.log(Cookies.get('loggedIn'), 'loggedIn')
         next()
     }
 

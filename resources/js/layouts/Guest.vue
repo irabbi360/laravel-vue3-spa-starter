@@ -3,10 +3,6 @@
     <router-view></router-view>
 </template>
 <script setup>
-import { defineAsyncComponent } from 'vue'
-
-const Navbar = defineAsyncComponent(() =>
-    import('../components/Nav.vue')
-)
+import Navbar from '../components/Nav.vue'
 
 </script>

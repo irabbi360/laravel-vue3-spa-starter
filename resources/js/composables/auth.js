@@ -56,7 +56,9 @@ export default function useAuth() {
         axios.get('/api/user')
             .then(response => {
                 loginUser(response)
-            })
+            }).catch((error) => {
+            Cookies.remove('loggedIn')
+        })
     }
 
     const logout = async () => {
