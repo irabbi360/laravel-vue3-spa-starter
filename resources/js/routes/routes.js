@@ -12,10 +12,8 @@ import PostsEdit from '../components/Posts/Edit.vue'
 
 function auth(to, from, next) {
     if (Cookies.get('loggedIn')) {
-        console.log(Cookies.get('loggedIn'), 'loggedIn')
         next()
     }
-
     next('/login')
 }
 
@@ -23,7 +21,6 @@ function guest(to, from, next) {
     if (Cookies.get('loggedIn')) {
         next('/')
     }
-
     next()
 }
 
