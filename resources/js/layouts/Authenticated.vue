@@ -2,7 +2,8 @@
     <AdminNavbar />
     <div class="d-flex align-items-stretch w-100">
         <AdminSidebar />
-        <div class="container my-5">
+        <div class="container">
+            <Breadcrumb class="row justify-content-center mt-4" :crumbs="crumbs" @selected="selected" />
             <h2 class="fw-semibold">
                 {{ currentPageTitle }}
             </h2>
@@ -19,10 +20,17 @@ import {computed} from "vue";
 import { useRoute } from "vue-router";
 import AdminNavbar from "../components/includes/AdminNavbar.vue";
 import AdminSidebar from "../components/includes/AdminSidebar.vue";
+import Breadcrumb from "../components/includes/Breadcrumb.vue";
 
 const route = useRoute()
 
+const crumbs = ['Home', 'Category', 'Sub category'];
+
 const currentPageTitle = computed(() => route.meta.title);
+
+function selected(crumb) {
+    console.log(crumb);
+}
 
 </script>
 
