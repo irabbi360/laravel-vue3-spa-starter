@@ -56,25 +56,25 @@ export default [
                 path: '/admin',
                 name: 'admin.index',
                 component: () => import('../views/admin/index.vue'),
-                meta: { title: 'Admin' }
+                meta: { breadCrumb: 'Admin' }
             },
             {
                 path: 'posts',
                 name: 'posts.index',
                 component: PostsIndex,
-                meta: { title: 'Posts' }
+                meta: { breadCrumb: 'Posts' }
             },
             {
                 path: 'posts/create',
                 name: 'posts.create',
                 component: PostsCreate,
-                meta: { title: 'Add new post' }
+                meta: { breadCrumb: 'Add new post' }
             },
             {
                 path: 'posts/edit/:id',
                 name: 'posts.edit',
                 component: PostsEdit,
-                meta: { title: 'Edit post' }
+                meta: { breadCrumb: 'Edit post' }
             },
         ]
     },

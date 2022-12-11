@@ -5,7 +5,7 @@
         <div class="container">
             <Breadcrumb class="row justify-content-center mt-4" :crumbs="crumbs" @selected="selected" />
             <h2 class="fw-semibold">
-                {{ currentPageTitle }}
+                {{ crumbs }}
             </h2>
             <!-- Page Content -->
             <div class="main">
@@ -24,9 +24,33 @@ import Breadcrumb from "../components/includes/Breadcrumb.vue";
 
 const route = useRoute()
 
-const crumbs = ['Home', 'Category', 'Sub category'];
+// const crumbs = ['Home', 'Category', 'Sub category'];
 
-const currentPageTitle = computed(() => route.meta.title);
+const crumbs = computed(() => {
+    let pathArray = route.path.split('/')
+      pathArray.shift()
+      const breadCrumbs = [{ "href": "/admin", "disabled": false, "text": "Dashboard" }]
+      // needed to handle the intermediary entries for nested vue routes
+      let breadcrumb = ''
+      let lastIndexFound = 0
+      for (let i = 0; i < pathArray.length; ++i) {
+        breadcrumb = `${breadcrumb}${'/'}${pathArray[i]}`
+        if (route.matched[i] &&
+          Object.hasOwnProperty.call(route.matched[i], 'meta') &&
+          Object.hasOwnProperty.call(route.matched[i].meta, 'breadCrumb')) {
+          breadCrumbs.push({
+            href: i !== 0 && pathArray[i - (i - lastIndexFound)]
+              ? '/' + pathArray[i - (i - lastIndexFound)] + breadcrumb
+              : breadcrumb,
+            disabled: i + 1 === pathArray.length,
+            text: route.matched[i].meta.breadCrumb || pathArray[i]
+          })
+          lastIndexFound = i
+          breadcrumb = ''
+        }
+      }
+      return breadCrumbs
+});
 
 function selected(crumb) {
     console.log(crumb);

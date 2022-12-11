@@ -7,7 +7,7 @@
           class="breadcrumb-item align-items-center"
         >
           <a class="btn btn-link" :class="{ disabled: isLast(ci) }" @click="selected(crumb)">
-            {{ crumb }}
+            {{ crumb.text }}
           </a>
         </li>
       </ol>
