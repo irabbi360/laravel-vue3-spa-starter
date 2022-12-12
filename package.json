@@ -6,14 +6,14 @@
     },
     "devDependencies": {
         "@popperjs/core": "^2.10.2",
-        "@vitejs/plugin-vue": "^3.0.1",
-        "axios": "^0.27",
+        "@vitejs/plugin-vue": "^4.0.0",
+        "axios": "^1.2.1",
         "bootstrap": "^5.2.1",
-        "laravel-vite-plugin": "^0.6.0",
+        "laravel-vite-plugin": "^0.7.1",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "sass": "^1.32.11",
-        "vite": "^3.0.0",
+        "vite": "^4.0.0",
         "vue": "^3.2.37"
     },
     "dependencies": {
