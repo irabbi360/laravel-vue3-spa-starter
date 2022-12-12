@@ -84,7 +84,7 @@ export default function usePosts() {
                 router.push({name: 'posts.index'})
                 swal({
                     icon: 'success',
-                    title: 'Post saved successfully'
+                    title: 'Post updated successfully'
                 })
             })
             .catch(error => {

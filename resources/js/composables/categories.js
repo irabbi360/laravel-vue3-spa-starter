@@ -78,12 +78,12 @@ export default function useCategories() {
         isLoading.value = true
         validationErrors.value = {}
 
-        axios.put('/api/caregories/' + category.id, category)
+        axios.put('/api/categories/' + category.id, category)
             .then(response => {
-                router.push({name: 'caregories.index'})
+                router.push({name: 'categories.index'})
                 swal({
                     icon: 'success',
-                    title: 'Category saved successfully'
+                    title: 'Category updated successfully'
                 })
             })
             .catch(error => {
@@ -108,7 +108,7 @@ export default function useCategories() {
         })
             .then(result => {
                 if (result.isConfirmed) {
-                    axios.delete('/api/Category/' + id)
+                    axios.delete('/api/categories/' + id)
                         .then(response => {
                             getCategories()
                             router.push({name: 'categories.index'})
@@ -125,7 +125,6 @@ export default function useCategories() {
                         })
                 }
             })
-
     }
 
     const getCategoryList = async () => {
@@ -135,7 +134,7 @@ export default function useCategories() {
             })
     }
 
-    return { 
+    return {
         categoryList,
         getCategoryList,
         categories,

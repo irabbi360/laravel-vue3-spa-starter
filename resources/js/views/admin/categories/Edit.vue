@@ -45,7 +45,7 @@ export default {
     setup() {
         // Define a validation schema
         const schema = {
-            name: 'required|min:5'
+            name: 'required|min:3'
         }
         // Create a form context with the validation schema
         const { validate, errors, resetForm } = useForm({ validationSchema: schema })
