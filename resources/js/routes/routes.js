@@ -76,6 +76,24 @@ export default [
                 component: PostsEdit,
                 meta: { breadCrumb: 'Edit post' }
             },
+            {
+                path: 'permissions',
+                name: 'permissions.index',
+                component: () => import('../views/admin/permissions/index.vue'),
+                meta: { breadCrumb: 'Permissions' }
+            },
+            {
+                path: 'roles',
+                name: 'roles.index',
+                component: () => import('../views/admin/roles/index.vue'),
+                meta: { breadCrumb: 'Roles' }
+            },
+            {
+                path: 'users',
+                name: 'users.index',
+                component: () => import('../views/admin/users/index.vue'),
+                meta: { breadCrumb: 'Users' }
+            },
         ]
     },
     {
