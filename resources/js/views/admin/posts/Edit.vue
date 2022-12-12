@@ -77,10 +77,10 @@
 <script>
 import { onMounted, reactive, watchEffect } from "vue";
 import { useRoute } from "vue-router";
-import useCategories from "../../composables/categories";
-import usePosts from "../../composables/posts";
+import useCategories from "../../../composables/categories";
+import usePosts from "../../../composables/posts";
 import { useForm, useField, defineRule } from "vee-validate";
-import { required, min } from "../../validation/rules"
+import { required, min } from "../../../validation/rules"
 defineRule('required', required)
 defineRule('min', min);
 export default {

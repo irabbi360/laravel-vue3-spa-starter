@@ -5,9 +5,9 @@ import AdminLayout from "../layouts/Admin.vue";
 import GuestLayout from "../layouts/Guest.vue";
 import ErrorLayout from "../layouts/Error.vue";
 
-import PostsIndex from '../components/Posts/Index.vue'
-import PostsCreate from '../components/Posts/Create.vue'
-import PostsEdit from '../components/Posts/Edit.vue'
+import PostsIndex from '../views/admin/posts/Index.vue'
+import PostsCreate from '../views/admin/posts/Create.vue'
+import PostsEdit from '../views/admin/posts/Edit.vue'
 
 
 function auth(to, from, next) {

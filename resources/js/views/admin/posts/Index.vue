@@ -149,8 +149,8 @@
 
 <script>
 import {ref, onMounted, watch} from "vue";
-import usePosts from "../../composables/posts";
-import useCategories from "../../composables/categories";
+import usePosts from "../../../composables/posts";
+import useCategories from "../../../composables/categories";
 import {useAbility} from '@casl/vue'
 
 export default {
