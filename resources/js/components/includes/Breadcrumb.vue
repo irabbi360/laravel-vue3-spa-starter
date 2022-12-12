@@ -1,14 +1,14 @@
 <template>
-    <nav>
-      <ol class="breadcrumb">
+    <nav class="mx-2">
+      <ol class="breadcrumb border-radius-0">
         <li
           v-for="(crumb, ci) in crumbs"
           :key="ci"
           class="breadcrumb-item align-items-center"
         >
-          <a class="btn btn-link" :class="{ disabled: isLast(ci) }" @click="selected(crumb)">
+          <router-link :to="crumb.href" class="btn btn-link" :class="{ disabled: isLast(ci) }" @click="selected(crumb)">
             {{ crumb.text }}
-          </a>
+          </router-link>
         </li>
       </ol>
     </nav>
@@ -41,5 +41,8 @@
   }
   .breadcrumb-item + .breadcrumb-item::before {
     float: none;
+  }
+  .border-radius-0{
+    border-radius: 0
   }
   </style>

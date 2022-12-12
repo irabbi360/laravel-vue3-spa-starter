@@ -4,9 +4,9 @@
         <AdminSidebar />
         <div class="container">
             <Breadcrumb class="row justify-content-center mt-4" :crumbs="crumbs" @selected="selected" />
-            <h2 class="fw-semibold">
+            <!-- <h2 class="fw-semibold">
                 {{ crumbs }}
-            </h2>
+            </h2> -->
             <!-- Page Content -->
             <div class="main">
                 <router-view></router-view>

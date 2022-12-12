@@ -1,8 +1,14 @@
 <template>
-    <div class="row justify-content-center my-5">
+    <div class="row justify-content-center my-2">
         <div class="col-md-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
+            <div class="card border-0">
+                <div class="card-header bg-transparent">
+                    <h5 class="float-start">Posts</h5>
+                    <router-link :to="{ name: 'posts.create' }" class="btn btn-primary btn-sm float-end">
+                        Create Post
+                    </router-link>
+                </div>
+                <div class="card-body shadow-sm">
                     <div class="mb-4">
                         <input v-model="search_global" type="text" placeholder="Search..."
                                class="form-control w-25">
