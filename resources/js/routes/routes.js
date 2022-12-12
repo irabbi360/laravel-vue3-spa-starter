@@ -1,9 +1,7 @@
 import Cookies from 'js-cookie'
 
 import AuthenticatedLayout from "../layouts/Authenticated.vue";
-import AdminLayout from "../layouts/Admin.vue";
 import GuestLayout from "../layouts/Guest.vue";
-import ErrorLayout from "../layouts/Error.vue";
 
 import PostsIndex from '../views/admin/posts/Index.vue'
 import PostsCreate from '../views/admin/posts/Create.vue'
