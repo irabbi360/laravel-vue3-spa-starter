@@ -3,9 +3,9 @@
         <div class="col-md-12">
             <div class="card border-0">
                 <div class="card-header bg-transparent">
-                    <h5 class="float-start">Posts</h5>
-                    <router-link :to="{ name: 'posts.create' }" class="btn btn-primary btn-sm float-end">
-                        Create Post
+                    <h5 class="float-start">Categories</h5>
+                    <router-link :to="{ name: 'categories.create' }" class="btn btn-primary btn-sm float-end">
+                        Create Category
                     </router-link>
                 </div>
                 <div class="card-body shadow-sm">
@@ -26,15 +26,6 @@
                                     <input v-model="search_title" type="text"
                                            class="inline-block mt-1 form-control"
                                            placeholder="Filter by Title">
-                                </th>
-                                <th class="px-6 py-3 bg-gray-50 text-left">
-                                    <v-select v-model="search_category" :options="categoryList"
-                                              :reduce="category => category.id" label="text" class="form-control w-100"/>
-                                </th>
-                                <th class="px-6 py-3 bg-gray-50 text-left">
-                                    <input v-model="search_content" type="text"
-                                           class="inline-block mt-1 form-control"
-                                           placeholder="Filter by Content">
                                 </th>
                                 <th class="px-6 py-3 text-start"></th>
                                 <th class="px-6 py-3 text-start"></th>
@@ -79,12 +70,6 @@
                                     </div>
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left">
-                                    <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Category</span>
-                                </th>
-                                <th class="px-6 py-3 bg-gray-50 text-left">
-                                    <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Content</span>
-                                </th>
-                                <th class="px-6 py-3 bg-gray-50 text-left">
                                     <div class="flex flex-row items-center justify-between cursor-pointer"
                                          @click="updateOrdering('created_at')">
                                         <div class="leading-4 font-medium text-gray-500 uppercase tracking-wider"
@@ -109,27 +94,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="post in posts.data" :key="post.id">
+                            <tr v-for="post in categories.data" :key="post.id">
                                 <td class="px-6 py-4 text-sm">
                                     {{ post.id }}
                                 </td>
                                 <td class="px-6 py-4 text-sm">
-                                    {{ post.title }}
-                                </td>
-                                <td class="px-6 py-4 text-sm">
-                                    {{ post.category }}
-                                </td>
-                                <td class="px-6 py-4 text-sm">
-                                    {{ post.content }}
+                                    {{ post.name }}
                                 </td>
                                 <td class="px-6 py-4 text-sm">
                                     {{ post.created_at }}
                                 </td>
                                 <td class="px-6 py-4 text-sm">
-                                    <router-link v-if="can('post-edit')"
-                                                 :to="{ name: 'posts.edit', params: { id: post.id } }" class="badge bg-primary">Edit
+                                    <router-link v-if="can('category-edit')"
+                                                 :to="{ name: 'categories.edit', params: { id: post.id } }" class="badge bg-primary">Edit
                                     </router-link>
-                                    <a href="#" v-if="can('post-delete')" @click.prevent="deletePost(post.id)"
+                                    <a href="#" v-if="can('category-delete')" @click.prevent="deleteCategory(post.id)"
                                        class="ml-2 badge bg-danger">Delete</a>
                                 </td>
                             </tr>
@@ -138,8 +117,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <Pagination :data="posts" :limit="3"
-                                @pagination-change-page="page => getPosts(page, search_category, search_id, search_title, search_content, search_global, orderColumn, orderDirection)"
+                    <Pagination :data="categories" :limit="3"
+                                @pagination-change-page="page => getCategories(page, search_category, search_id, search_title, search_content, search_global, orderColumn, orderDirection)"
                                 class="mt-4"/>
                 </div>
             </div>
@@ -149,7 +128,6 @@
 
 <script>
 import {ref, onMounted, watch} from "vue";
-import usePosts from "../../../composables/posts";
 import useCategories from "../../../composables/categories";
 import {useAbility} from '@casl/vue'
 
@@ -162,17 +140,15 @@ export default {
         const search_global = ref('')
         const orderColumn = ref('created_at')
         const orderDirection = ref('desc')
-        const {posts, getPosts, deletePost} = usePosts()
-        const {categoryList, getCategoryList} = useCategories()
+        const {categories, getCategories, deleteCategory} = useCategories()
         const {can} = useAbility()
         onMounted(() => {
-            getPosts()
-            getCategoryList()
+            getCategories()
         })
         const updateOrdering = (column) => {
             orderColumn.value = column;
             orderDirection.value = (orderDirection.value === 'asc') ? 'desc' : 'asc';
-            getPosts(
+            getCategories(
                 1,
                 search_category.value,
                 search_id.value,
@@ -184,7 +160,7 @@ export default {
             );
         }
         watch(search_category, (current, previous) => {
-            getPosts(
+            getCategories(
                 1,
                 current,
                 search_id.value,
@@ -194,7 +170,7 @@ export default {
             )
         })
         watch(search_id, (current, previous) => {
-            getPosts(
+            getCategories(
                 1,
                 search_category.value,
                 current,
@@ -204,7 +180,7 @@ export default {
             )
         })
         watch(search_title, (current, previous) => {
-            getPosts(
+            getCategories(
                 1,
                 search_category.value,
                 search_id.value,
@@ -214,7 +190,7 @@ export default {
             )
         })
         watch(search_content, (current, previous) => {
-            getPosts(
+            getCategories(
                 1,
                 search_category.value,
                 search_id.value,
@@ -224,7 +200,7 @@ export default {
             )
         })
         watch(search_global, _.debounce((current, previous) => {
-            getPosts(
+            getCategories(
                 1,
                 search_category.value,
                 search_id.value,
@@ -234,10 +210,9 @@ export default {
             )
         }, 200))
         return {
-            posts,
-            getPosts,
-            deletePost,
-            categoryList,
+            categories,
+            getCategories,
+            deleteCategory,
             search_category,
             search_id,
             search_title,

@@ -39,7 +39,7 @@
                             <label for="post-category" class="form-label">
                                 Category
                             </label>
-                            <v-select v-model="post.category_id" :options="categories" :reduce="category => category.id" label="text" class="form-control" />
+                            <v-select v-model="post.category_id" :options="categoryList" :reduce="category => category.id" label="name" class="form-control" />
                             <div class="text-danger mt-1">
                                 {{ errors.category_id }}
                             </div>
@@ -97,7 +97,7 @@ export default {
         const { value: title } = useField('title', null, { initialValue: '' });
         const { value: content } = useField('content', null, { initialValue: '' });
         const { value: category_id } = useField('category_id', null, { initialValue: '', label: 'category' });
-        const { categories, getCategories } = useCategories()
+        const { categoryList, getCategoryList } = useCategories()
         const { post: postData, getPost, updatePost, validationErrors, isLoading } = usePosts()
         const post = reactive({
             title,
@@ -111,7 +111,7 @@ export default {
         }
         onMounted(() => {
             getPost(route.params.id)
-            getCategories()
+            getCategoryList()
         })
         // https://vuejs.org/api/reactivity-core.html#watcheffect
         watchEffect(() => {
@@ -121,7 +121,7 @@ export default {
             post.category_id = postData.value.category_id
         })
         return {
-            categories,
+            categoryList,
             post,
             validationErrors,
             isLoading,
