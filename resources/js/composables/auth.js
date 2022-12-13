@@ -46,7 +46,7 @@ export default function useAuth() {
     const loginUser = async (response) => {
         user.name = response.data.name
         user.email = response.data.email
-        await store.dispatch('updateUser', response.data)
+        // await store.dispatch('updateUser', response.data)
         Cookies.set('loggedIn', true)
         await getAbilities()
         // await router.push({ name: 'admin.index' })
@@ -70,7 +70,7 @@ export default function useAuth() {
             .then(response => {
                 user.name = ''
                 user.email = ''
-                store.dispatch('updateUser', null)
+                // store.dispatch('updateUser', null)
                 router.push({ name: 'login' })
             })
             .catch(error => {
