@@ -110,6 +110,18 @@ export default [
                 meta: { breadCrumb: 'Roles' }
             },
             {
+                name: 'roles.create',
+                path: 'roles/create',
+                component: () => import('../views/admin/roles/create.vue'),
+                meta: { breadCrumb: 'Create Role' }
+            },
+            {
+                name: 'roles.edit',
+                path: 'roles/edit/:id',
+                component: () => import('../views/admin/roles/edit.vue'),
+                meta: { breadCrumb: 'Role Edit' }
+            },
+            {
                 name: 'users.index',
                 path: 'users',
                 component: () => import('../views/admin/users/index.vue'),
