@@ -22,7 +22,7 @@
                             Hi, {{ user.name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><router-link :to="{ name: 'profile.index' }" class="dropdown-item">Profile</router-link></li>
                             <li><a class="dropdown-item" href="#">Setting</a></li>
                             <li>
                                 <hr class="dropdown-divider">

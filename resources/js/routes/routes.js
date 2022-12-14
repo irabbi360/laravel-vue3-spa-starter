@@ -56,6 +56,12 @@ export default [
                 meta: { breadCrumb: 'Admin' }
             },
             {
+                name: 'profile.index',
+                path: 'profile',
+                component: () => import('../views/admin/profile/index.vue'),
+                meta: { breadCrumb: 'Profile' }
+            },
+            {
                 name: 'posts.index',
                 path: 'posts',
                 component: PostsIndex,
