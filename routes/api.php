@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::put('/user', [\App\Http\Controllers\Api\ProfileController::class, 'update']);
 
     Route::get('abilities', function(Request $request) {
         return $request->user()->roles()->with('permissions')

@@ -6,6 +6,14 @@ const required = (value, args, { field }) => {
     return true
 }
 
+const email = (value, args, { field }) => {
+    if (!value) {
+        return `The ${field} field is required.`
+    }
+
+    return true
+}
+
 const min = (value, [limit], { field }) => {
     if (!value || !value.length) {
         return true
@@ -18,4 +26,4 @@ const min = (value, [limit], { field }) => {
     return true
 }
 
-export { required, min }
+export { required, min, email }
