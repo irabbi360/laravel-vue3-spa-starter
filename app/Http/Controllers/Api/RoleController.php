@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Resources\RoleResource;
@@ -49,48 +51,56 @@ class RoleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return RoleResource
      */
     public function store(StoreRoleRequest $request)
     {
-        $this->authorize('category-create');
-        $role = Role::create($request->validated());
+        $this->authorize('role-create');
 
-        return new RoleResource($role);
+        $role = new Role();
+        $role->name = $request->name;
+        $role->guard_name = 'web';
+
+        if ($role->save()) {
+            return new RoleResource($role);
+        }
+
+        return response()->json(['status' => 405, 'success' => false]);
+
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RoleResource
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        //
-    }
+        $this->authorize('role-edit');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return new RoleResource($role);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Role $role
+     * @param StoreRoleRequest $request
+     * @return RoleResource
+     * @throws AuthorizationException
      */
-    public function update(Request $request, $id)
+    public function update(Role $role, StoreRoleRequest $request)
     {
-        //
+        $this->authorize('role-edit');
+
+        $role->name = $request->name;
+
+        if ($role->save()) {
+            return new RoleResource($role);
+        }
+
+        return response()->json(['status' => 405, 'success' => false]);
     }
 
     /**
@@ -99,8 +109,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Role $role) {
+        $this->authorize('role-delete');
+        $role->delete();
+
+        return response()->noContent();
     }
 }

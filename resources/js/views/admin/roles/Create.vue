@@ -9,7 +9,7 @@
                             <label for="post-name" class="form-label">
                                 Title
                             </label>
-                            <input v-model="category.name" id="post-name" type="text" class="form-control">
+                            <input v-model="role.name" id="post-name" type="text" class="form-control">
                             <div class="text-danger mt-1">
                                 {{ errors.name }}
                             </div>
@@ -35,9 +35,9 @@
 </template>
 <script>
 import { onMounted, reactive } from "vue";
-import useCategories from "../../../composables/categories";
+import useRoles from "../../../composables/roles";
 import { useForm, useField, defineRule } from "vee-validate";
-import { required, min } from "../../../validation/rules"
+import { required, min } from "@/validation/rules"
 defineRule('required', required)
 defineRule('min', min);
 export default {
@@ -47,21 +47,21 @@ export default {
             name: 'required|min:3'
         }
         // Create a form context with the validation schema
-        const { validate, errors } = useForm({ validationSchema: schema })
+        const { validate, errors } = useForm({ validationSchema: schema });
         // Define actual fields for validation
         const { value: name } = useField('name', null, { initialValue: '' });
-        const { storeCategory, validationErrors, isLoading } = useCategories()
-        const category = reactive({
+        const { storeRole, validationErrors, isLoading } = useRoles();
+        const role = reactive({
             name
         })
         function submitForm() {
-            validate().then(form => { if (form.valid) storeCategory(category) })
+            validate().then(form => { if (form.valid) storeRole(role) })
         }
         onMounted(() => {
-            
+
         })
         return {
-            category,
+            role,
             validationErrors,
             isLoading,
             errors,

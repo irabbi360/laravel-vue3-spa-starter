@@ -9,7 +9,7 @@
                             <label for="post-title" class="form-label">
                                 Title
                             </label>
-                            <input v-model="category.name" id="post-title" type="text" class="form-control">
+                            <input v-model="role.name" id="post-title" type="text" class="form-control">
                             <div class="text-danger mt-1">
                                 {{ errors.name }}
                             </div>
@@ -24,7 +24,7 @@
                             <button :disabled="isLoading" class="btn btn-primary">
                                 <div v-show="isLoading" class=""></div>
                                 <span v-if="isLoading">Processing...</span>
-                                <span v-else>Save</span>
+                                <span v-else>Update</span>
                             </button>
                         </div>
                     </form>
@@ -36,9 +36,9 @@
 <script>
 import { onMounted, reactive, watchEffect } from "vue";
 import { useRoute } from "vue-router";
-import useCategories from "../../../composables/categories";
+import useRoles from "../../../composables/roles";
 import { useForm, useField, defineRule } from "vee-validate";
-import { required, min } from "../../../validation/rules"
+import { required, min } from "@/validation/rules"
 defineRule('required', required)
 defineRule('min', min);
 export default {
@@ -51,27 +51,27 @@ export default {
         const { validate, errors, resetForm } = useForm({ validationSchema: schema })
         // Define actual fields for validation
         const { value: name } = useField('name', null, { initialValue: '' });
-        const { category: postData, getCategory, updateCategory, validationErrors, isLoading } = useCategories()
-        const category = reactive({
+        const { role: postData, getRole, updateRole, validationErrors, isLoading } = useRoles()
+        const role = reactive({
             name
         })
         const route = useRoute()
         function submitForm() {
-            validate().then(form => { if (form.valid) updateCategory(category) })
+            validate().then(form => { if (form.valid) updateRole(role) })
         }
         onMounted(() => {
-            getCategory(route.params.id)
+            getRole(route.params.id)
         })
         // https://vuejs.org/api/reactivity-core.html#watcheffect
         watchEffect(() => {
-            category.id = postData.value.id
-            category.name = postData.value.name
+            role.id = postData.value.id
+            role.name = postData.value.name
         })
         return {
-            category,
+            role,
             validationErrors,
             isLoading,
-            updateCategory,
+            updateRole,
             errors,
             submitForm,
         }

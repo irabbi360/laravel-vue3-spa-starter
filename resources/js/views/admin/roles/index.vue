@@ -109,7 +109,7 @@
                                                  :to="{ name: 'roles.edit', params: { id: post.id } }" class="badge bg-primary">Edit
                                     </router-link>
                                     <a href="#" v-if="can('role-delete')" @click.prevent="deleteRole(post.id)"
-                                       class="ml-2 badge bg-danger">Delete</a>
+                                       class="ms-2 badge bg-danger">Delete</a>
                                 </td>
                             </tr>
                             </tbody>
