@@ -104,6 +104,18 @@ export default [
                 meta: { breadCrumb: 'Permissions' }
             },
             {
+                name: 'permissions.create',
+                path: 'permissions/create',
+                component: () => import('../views/admin/permissions/create.vue'),
+                meta: { breadCrumb: 'Create Permission' }
+            },
+            {
+                name: 'permissions.edit',
+                path: 'permissions/edit/:id',
+                component: () => import('../views/admin/permissions/edit.vue'),
+                meta: { breadCrumb: 'Permission Edit' }
+            },
+            {
                 name: 'roles.index',
                 path: 'roles',
                 component: () => import('../views/admin/roles/index.vue'),
