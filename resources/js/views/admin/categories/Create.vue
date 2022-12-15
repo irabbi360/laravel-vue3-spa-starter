@@ -33,40 +33,27 @@
         </div>
     </div>
 </template>
-<script>
-import { onMounted, reactive } from "vue";
-import useCategories from "../../../composables/categories";
-import { useForm, useField, defineRule } from "vee-validate";
-import { required, min } from "../../../validation/rules"
-defineRule('required', required)
-defineRule('min', min);
-export default {
-    setup() {
-        // Define a validation schema
-        const schema = {
-            name: 'required|min:3'
-        }
-        // Create a form context with the validation schema
-        const { validate, errors } = useForm({ validationSchema: schema })
-        // Define actual fields for validation
-        const { value: name } = useField('name', null, { initialValue: '' });
-        const { storeCategory, validationErrors, isLoading } = useCategories()
-        const category = reactive({
-            name
-        })
-        function submitForm() {
-            validate().then(form => { if (form.valid) storeCategory(category) })
-        }
-        onMounted(() => {
-            
-        })
-        return {
-            category,
-            validationErrors,
-            isLoading,
-            errors,
-            submitForm
-        }
+<script setup>
+    import { reactive } from "vue";
+    import useCategories from "../../../composables/categories";
+    import { useForm, useField, defineRule } from "vee-validate";
+    import { required, min } from "../../../validation/rules"
+    defineRule('required', required)
+    defineRule('min', min);
+
+    // Define a validation schema
+    const schema = {
+        name: 'required|min:3'
     }
-}
+    // Create a form context with the validation schema
+    const { validate, errors } = useForm({ validationSchema: schema })
+    // Define actual fields for validation
+    const { value: name } = useField('name', null, { initialValue: '' });
+    const { storeCategory, validationErrors, isLoading } = useCategories()
+    const category = reactive({
+        name
+    })
+    function submitForm() {
+        validate().then(form => { if (form.valid) storeCategory(category) })
+    }
 </script>
