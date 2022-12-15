@@ -47,7 +47,16 @@ export default [
         // redirect: {
         //     name: 'admin.index'
         // },
-        beforeEnter: requireLogin,
+        beforeEnter: (to, from, next) => {
+            let isLogin = false;
+            isLogin = !!Cookies.get('loggedIn');
+
+            if (isLogin) {
+                next()
+            } else {
+                next('/login')
+            }
+        },
         children: [
             {
                 name: 'admin.index',

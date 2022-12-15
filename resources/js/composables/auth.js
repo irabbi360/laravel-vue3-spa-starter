@@ -1,6 +1,5 @@
 import { ref, reactive, inject } from 'vue'
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 import { AbilityBuilder, Ability } from '@casl/ability';
 import { ABILITY_TOKEN } from '@casl/vue';
 import Cookies from 'js-cookie'
@@ -14,7 +13,6 @@ export default function useAuth() {
     const processing = ref(false)
     const validationErrors = ref({})
     const router = useRouter()
-    const store = useStore()
     const swal = inject('$swal')
     const ability = inject(ABILITY_TOKEN)
 

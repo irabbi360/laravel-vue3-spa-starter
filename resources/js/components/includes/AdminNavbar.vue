@@ -21,7 +21,7 @@
                            aria-expanded="false">
                             Hi, {{ user.name }}
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm">
                             <li><router-link :to="{ name: 'profile.index' }" class="dropdown-item">Profile</router-link></li>
                             <li><a class="dropdown-item" href="#">Setting</a></li>
                             <li>
