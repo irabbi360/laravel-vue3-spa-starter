@@ -8,7 +8,7 @@ import PostsCreate from '../views/admin/posts/Create.vue'
 import PostsEdit from '../views/admin/posts/Edit.vue'
 
 
-function auth(to, from, next) {
+function requireLogin(to, from, next) {
     if (Cookies.get('loggedIn')) {
         next()
     }
@@ -47,11 +47,11 @@ export default [
         // redirect: {
         //     name: 'admin.index'
         // },
-        beforeEnter: auth,
+        beforeEnter: requireLogin,
         children: [
             {
                 name: 'admin.index',
-                path: '/admin',
+                path: '',
                 component: () => import('../views/admin/index.vue'),
                 meta: { breadCrumb: 'Admin' }
             },
