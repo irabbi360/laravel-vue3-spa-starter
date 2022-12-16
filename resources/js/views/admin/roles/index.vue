@@ -126,73 +126,57 @@
     </div>
 </template>
 
-<script>
-import {ref, onMounted, watch} from "vue";
-import useRoles from "../../../composables/roles";
-import {useAbility} from '@casl/vue';
+<script setup>
+    import {ref, onMounted, watch} from "vue";
+    import useRoles from "../../../composables/roles";
+    import {useAbility} from '@casl/vue';
 
-export default {
-    setup() {
-        const search_id = ref('')
-        const search_title = ref('')
-        const search_global = ref('')
-        const orderColumn = ref('created_at')
-        const orderDirection = ref('desc')
-        const {roles, getRoles, deleteRole} = useRoles()
-        const {can} = useAbility()
-        onMounted(() => {
-            getRoles()
-        })
-        const updateOrdering = (column) => {
-            orderColumn.value = column;
-            orderDirection.value = (orderDirection.value === 'asc') ? 'desc' : 'asc';
-            getRoles(
-                1,
-                search_id.value,
-                search_title.value,
-                search_global.value,
-                orderColumn.value,
-                orderDirection.value
-            );
-        }
-        watch(search_id, (current, previous) => {
-            getRoles(
-                1,
-                current,
-                search_title.value,
-                search_global.value
-            )
-        })
-        watch(search_title, (current, previous) => {
-            getRoles(
-                1,
-                search_id.value,
-                current,
-                search_global.value
-            )
-        })
-        watch(search_global, _.debounce((current, previous) => {
-            getRoles(
-                1,
-                search_id.value,
-                search_title.value,
-                current
-            )
-        }, 200))
-        return {
-            roles,
-            getRoles,
-            deleteRole,
-            search_id,
-            search_title,
-            search_global,
-            orderColumn,
-            orderDirection,
-            updateOrdering,
-            can
-        }
+    const search_id = ref('')
+    const search_title = ref('')
+    const search_global = ref('')
+    const orderColumn = ref('created_at')
+    const orderDirection = ref('desc')
+    const {roles, getRoles, deleteRole} = useRoles()
+    const {can} = useAbility()
+    onMounted(() => {
+        getRoles()
+    })
+    const updateOrdering = (column) => {
+        orderColumn.value = column;
+        orderDirection.value = (orderDirection.value === 'asc') ? 'desc' : 'asc';
+        getRoles(
+            1,
+            search_id.value,
+            search_title.value,
+            search_global.value,
+            orderColumn.value,
+            orderDirection.value
+        );
     }
-}
+    watch(search_id, (current, previous) => {
+        getRoles(
+            1,
+            current,
+            search_title.value,
+            search_global.value
+        )
+    })
+    watch(search_title, (current, previous) => {
+        getRoles(
+            1,
+            search_id.value,
+            current,
+            search_global.value
+        )
+    })
+    watch(search_global, _.debounce((current, previous) => {
+        getRoles(
+            1,
+            search_id.value,
+            search_title.value,
+            current
+        )
+    }, 200))
 
 </script>
 

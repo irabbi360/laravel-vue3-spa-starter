@@ -33,40 +33,27 @@
         </div>
     </div>
 </template>
-<script>
-import { onMounted, reactive } from "vue";
-import useRoles from "../../../composables/roles";
-import { useForm, useField, defineRule } from "vee-validate";
-import { required, min } from "@/validation/rules"
-defineRule('required', required)
-defineRule('min', min);
-export default {
-    setup() {
-        // Define a validation schema
-        const schema = {
-            name: 'required|min:3'
-        }
-        // Create a form context with the validation schema
-        const { validate, errors } = useForm({ validationSchema: schema });
-        // Define actual fields for validation
-        const { value: name } = useField('name', null, { initialValue: '' });
-        const { storeRole, validationErrors, isLoading } = useRoles();
-        const role = reactive({
-            name
-        })
-        function submitForm() {
-            validate().then(form => { if (form.valid) storeRole(role) })
-        }
-        onMounted(() => {
+<script setup>
+    import { onMounted, reactive } from "vue";
+    import useRoles from "@/composables/roles";
+    import { useForm, useField, defineRule } from "vee-validate";
+    import { required, min } from "@/validation/rules"
+    defineRule('required', required)
+    defineRule('min', min);
 
-        })
-        return {
-            role,
-            validationErrors,
-            isLoading,
-            errors,
-            submitForm
-        }
+    // Define a validation schema
+    const schema = {
+        name: 'required|min:3'
     }
-}
+    // Create a form context with the validation schema
+    const { validate, errors } = useForm({ validationSchema: schema });
+    // Define actual fields for validation
+    const { value: name } = useField('name', null, { initialValue: '' });
+    const { storeRole, validationErrors, isLoading } = useRoles();
+    const role = reactive({
+        name
+    })
+    function submitForm() {
+        validate().then(form => { if (form.valid) storeRole(role) })
+    }
 </script>
