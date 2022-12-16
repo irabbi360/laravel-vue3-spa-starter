@@ -162,7 +162,7 @@
     const orderDirection = ref('desc')
     const {posts, getPosts, deletePost} = usePosts()
     const {categoryList, getCategoryList} = useCategories()
-    const {can} = useAbility()
+    const {can} = useAbility();
     onMounted(() => {
         getPosts()
         getCategoryList()

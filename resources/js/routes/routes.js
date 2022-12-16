@@ -19,10 +19,14 @@ function requireLogin(to, from, next) {
 }
 
 function guest(to, from, next) {
-    if (store.state.auth.authenticated) {
+    let isLogin;
+    isLogin = !!store.state.auth.authenticated;
+
+    if (isLogin) {
         next('/')
+    } else {
+        next()
     }
-    next()
 }
 
 export default [

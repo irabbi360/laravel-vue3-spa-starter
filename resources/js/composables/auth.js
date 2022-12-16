@@ -31,7 +31,7 @@ export default function useAuth() {
         await axios.post('/login', loginForm)
             .then(async response => {
                 await store.dispatch('auth/getUser')
-                await loginUser(response)
+                await loginUser()
                 await router.push({ name: 'admin.index' })
             })
             .catch(error => {
@@ -42,21 +42,17 @@ export default function useAuth() {
             .finally(() => processing.value = false)
     }
 
-    const loginUser = async (response) => {
-        user.name = response.data.name
-        user.email = response.data.email
+    const loginUser = () => {
         user = store.state.auth.user
         // Cookies.set('loggedIn', true)
-        await getAbilities()
+        getAbilities()
     }
 
-    const getUser = () => {
-        axios.get('/api/user')
-            .then(response => {
-                loginUser(response)
-            }).catch((error) => {
-            // Cookies.remove('loggedIn')
-        })
+    const getUser = async () => {
+        if (store.getters['auth/authenticated']) {
+            await store.dispatch('auth/getUser')
+            await loginUser()
+        }
     }
 
     const logout = async () => {
@@ -85,7 +81,7 @@ export default function useAuth() {
     }
 
     const getAbilities = async() => {
-        axios.get('/api/abilities')
+        await axios.get('/api/abilities')
             .then(response => {
                 const permissions = response.data
                 const { can, rules } = new AbilityBuilder(Ability)
