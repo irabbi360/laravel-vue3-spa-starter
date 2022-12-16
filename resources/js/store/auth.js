@@ -1,7 +1,4 @@
-import axios from 'axios'
-import { useRouter } from "vue-router";
-
-const router = useRouter();
+import axios from 'axios';
 
 export default {
     namespaced: true,
@@ -30,7 +27,7 @@ export default {
             return axios.get('/api/user').then(({data}) => {
                 commit('SET_USER', data)
                 commit('SET_AUTHENTICATED', true)
-                router.push({name: 'dashboard'})
+                this.$router.push({name: 'dashboard'})
             }).catch(({res}) => {
                 commit('SET_USER', {})
                 commit('SET_AUTHENTICATED', false)
