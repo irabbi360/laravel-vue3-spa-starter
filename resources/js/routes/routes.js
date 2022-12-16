@@ -38,7 +38,7 @@ export default [
             },
             {
                 path: 'login',
-                name: 'login',
+                name: 'auth.login',
                 component: () => import('../views/login/Login.vue'),
                 beforeEnter: guest,
             },

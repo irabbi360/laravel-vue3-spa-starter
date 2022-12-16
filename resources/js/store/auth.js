@@ -27,7 +27,6 @@ export default {
             return axios.get('/api/user').then(({data}) => {
                 commit('SET_USER', data)
                 commit('SET_AUTHENTICATED', true)
-                this.$router.push({name: 'dashboard'})
             }).catch(({res}) => {
                 commit('SET_USER', {})
                 commit('SET_AUTHENTICATED', false)

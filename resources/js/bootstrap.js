@@ -18,9 +18,8 @@ window.axios.defaults.withCredentials = true
 window.axios.interceptors.response.use(
     response => response,
     error => {
-        if (error.response?.status === 401 || error.response?.status === 419) {
-            if (JSON.parse(localStorage.getItem('loggedIn'))) {
-                localStorage.setItem('loggedIn', false)
+        if (error.response?.status === 401 || error.response?.status === 403 || error.response?.status === 419) {
+            if (location.pathname !== '/login'){
                 location.assign('/login')
             }
         }

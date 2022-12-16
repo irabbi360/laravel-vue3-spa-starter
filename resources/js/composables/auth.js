@@ -2,7 +2,6 @@ import { ref, reactive, inject } from 'vue'
 import { useRouter } from "vue-router";
 import { AbilityBuilder, Ability } from '@casl/ability';
 import { ABILITY_TOKEN } from '@casl/vue';
-import Cookies from 'js-cookie'
 import store from '../store'
 
 let user = reactive({
@@ -70,14 +69,14 @@ export default function useAuth() {
                 user.name = ''
                 user.email = ''
                 store.dispatch('auth/logout')
-                router.push({ name: 'login' })
+                router.push({ name: 'auth.login' })
             })
             .catch(error => {
-                swal({
-                    icon: 'error',
-                    title: error.response.status,
-                    text: error.response.statusText
-                })
+                // swal({
+                //     icon: 'error',
+                //     title: error.response.status,
+                //     text: error.response.statusText
+                // })
             })
             .finally(() => {
                 processing.value = false
