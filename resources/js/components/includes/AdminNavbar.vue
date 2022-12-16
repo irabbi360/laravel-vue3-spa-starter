@@ -38,9 +38,13 @@
 </template>
 
 <script setup>
-    import useAuth from "@/composables/auth";
+import {computed} from "vue";
+import { useStore } from 'vuex';
+import useAuth from "@/composables/auth";
 
-    const {user, processing, logout} = useAuth();
+    const store = useStore();
+    const user = computed(() => store.state.auth.user)
+    const {processing, logout} = useAuth();
 </script>
 
 <style scoped>

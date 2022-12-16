@@ -14,9 +14,8 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-select/dist/vue-select.css';
 
 const app = createApp({
-    setup() {
-        const { getUser } = useAuth()
-        onMounted(getUser)
+    created() {
+        this.$store.dispatch('auth/getUser')
     }
 });
 

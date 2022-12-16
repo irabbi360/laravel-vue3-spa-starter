@@ -31,7 +31,23 @@ export default {
                 commit('SET_USER', data)
                 commit('SET_AUTHENTICATED', true)
                 router.push({name: 'dashboard'})
-            }).catch(({response: {data}}) => {
+            }).catch(({res}) => {
+                commit('SET_USER', {})
+                commit('SET_AUTHENTICATED', false)
+            })
+        },
+        getUser({commit}) {
+            return axios.get('/api/user').then(({data}) => {
+                if (data.success) {
+                    commit('SET_USER', data.data)
+                    commit('SET_AUTHENTICATED', true)
+                    // router.push({name: 'dashboard'})
+                }
+                // else {
+                //     commit('SET_USER', {})
+                //     commit('SET_AUTHENTICATED', false)
+                // }
+            }).catch(({res}) => {
                 commit('SET_USER', {})
                 commit('SET_AUTHENTICATED', false)
             })

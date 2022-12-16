@@ -3,8 +3,9 @@ import { useRouter } from "vue-router";
 import { AbilityBuilder, Ability } from '@casl/ability';
 import { ABILITY_TOKEN } from '@casl/vue';
 import Cookies from 'js-cookie'
+import store from '../store'
 
-const user = reactive({
+let user = reactive({
     name: '',
     email: '',
 })
@@ -28,9 +29,10 @@ export default function useAuth() {
         processing.value = true
         validationErrors.value = {}
 
-        axios.post('/login', loginForm)
+        await axios.post('/login', loginForm)
             .then(async response => {
-                loginUser(response)
+                await store.dispatch('auth/getUser')
+                await loginUser(response)
                 await router.push({ name: 'admin.index' })
             })
             .catch(error => {
@@ -44,10 +46,9 @@ export default function useAuth() {
     const loginUser = async (response) => {
         user.name = response.data.name
         user.email = response.data.email
-        // await store.dispatch('updateUser', response.data)
-        Cookies.set('loggedIn', true)
+        user = store.state.auth.user
+        // Cookies.set('loggedIn', true)
         await getAbilities()
-        // await router.push({ name: 'admin.index' })
     }
 
     const getUser = () => {
@@ -55,7 +56,7 @@ export default function useAuth() {
             .then(response => {
                 loginUser(response)
             }).catch((error) => {
-            Cookies.remove('loggedIn')
+            // Cookies.remove('loggedIn')
         })
     }
 
@@ -68,7 +69,7 @@ export default function useAuth() {
             .then(response => {
                 user.name = ''
                 user.email = ''
-                // store.dispatch('updateUser', null)
+                store.dispatch('auth/logout')
                 router.push({ name: 'login' })
             })
             .catch(error => {
@@ -80,7 +81,7 @@ export default function useAuth() {
             })
             .finally(() => {
                 processing.value = false
-                Cookies.remove('loggedIn')
+                // Cookies.remove('loggedIn')
             })
     }
 

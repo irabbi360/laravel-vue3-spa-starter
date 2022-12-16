@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-
+import store from "../store";
 import AuthenticatedLayout from "../layouts/Authenticated.vue";
 import GuestLayout from "../layouts/Guest.vue";
 
@@ -7,16 +7,19 @@ import PostsIndex from '../views/admin/posts/Index.vue'
 import PostsCreate from '../views/admin/posts/Create.vue'
 import PostsEdit from '../views/admin/posts/Edit.vue'
 
-
 function requireLogin(to, from, next) {
-    if (Cookies.get('loggedIn')) {
+    let isLogin = false;
+    isLogin = !!store.state.auth.authenticated;
+
+    if (isLogin) {
         next()
+    } else {
+        next('/login')
     }
-    next('/login')
 }
 
 function guest(to, from, next) {
-    if (Cookies.get('loggedIn')) {
+    if (store.state.auth.authenticated) {
         next('/')
     }
     next()
@@ -47,16 +50,7 @@ export default [
         // redirect: {
         //     name: 'admin.index'
         // },
-        beforeEnter: (to, from, next) => {
-            let isLogin = false;
-            isLogin = !!Cookies.get('loggedIn');
-
-            if (isLogin) {
-                next()
-            } else {
-                next('/login')
-            }
-        },
+        beforeEnter: requireLogin,
         children: [
             {
                 name: 'admin.index',

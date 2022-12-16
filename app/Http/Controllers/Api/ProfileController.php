@@ -24,4 +24,11 @@ class ProfileController extends Controller
         }
         return response()->json(['status' => 403, 'success' => false]);
     }
+
+    public function user(Request $request)
+    {
+        $user = $request->user();
+
+        return $this->successResponse($user, 'User found');
+    }
 }
