@@ -74,50 +74,39 @@
         </div>
     </div>
 </template>
-<script>
-import { onMounted, reactive } from "vue";
-import useCategories from "../../../composables/categories";
-import usePosts from "../../../composables/posts";
-import { useForm, useField, defineRule } from "vee-validate";
-import { required, min } from "../../../validation/rules"
-defineRule('required', required)
-defineRule('min', min);
-export default {
-    setup() {
-        // Define a validation schema
-        const schema = {
-            title: 'required|min:5',
-            content: 'required|min:50',
-            category_id: 'required'
-        }
-        // Create a form context with the validation schema
-        const { validate, errors } = useForm({ validationSchema: schema })
-        // Define actual fields for validation
-        const { value: title } = useField('title', null, { initialValue: '' });
-        const { value: content } = useField('content', null, { initialValue: '' });
-        const { value: category_id } = useField('category_id', null, { initialValue: '', label: 'category' });
-        const { categoryList, getCategoryList } = useCategories()
-        const { storePost, validationErrors, isLoading } = usePosts()
-        const post = reactive({
-            title,
-            content,
-            category_id,
-            thumbnail: ''
-        })
-        function submitForm() {
-            validate().then(form => { if (form.valid) storePost(post) })
-        }
-        onMounted(() => {
-            getCategoryList()
-        })
-        return {
-            categoryList,
-            post,
-            validationErrors,
-            isLoading,
-            errors,
-            submitForm
-        }
+<script setup>
+    import { onMounted, reactive } from "vue";
+    import useCategories from "@/composables/categories";
+    import usePosts from "@/composables/posts";
+    import { useForm, useField, defineRule } from "vee-validate";
+    import { required, min } from "../../../validation/rules"
+    defineRule('required', required)
+    defineRule('min', min);
+
+    // Define a validation schema
+    const schema = {
+        title: 'required|min:5',
+        content: 'required|min:50',
+        category_id: 'required'
     }
-}
+    // Create a form context with the validation schema
+    const { validate, errors } = useForm({ validationSchema: schema })
+    // Define actual fields for validation
+    const { value: title } = useField('title', null, { initialValue: '' });
+    const { value: content } = useField('content', null, { initialValue: '' });
+    const { value: category_id } = useField('category_id', null, { initialValue: '', label: 'category' });
+    const { categoryList, getCategoryList } = useCategories()
+    const { storePost, validationErrors, isLoading } = usePosts()
+    const post = reactive({
+        title,
+        content,
+        category_id,
+        thumbnail: ''
+    })
+    function submitForm() {
+        validate().then(form => { if (form.valid) storePost(post) })
+    }
+    onMounted(() => {
+        getCategoryList()
+    })
 </script>

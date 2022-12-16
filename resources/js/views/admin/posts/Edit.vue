@@ -74,61 +74,49 @@
         </div>
     </div>
 </template>
-<script>
-import { onMounted, reactive, watchEffect } from "vue";
-import { useRoute } from "vue-router";
-import useCategories from "../../../composables/categories";
-import usePosts from "../../../composables/posts";
-import { useForm, useField, defineRule } from "vee-validate";
-import { required, min } from "../../../validation/rules"
-defineRule('required', required)
-defineRule('min', min);
-export default {
-    setup() {
-        // Define a validation schema
-        const schema = {
-            title: 'required|min:5',
-            content: 'required|min:50',
-            category_id: 'required'
-        }
-        // Create a form context with the validation schema
-        const { validate, errors, resetForm } = useForm({ validationSchema: schema })
-        // Define actual fields for validation
-        const { value: title } = useField('title', null, { initialValue: '' });
-        const { value: content } = useField('content', null, { initialValue: '' });
-        const { value: category_id } = useField('category_id', null, { initialValue: '', label: 'category' });
-        const { categoryList, getCategoryList } = useCategories()
-        const { post: postData, getPost, updatePost, validationErrors, isLoading } = usePosts()
-        const post = reactive({
-            title,
-            content,
-            category_id,
-            thumbnail: ''
-        })
-        const route = useRoute()
-        function submitForm() {
-            validate().then(form => { if (form.valid) updatePost(post) })
-        }
-        onMounted(() => {
-            getPost(route.params.id)
-            getCategoryList()
-        })
-        // https://vuejs.org/api/reactivity-core.html#watcheffect
-        watchEffect(() => {
-            post.id = postData.value.id
-            post.title = postData.value.title
-            post.content = postData.value.content
-            post.category_id = postData.value.category_id
-        })
-        return {
-            categoryList,
-            post,
-            validationErrors,
-            isLoading,
-            updatePost,
-            errors,
-            submitForm,
-        }
+<script setup>
+    import { onMounted, reactive, watchEffect } from "vue";
+    import { useRoute } from "vue-router";
+    import useCategories from "@/composables/categories";
+    import usePosts from "@/composables/posts";
+    import { useForm, useField, defineRule } from "vee-validate";
+    import { required, min } from "../../../validation/rules"
+    defineRule('required', required)
+    defineRule('min', min);
+
+    // Define a validation schema
+    const schema = {
+        title: 'required|min:5',
+        content: 'required|min:50',
+        category_id: 'required'
     }
-}
+    // Create a form context with the validation schema
+    const { validate, errors, resetForm } = useForm({ validationSchema: schema })
+    // Define actual fields for validation
+    const { value: title } = useField('title', null, { initialValue: '' });
+    const { value: content } = useField('content', null, { initialValue: '' });
+    const { value: category_id } = useField('category_id', null, { initialValue: '', label: 'category' });
+    const { categoryList, getCategoryList } = useCategories()
+    const { post: postData, getPost, updatePost, validationErrors, isLoading } = usePosts()
+    const post = reactive({
+        title,
+        content,
+        category_id,
+        thumbnail: ''
+    })
+    const route = useRoute()
+    function submitForm() {
+        validate().then(form => { if (form.valid) updatePost(post) })
+    }
+    onMounted(() => {
+        getPost(route.params.id)
+        getCategoryList()
+    })
+    // https://vuejs.org/api/reactivity-core.html#watcheffect
+    watchEffect(() => {
+        post.id = postData.value.id
+        post.title = postData.value.title
+        post.content = postData.value.content
+        post.category_id = postData.value.category_id
+    })
 </script>
