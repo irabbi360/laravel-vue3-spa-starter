@@ -37,14 +37,10 @@
     </nav>
 </template>
 
-<script>
-import useAuth from "../../composables/auth";
-export default {
-    setup() {
-        const {user, processing, logout} = useAuth()
-        return {user, processing, logout}
-    }
-}
+<script setup>
+    import useAuth from "@/composables/auth";
+
+    const {user, processing, logout} = useAuth();
 </script>
 
 <style scoped>

@@ -41,50 +41,38 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { onMounted, reactive, watchEffect } from "vue";
 import { useForm, useField, defineRule } from "vee-validate";
 import { required, min } from "../../../validation/rules"
-import useProfile from "../../../composables/profile";
+import useProfile from "@/composables/profile";
 defineRule('required', required)
 // defineRule('email', email)
 defineRule('min', min);
-export default {
-    setup() {
-        const schema = {
-            name: 'required|min:3',
-            email: 'required',
-        }
-        // Create a form context with the validation schema
-        const { validate, errors } = useForm({ validationSchema: schema })
-        // Define actual fields for validation
-        const { value: name } = useField('name', null, { initialValue: '' });
-        const { value: email } = useField('email', null, { initialValue: '' });
-        const { profile: profileData, getProfile, updateProfile, validationErrors, isLoading } = useProfile()
-        const profile = reactive({
-            name,
-            email
-        })
-        function submitForm() {
-            validate().then(form => { if (form.valid) updateProfile(profile) })
-        }
-        onMounted(() => {
-            getProfile()
-        })
 
-        watchEffect(() => {
-            profile.name = profileData.value.name
-            profile.email = profileData.value.email
-        })
-
-        return {
-            profile,
-            validationErrors,
-            isLoading,
-            updateProfile,
-            errors,
-            submitForm,
-        }
+    const schema = {
+        name: 'required|min:3',
+        email: 'required',
     }
-}
+    // Create a form context with the validation schema
+    const { validate, errors } = useForm({ validationSchema: schema })
+    // Define actual fields for validation
+    const { value: name } = useField('name', null, { initialValue: '' });
+    const { value: email } = useField('email', null, { initialValue: '' });
+    const { profile: profileData, getProfile, updateProfile, validationErrors, isLoading } = useProfile()
+    const profile = reactive({
+        name,
+        email
+    })
+    function submitForm() {
+        validate().then(form => { if (form.valid) updateProfile(profile) })
+    }
+    onMounted(() => {
+        getProfile()
+    })
+
+    watchEffect(() => {
+        profile.name = profileData.value.name
+        profile.email = profileData.value.email
+    })
 </script>

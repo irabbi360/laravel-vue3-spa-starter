@@ -42,20 +42,8 @@
     </nav>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-import useAuth from "../composables/auth";
+<script setup>
+    import useAuth from "@/composables/auth";
 
-export default {
-    name: 'Nav',
-    setup() {
-        const { user, processing, logout } = useAuth()
-        return { user, processing, logout }
-    },
-    computed: {
-        currentPageTitle() {
-            return this.$route.meta.title;
-        }
-    }
-}
+    const { user, processing, logout } = useAuth();
 </script>

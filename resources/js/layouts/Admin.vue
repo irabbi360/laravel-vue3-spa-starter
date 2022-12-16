@@ -50,19 +50,11 @@
     </div>
 </template>
 
-<script>
-import useAuth from "../composables/auth";
+<script setup>
+    import { computed } from "vue";
+    import useAuth from "@/composables/auth";
 
-export default {
-    name: 'AdminLayout',
-    setup() {
-        const { user, processing, logout } = useAuth()
-        return { user, processing, logout }
-    },
-    computed: {
-        currentPageTitle() {
-            return this.$route.meta.title;
-        }
-    }
-}
+    const { user, processing, logout } = useAuth();
+    const currentPageTitle = computed(() => { return this.$route.meta.title})
+
 </script>
