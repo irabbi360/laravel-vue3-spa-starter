@@ -30,10 +30,11 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $token = $request->session()->regenerate();
+//        $token = $request->session()->regenerate();
+        $token = $request->user()->createToken($request->userAgent())->plainTextToken;
 
         if ($request->wantsJson()) {
-            return response()->json($request->user());
+            return response()->json(['user' => $request->user(), 'token' => $token]);
         }
 
         return redirect()->intended(RouteServiceProvider::HOME);
