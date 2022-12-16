@@ -1,5 +1,6 @@
 import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
+import store from "../store";
 
 export default function useProfile() {
     const profile = ref({
@@ -13,10 +14,11 @@ export default function useProfile() {
     const swal = inject('$swal')
 
     const getProfile = async () => {
-        axios.get('/api/user')
-            .then(response => {
-                profile.value = response.data;
-            })
+        profile.value = store.getters["auth/user"]
+        // axios.get('/api/user')
+        //     .then(({data}) => {
+        //         profile.value = data.data;
+        //     })
     }
 
     const updateProfile = async (profile) => {
@@ -26,12 +28,15 @@ export default function useProfile() {
         validationErrors.value = {}
 
         axios.put('/api/user', profile)
-            .then(response => {
-                router.push({name: 'profile.index'})
-                swal({
-                    icon: 'success',
-                    title: 'Profile updated successfully'
-                })
+            .then(({data}) => {
+                if (data.success) {
+                    store.commit('auth/SET_USER', data.data)
+                    // router.push({name: 'profile.index'})
+                    swal({
+                        icon: 'success',
+                        title: 'Profile updated successfully'
+                    })
+                }
             })
             .catch(error => {
                 if (error.response?.data) {
