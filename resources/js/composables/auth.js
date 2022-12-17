@@ -22,6 +22,13 @@ export default function useAuth() {
         remember: false
     })
 
+    const registerForm = reactive({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+    })
+
     const submitLogin = async () => {
         if (processing.value) return
 
@@ -32,7 +39,35 @@ export default function useAuth() {
             .then(async response => {
                 await store.dispatch('auth/getUser')
                 await loginUser()
+                swal({
+                    icon: 'success',
+                    title: 'Login successfully'
+                })
                 await router.push({ name: 'admin.index' })
+            })
+            .catch(error => {
+                if (error.response?.data) {
+                    validationErrors.value = error.response.data.errors
+                }
+            })
+            .finally(() => processing.value = false)
+    }
+
+    const submitRegister = async () => {
+        if (processing.value) return
+
+        processing.value = true
+        validationErrors.value = {}
+
+        await axios.post('/register', registerForm)
+            .then(async response => {
+                // await store.dispatch('auth/getUser')
+                // await loginUser()
+                swal({
+                    icon: 'success',
+                    title: 'Registration successfully'
+                })
+                await router.push({ name: 'auth.login' })
             })
             .catch(error => {
                 if (error.response?.data) {
@@ -94,9 +129,11 @@ export default function useAuth() {
 
     return {
         loginForm,
+        registerForm,
         validationErrors,
         processing,
         submitLogin,
+        submitRegister,
         user,
         getUser,
         logout,

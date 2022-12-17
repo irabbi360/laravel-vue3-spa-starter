@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('login', [
-    \App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store']);
-Route::post('logout', [
-    \App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy']);
+Route::post('login', [AuthenticatedSessionController::class, 'login']);
+Route::post('register', [AuthenticatedSessionController::class, 'register']);
+Route::post('logout', [AuthenticatedSessionController::class, 'logout']);
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

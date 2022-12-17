@@ -46,6 +46,12 @@ export default [
                 component: () => import('../views/login/Login.vue'),
                 beforeEnter: guest,
             },
+            {
+                path: 'register',
+                name: 'auth.register',
+                component: () => import('../views/register/index.vue'),
+                beforeEnter: guest,
+            },
         ]
     },
     {
