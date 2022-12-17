@@ -1,9 +1,9 @@
 import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 
-export default function useCategories() {
-    const categories = ref([])
-    const category = ref({
+export default function useUsers() {
+    const users = ref([])
+    const user = ref({
         name: ''
     })
 
@@ -12,7 +12,7 @@ export default function useCategories() {
     const isLoading = ref(false)
     const swal = inject('$swal')
 
-    const getCategories = async (
+    const getUsers = async (
         page = 1,
         search_id = '',
         search_title = '',
@@ -20,36 +20,43 @@ export default function useCategories() {
         order_column = 'created_at',
         order_direction = 'desc'
     ) => {
-        axios.get('/api/categories?page=' + page +
+        axios.get('/api/users?page=' + page +
             '&search_id=' + search_id +
             '&search_title=' + search_title +
             '&search_global=' + search_global +
             '&order_column=' + order_column +
             '&order_direction=' + order_direction)
             .then(response => {
-                categories.value = response.data;
+                users.value = response.data;
             })
     }
 
-    const getCategory = async (id) => {
-        axios.get('/api/categories/' + id)
+    const getUser = async (id) => {
+        axios.get('/api/users/' + id)
             .then(response => {
-                category.value = response.data.data;
+                user.value = response.data.data;
             })
     }
 
-    const storeCategory = async (category) => {
+    const storeUser = async (user) => {
         if (isLoading.value) return;
 
         isLoading.value = true
         validationErrors.value = {}
 
-        axios.post('/api/categories', category)
+        let serializedPost = new FormData()
+        for (let item in user) {
+            if (user.hasOwnProperty(item)) {
+                serializedPost.append(item, user[item])
+            }
+        }
+
+        axios.post('/api/users', serializedPost)
             .then(response => {
-                router.push({name: 'categories.index'})
+                router.push({name: 'users.index'})
                 swal({
                     icon: 'success',
-                    title: 'Category saved successfully'
+                    title: 'User saved successfully'
                 })
             })
             .catch(error => {
@@ -60,18 +67,18 @@ export default function useCategories() {
             .finally(() => isLoading.value = false)
     }
 
-    const updateCategory = async (category) => {
+    const updateUser = async (user) => {
         if (isLoading.value) return;
 
         isLoading.value = true
         validationErrors.value = {}
 
-        axios.put('/api/categories/' + category.id, category)
+        axios.put('/api/users/' + user.id, user)
             .then(response => {
-                router.push({name: 'categories.index'})
+                router.push({name: 'users.index'})
                 swal({
                     icon: 'success',
-                    title: 'Category updated successfully'
+                    title: 'User updated successfully'
                 })
             })
             .catch(error => {
@@ -82,7 +89,7 @@ export default function useCategories() {
             .finally(() => isLoading.value = false)
     }
 
-    const deleteCategory = async (id) => {
+    const deleteUser = async (id) => {
         swal({
             title: 'Are you sure?',
             text: 'You won\'t be able to revert this action!',
@@ -96,13 +103,13 @@ export default function useCategories() {
         })
             .then(result => {
                 if (result.isConfirmed) {
-                    axios.delete('/api/categories/' + id)
+                    axios.delete('/api/users/' + id)
                         .then(response => {
-                            getCategories()
-                            router.push({name: 'categories.index'})
+                            getUsers()
+                            router.push({name: 'users.index'})
                             swal({
                                 icon: 'success',
-                                title: 'Category deleted successfully'
+                                title: 'User deleted successfully'
                             })
                         })
                         .catch(error => {
@@ -116,13 +123,13 @@ export default function useCategories() {
     }
 
     return {
-        categories,
-        category,
-        getCategories,
-        getCategory,
-        storeCategory,
-        updateCategory,
-        deleteCategory,
+        users,
+        user,
+        getUsers,
+        getUser,
+        storeUser,
+        updateUser,
+        deleteUser,
         validationErrors,
         isLoading
     }
