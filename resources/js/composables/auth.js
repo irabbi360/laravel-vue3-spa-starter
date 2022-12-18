@@ -41,7 +41,9 @@ export default function useAuth() {
                 await loginUser()
                 swal({
                     icon: 'success',
-                    title: 'Login successfully'
+                    title: 'Login successfully',
+                    showConfirmButton: false,
+                    timer: 1500
                 })
                 await router.push({ name: 'admin.index' })
             })
@@ -65,7 +67,9 @@ export default function useAuth() {
                 // await loginUser()
                 swal({
                     icon: 'success',
-                    title: 'Registration successfully'
+                    title: 'Registration successfully',
+                    showConfirmButton: false,
+                    timer: 1500
                 })
                 await router.push({ name: 'auth.login' })
             })
