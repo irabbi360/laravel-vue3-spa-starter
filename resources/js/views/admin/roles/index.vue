@@ -4,7 +4,7 @@
             <div class="card border-0">
                 <div class="card-header bg-transparent">
                     <h5 class="float-start">Roles</h5>
-                    <router-link :to="{ name: 'roles.create' }" class="btn btn-primary btn-sm float-end">
+                    <router-link v-if="can('role-list')" :to="{ name: 'roles.create' }" class="btn btn-primary btn-sm float-end">
                         Create Role
                     </router-link>
                 </div>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="card-footer">
                     <Pagination :data="roles" :limit="3"
-                                @pagination-change-page="page => getRoles(page, search_category, search_id, search_title, search_content, search_global, orderColumn, orderDirection)"
+                                @pagination-change-page="page => getRoles(page, search_id, search_title, search_global, orderColumn, orderDirection)"
                                 class="mt-4"/>
                 </div>
             </div>

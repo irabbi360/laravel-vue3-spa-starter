@@ -4,7 +4,7 @@
             <div class="card border-0">
                 <div class="card-header bg-transparent">
                     <h5 class="float-start">Posts</h5>
-                    <router-link :to="{ name: 'posts.create' }" class="btn btn-primary btn-sm float-end">
+                    <router-link v-if="can('post-create')" :to="{ name: 'posts.create' }" class="btn btn-primary btn-sm float-end">
                         Create Post
                     </router-link>
                 </div>

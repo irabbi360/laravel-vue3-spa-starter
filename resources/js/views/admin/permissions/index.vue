@@ -4,7 +4,7 @@
             <div class="card border-0">
                 <div class="card-header bg-transparent">
                     <h5 class="float-start">Permissions</h5>
-                    <router-link :to="{ name: 'permissions.create' }" class="btn btn-primary btn-sm float-end">
+                    <router-link v-if="can('permission-create')" :to="{ name: 'permissions.create' }" class="btn btn-primary btn-sm float-end">
                         Create Permission
                     </router-link>
                 </div>

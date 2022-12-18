@@ -4,9 +4,9 @@
             <div class="card border-0">
                 <div class="card-header bg-transparent">
                     <h5 class="float-start">Users</h5>
-<!--                    <router-link :to="{ name: 'users.create' }" class="btn btn-primary btn-sm float-end">
+                    <router-link v-if="can('user-list')" :to="{ name: 'users.create' }" class="btn btn-primary btn-sm float-end">
                         Create Category
-                    </router-link>-->
+                    </router-link>
                 </div>
                 <div class="card-body shadow-sm">
                     <div class="mb-4">
