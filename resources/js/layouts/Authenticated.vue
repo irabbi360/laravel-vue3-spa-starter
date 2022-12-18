@@ -53,7 +53,7 @@ const crumbs = computed(() => {
 });
 
 function selected(crumb) {
-    console.log(crumb);
+    // console.log(crumb);
 }
 
 </script>

@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 
 export default function useCategories() {
     const categories = ref([])
+    const categoryList = ref([])
     const category = ref({
         name: ''
     })
@@ -115,10 +116,19 @@ export default function useCategories() {
             })
     }
 
+    const getCategoryList = async () => {
+        axios.get('/api/category-list')
+            .then(response => {
+                categoryList.value = response.data.data;
+            })
+    }
+
     return {
+        categoryList,
         categories,
         category,
         getCategories,
+        getCategoryList,
         getCategory,
         storeCategory,
         updateCategory,
