@@ -86,6 +86,13 @@ class PostController extends Controller
         return $posts;
     }
 
+    public function getCategoryByPosts($id)
+    {
+        $posts = Post::latest()->where('category_id', $id)->paginate();
+
+        return $posts;
+    }
+
     public function getPost($id)
     {
         $post = Post::with('category')->findOrFail($id);

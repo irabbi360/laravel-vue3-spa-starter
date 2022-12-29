@@ -49,7 +49,7 @@
                 <h4 class="fst-italic">Categories</h4>
                 <ol class="list-unstyled">
                     <li v-for="category in categories" :key="category.id">
-                        <a href="#">{{ category.name }}</a>
+                        <router-link :to="{ name: 'category-posts.index', params: category.id }">{{ category.name }}</router-link>
                     </li>
                 </ol>
                 </div>

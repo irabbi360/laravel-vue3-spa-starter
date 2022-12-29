@@ -51,6 +51,11 @@ export default [
                 component: () => import('../views/posts/details.vue'),
             },
             {
+                path: 'category/:id',
+                name: 'category-posts.index',
+                component: () => import('../views/category/posts.vue'),
+            },
+            {
                 path: 'login',
                 name: 'auth.login',
                 component: () => import('../views/login/Login.vue'),
