@@ -95,7 +95,7 @@ class PostController extends Controller
 
     public function getPost($id)
     {
-        $post = Post::with('category')->findOrFail($id);
+        $post = Post::with('category', 'user')->findOrFail($id);
 
         return $post;
     }
