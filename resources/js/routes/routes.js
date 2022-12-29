@@ -41,6 +41,16 @@ export default [
                 component: () => import('../views/home/index.vue'),
             },
             {
+                path: 'posts',
+                name: 'public-posts.index',
+                component: () => import('../views/posts/index.vue'),
+            },
+            {
+                path: 'posts/:id',
+                name: 'public-posts.details',
+                component: () => import('../views/posts/details.vue'),
+            },
+            {
                 path: 'login',
                 name: 'auth.login',
                 component: () => import('../views/login/Login.vue'),

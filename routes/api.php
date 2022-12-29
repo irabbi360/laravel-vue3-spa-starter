@@ -30,3 +30,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
             ->toArray();
     });
 });
+
+Route::get('category-list', [CategoryController::class, 'getList']);
+Route::get('get-posts', [PostController::class, 'getPosts']);
+Route::get('get-post/{id}', [PostController::class, 'getPost']);

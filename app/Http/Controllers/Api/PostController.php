@@ -78,4 +78,18 @@ class PostController extends Controller
 
         return response()->noContent();
     }
+
+    public function getPosts()
+    {
+        $posts = Post::latest()->paginate();
+
+        return $posts;
+    }
+
+    public function getPost($id)
+    {
+        $post = Post::with('category')->findOrFail($id);
+
+        return $post;
+    }
 }

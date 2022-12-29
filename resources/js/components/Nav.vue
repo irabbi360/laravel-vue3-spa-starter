@@ -11,7 +11,7 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <router-link :to="{ name : 'public-posts.index'}" class="nav-link">Posts</router-link>
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mt-lg-0 ms-auto">
