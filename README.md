@@ -1,4 +1,4 @@
-## Laravel Vue.js 3 SPA Stater Boilerplate
+## Laravel Vue.js 3 SPA Starter Boilerplate
 
 A simple and clean boilerplate to start a new SPA project with authentication, user, roles, permissions management and more features. This boilerplate uses the following tools:
 
