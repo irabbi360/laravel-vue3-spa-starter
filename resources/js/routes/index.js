@@ -1,18 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import routes from './routes.js'
 
-// function views (path) {
-//     return () => import(/* webpackChunkName: '' */ `../views/${path}`).then(m => m.default || m)
-// }
-
-/*function auth(to, from, next) {
-    if (JSON.parse(localStorage.getItem('loggedIn'))) {
-        next()
-    }
-
-    next('/login')
-}*/
-
 const router = createRouter({
     history: createWebHistory(),
     routes
