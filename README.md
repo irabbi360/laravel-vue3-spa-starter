@@ -13,11 +13,14 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## Features
 
-The following Sanctum and Fortify features are implemented in this Vue SPA:
+The following Sanctum features are implemented in this Vue SPA:
 
+- ✅ Laravel 9
+- ✅ Vue + VueRouter + Vuex
 - ✅ Login
 - ✅ Password Reset
 - ✅ Registration
+- ✅ Admin Panel
 - ✅ Profile Management
 - ✅ User Management
 - ✅ Roles Management
@@ -25,11 +28,62 @@ The following Sanctum and Fortify features are implemented in this Vue SPA:
 - ✅ Password Change
 - ✅ E-Mail Verification
 - ✅ Posts Management
+- ✅ Frontend Blog
+- ✅ Bootstrap 5
 
+## How To Use
+#### Clone the repository
+
+```bash
+git clone https://github.com/irabbi360/laravel-vue3-spa-starter.git
+```
+
+#### Copy .env.example file to .env and edit credentials also set app url
+
+#### Install Via Composer
+
+```bash
+composer install
+```
+
+#### Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+#### Migrate Database
+
+```bash
+php artisan migrate
+```
+
+#### Run Seeder
+
+```bash
+php artisan db:seed
+```
+
+#### Install Node Dependencies
+
+```bash
+npm install or yarn install
+
+npm run dev or yarn dev
+```
+#### Production
+
+```bash
+npm run build or yarn build
+```
+
+## Email Verification
+
+To enable email verification make sure that your `App\User` model implements the `Illuminate\Contracts\Auth\MustVerifyEmail` contract.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Thank you for considering contributing to the project! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
 ## Code of Conduct
 
