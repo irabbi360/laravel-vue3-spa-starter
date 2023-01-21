@@ -11,7 +11,7 @@
                         <router-link to="/" class="nav-link active" aria-current="page">Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name : 'public-posts.index'}" class="nav-link">Posts</router-link>
+                        <router-link :to="{ name : 'public-posts.index'}" class="nav-link">Blog</router-link>
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 mt-lg-0 ms-auto">
