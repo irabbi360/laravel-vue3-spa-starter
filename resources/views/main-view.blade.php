@@ -1,3 +1,10 @@
+@php
+    $config = [
+        'appName' => config('app.name'),
+        'locale' => $locale = app()->getLocale(),
+        'locales' => config('app.locales'),
+    ];
+@endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -12,7 +19,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
+    <script>
+        window.config = @json($config);
+    </script>
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>

@@ -13,6 +13,7 @@
                     <li class="nav-item">
                         <router-link :to="{ name : 'public-posts.index'}" class="nav-link">Blog</router-link>
                     </li>
+                    <LocaleSwitcher />
                 </ul>
                 <ul class="navbar-nav mt-2 mt-lg-0 ms-auto">
                     <template v-if="!user?.name">
@@ -45,7 +46,9 @@
 <script setup>
 import { useStore} from "vuex";
 import useAuth from "@/composables/auth";
+import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
 import {computed} from "vue";
+
     const store = useStore();
     const user = computed(() => store.getters["auth/user"])
     const { processing, logout } = useAuth();
