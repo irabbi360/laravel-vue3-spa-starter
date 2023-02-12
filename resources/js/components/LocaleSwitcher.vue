@@ -28,7 +28,6 @@ const locale = computed(() => store.getters["lang/locale"])
 const locales = computed(() => store.getters["lang/locales"])
 
 function setLocale(locale) {
-    console.log(locale, 'locake')
     if (i18n.locale !== locale) {
         loadMessages(locale)
         store.dispatch('lang/setLocale', { locale })

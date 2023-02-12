@@ -13,6 +13,7 @@ return [
     |
     */
 
+    "welcome_starter_title" => "Welcome to Laravel 9 Vue.js 3 Starter",
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
