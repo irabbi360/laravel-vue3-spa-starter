@@ -12,6 +12,7 @@ export default defineConfig({
             // reactivityTransform: true,
             refresh: true,
         }),
+
         vue({
             template: {
                 transformAssetUrls: {
@@ -23,7 +24,12 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            vue: 'vue/dist/vue.esm-bundler.js',
+            vue: 'vue/dist/vue.esm-bundler.js'
         },
     },
+    optimization: {
+        providedExports: false,
+        sideEffects: false,
+        usedExports: false
+    }
 });

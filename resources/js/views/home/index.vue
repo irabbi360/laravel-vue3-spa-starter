@@ -8,16 +8,7 @@
     </div>
 </template>
 
-<script>
-
-const Footer  = () => import('../../components/Footer.vue');
-
-export default {
-    name: "HomeIndex",
-    components: {
-        Footer,
-    },
-}
+<script setup>
 </script>
 
 <style scoped>

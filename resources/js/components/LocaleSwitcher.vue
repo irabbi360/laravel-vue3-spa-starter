@@ -22,7 +22,7 @@ import { useI18n } from 'vue-i18n'
 import { loadMessages } from '@/plugins/i18n'
 
 const store = useStore();
-const i18n = useI18n();
+const i18n = useI18n({useScope: "global"});
 
 const locale = computed(() => store.getters["lang/locale"])
 const locales = computed(() => store.getters["lang/locales"])
