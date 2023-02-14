@@ -7,7 +7,7 @@
                         <div class="">
                             <!-- Email -->
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
+                                <label for="email" class="form-label">{{ $t('email') }}</label>
                                 <input v-model="loginForm.email" id="email" type="email" class="form-control" required autofocus autocomplete="username">
                                 <!-- Validation Errors -->
                                 <div class="text-danger mt-1">
@@ -19,7 +19,7 @@
                             <!-- Password -->
                             <div class="mb-4">
                                 <label for="password" class="form-label">
-                                    Password
+                                    {{ $t('password') }}
                                 </label>
                                 <input v-model="loginForm.password" id="password" type="password" class="form-control" required autocomplete="current-password">
                                 <!-- Validation Errors -->
@@ -33,14 +33,14 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" v-model="loginForm.remember" id="flexCheckIndeterminate">
                                 <label class="form-check-label" for="flexCheckIndeterminate">
-                                    Remember me
+                                    {{ $t('remember_me') }}
                                 </label>
                             </div>
 
                             <!-- Buttons -->
                             <div class="flex items-center justify-end mt-4">
                                 <button class="btn btn-primary" :class="{ 'opacity-25': processing }" :disabled="processing">
-                                    Log in
+                                    {{ $t('login') }}
                                 </button>
                             </div>
                         </div>
