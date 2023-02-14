@@ -46,8 +46,8 @@
 <script setup>
 import { useStore} from "vuex";
 import useAuth from "@/composables/auth";
-import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
 import {computed} from "vue";
+import LocaleSwitcher from "../components/LocaleSwitcher.vue";
 
     const store = useStore();
     const user = computed(() => store.getters["auth/user"])
