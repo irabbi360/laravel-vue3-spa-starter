@@ -22,9 +22,7 @@ import AdminNavbar from "../components/includes/AdminNavbar.vue";
 import AdminSidebar from "../components/includes/AdminSidebar.vue";
 import Breadcrumb from "../components/includes/Breadcrumb.vue";
 
-const route = useRoute()
-
-// const crumbs = ['Home', 'Category', 'Sub category'];
+const route = useRoute();
 
 const crumbs = computed(() => {
     let pathArray = route.path.split('/')
