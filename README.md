@@ -8,6 +8,7 @@ A simple and clean boilerplate to start a new SPA project with authentication, u
 - [Vue Router](https://router.vuejs.org/)
 - [Vuex](https://vuex.vuejs.org/)
 - [Bootstrap](https://getbootstrap.com/)
+- [Vue I18n](https://vue-i18n.intlify.dev)
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
@@ -17,6 +18,7 @@ The following Sanctum features are implemented in this Vue SPA:
 
 - ✅ Laravel 9
 - ✅ Vue + VueRouter + Vuex
+- ✅ Vue I18n Multi Language
 - ✅ Login
 - ✅ Password Reset
 - ✅ Registration
