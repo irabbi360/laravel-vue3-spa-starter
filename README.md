@@ -2,8 +2,8 @@
 
 A simple and clean boilerplate to start a new SPA project with authentication, user, roles, permissions management and more features. This boilerplate uses the following tools:
 
-- [Laravel 9.x](https://github.com/laravel/laravel)
-- [Laravel Sanctum](https://laravel.com/docs/9.x/sanctum)
+- [Laravel 10.x](https://github.com/laravel/laravel)
+- [Laravel Sanctum](https://laravel.com/docs/10.x/sanctum)
 - [Vue 3](https://github.com/vuejs/vue)
 - [Vue Router](https://router.vuejs.org/)
 - [Vuex](https://vuex.vuejs.org/)
@@ -16,8 +16,9 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 The following Sanctum features are implemented in this Vue SPA:
 
-- ✅ Laravel 9
-- ✅ Vue + VueRouter + Vuex
+- ✅ Laravel 10
+- ✅ Vue 3
+- ✅ VueRouter + Vuex
 - ✅ Vue I18n Multi Language
 - ✅ Login
 - ✅ Password Reset
