@@ -68,6 +68,18 @@ export default [
                 component: () => import('../views/register/index.vue'),
                 beforeEnter: guest,
             },
+            {
+                path: 'forgot-password',
+                name: 'auth.forgot-password',
+                component: () => import('../views/auth/passwords/Email.vue'),
+                beforeEnter: guest,
+            },
+            {
+                path: 'reset-password/:token',
+                name: 'auth.reset-password',
+                component: () => import('../views/auth/passwords/Reset.vue'),
+                beforeEnter: guest,
+            },
         ]
     },
     {

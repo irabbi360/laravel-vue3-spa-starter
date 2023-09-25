@@ -22,6 +22,17 @@ export default function useAuth() {
         remember: false
     })
 
+    const forgotForm = reactive({
+        email: '',
+    })
+
+    const resetForm = reactive({
+        email: '',
+        token: '',
+        password: '',
+        password_confirmation: ''
+    })
+
     const registerForm = reactive({
         name: '',
         email: '',
@@ -68,6 +79,54 @@ export default function useAuth() {
                 swal({
                     icon: 'success',
                     title: 'Registration successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                await router.push({ name: 'auth.login' })
+            })
+            .catch(error => {
+                if (error.response?.data) {
+                    validationErrors.value = error.response.data.errors
+                }
+            })
+            .finally(() => processing.value = false)
+    }
+
+    const submitForgotPassword = async () => {
+        if (processing.value) return
+
+        processing.value = true
+        validationErrors.value = {}
+
+        await axios.post('/api/forget-password', forgotForm)
+            .then(async response => {
+                swal({
+                    icon: 'success',
+                    title: 'We have emailed your password reset link! Please check your mail inbox.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                // await router.push({ name: 'admin.index' })
+            })
+            .catch(error => {
+                if (error.response?.data) {
+                    validationErrors.value = error.response.data.errors
+                }
+            })
+            .finally(() => processing.value = false)
+    }
+
+    const submitResetPassword = async () => {
+        if (processing.value) return
+
+        processing.value = true
+        validationErrors.value = {}
+
+        await axios.post('/api/reset-password', resetForm)
+            .then(async response => {
+                swal({
+                    icon: 'success',
+                    title: 'Password successfully changed.',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -134,10 +193,14 @@ export default function useAuth() {
     return {
         loginForm,
         registerForm,
+        forgotForm,
+        resetForm,
         validationErrors,
         processing,
         submitLogin,
         submitRegister,
+        submitForgotPassword,
+        submitResetPassword,
         user,
         getUser,
         logout,
