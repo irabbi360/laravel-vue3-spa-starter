@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Resources\RoleResource;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -114,5 +112,10 @@ class RoleController extends Controller
         $role->delete();
 
         return response()->noContent();
+    }
+
+    public function getList()
+    {
+        return RoleResource::collection(Role::all());
     }
 }

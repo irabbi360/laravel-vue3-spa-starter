@@ -6,6 +6,7 @@ export default function useRoles() {
     const role = ref({
         name: ''
     })
+    const roleList = ref([])
 
     const router = useRouter()
     const validationErrors = ref({})
@@ -115,9 +116,18 @@ export default function useRoles() {
             })
     }
 
+    const getRoleList = async () => {
+        axios.get('/api/role-list')
+            .then(response => {
+                roleList.value = response.data.data;
+            })
+    }
+
     return {
         roles,
         role,
+        roleList,
+        getRoleList,
         getRoles,
         getRole,
         storeRole,

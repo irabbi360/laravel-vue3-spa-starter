@@ -180,6 +180,18 @@ export default [
                 component: () => import('../views/admin/users/index.vue'),
                 meta: { breadCrumb: 'Users' }
             },
+            {
+                name: 'users.create',
+                path: 'users/create',
+                component: () => import('../views/admin/users/create.vue'),
+                meta: { breadCrumb: 'Add New' }
+            },
+            {
+                name: 'users.edit',
+                path: 'users/edit/:id',
+                component: () => import('../views/admin/users/edit.vue'),
+                meta: { breadCrumb: 'User Edit' }
+            },
         ]
     },
     {

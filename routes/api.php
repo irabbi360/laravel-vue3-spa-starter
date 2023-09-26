@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::apiResource('posts', PostController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('roles', RoleController::class);
+    Route::get('role-list', [RoleController::class, 'getList']);
     Route::apiResource('permissions', PermissionController::class);
     Route::get('category-list', [CategoryController::class, 'getList']);
     Route::get('/user', [ProfileController::class, 'user']);
