@@ -32,5 +32,19 @@ class CreateAdminUserSeeder extends Seeder
         $role->syncPermissions($permissions);
 
         $user->assignRole([$role->id]);
+
+        $role2 = Role::create(['name' => 'super-admin']);
+        // gets all permissions via Gate::before rule; see AuthServiceProvider
+        // create demo users
+        $user = User::create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@demo.com',
+            'password' => bcrypt('12345678')
+        ]);
+
+        foreach ($permissions as $permission) {
+            $role2->givePermissionTo($permission);
+        }
+        $user->assignRole($role2);
     }
 }
