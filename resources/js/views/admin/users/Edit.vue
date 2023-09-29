@@ -104,7 +104,7 @@
         password,
         role_id,
     })
-
+console.log(user)
     const route = useRoute()
     function submitForm() {
         validate().then(form => { if (form.valid) updateUser(user) })
