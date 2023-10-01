@@ -9,7 +9,9 @@
             </h2> -->
             <!-- Page Content -->
             <div class="main">
+                <Suspense>
                 <router-view></router-view>
+                </Suspense>
             </div>
         </div>
     </div>

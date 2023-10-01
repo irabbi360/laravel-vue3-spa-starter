@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Resources\PermissionResource;
+use Illuminate\Http\Request;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
@@ -31,12 +33,12 @@ class PermissionController extends Controller
             $query->where('id', request('search_id'));
         })
             ->when(request('search_title'), function ($query) {
-                $query->where('name', 'like', '%'.request('search_title').'%');
+                $query->where('name', 'like', '%' . request('search_title') . '%');
             })
             ->when(request('search_global'), function ($query) {
-                $query->where(function($q) {
+                $query->where(function ($q) {
                     $q->where('id', request('search_global'))
-                        ->orWhere('name', 'like', '%'.request('search_global').'%');
+                        ->orWhere('name', 'like', '%' . request('search_global') . '%');
 
                 });
             })
@@ -72,7 +74,7 @@ class PermissionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return PermissionResource
      */
     public function show(Permission $permission)
@@ -106,13 +108,29 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permission $permission) {
+    public function destroy(Permission $permission)
+    {
         $this->authorize('permission-delete');
         $permission->delete();
 
         return response()->noContent();
+    }
+
+    public function getRolePermissions($id)
+    {
+        $permissions = Role::findById($id, 'web')->permissions;
+        return PermissionResource::collection($permissions);
+    }
+
+    public function updateRolePermissions(Request $request)
+    {
+        $permissions = json_decode($request->permissions, true);
+        $permissions_where = Permission::whereIn('id', $permissions)->get();
+        $role = Role::findById($request->role_id, 'web');
+        $role->syncPermissions($permissions_where);
+        return PermissionResource::collection($permissions_where);
     }
 }

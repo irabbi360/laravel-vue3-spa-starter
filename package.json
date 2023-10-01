@@ -23,6 +23,7 @@
         "laravel-vue-pagination": "^4.1.1",
         "vee-validate": "^4.11.7",
         "vue-i18n": "^9.4.1",
+        "vue-multiselect-listbox": "^0.4.5",
         "vue-router": "^4.2.5",
         "vue-select": "^4.0.0-beta.5",
         "vue-sweetalert2": "^5.0.5",
