@@ -127,6 +127,8 @@ class PermissionController extends Controller
 
     public function updateRolePermissions(Request $request)
     {
+        $this->authorize('permission-edit');
+
         $permissions = json_decode($request->permissions, true);
         $permissions_where = Permission::whereIn('id', $permissions)->get();
         $role = Role::findById($request->role_id, 'web');
