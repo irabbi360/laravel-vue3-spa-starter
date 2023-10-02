@@ -42,7 +42,7 @@ class PostController extends Controller
 
                 });
             })
-            ->when(!auth()->user()->hasAnyRole(['super-user', 'admin']), function ($query) {
+            ->when(!auth()->user()->hasAnyRole(['admin']), function ($query) {
                 $query->where('user_id', auth()->user()->id);
             })
             ->orderBy($orderColumn, $orderDirection)
@@ -76,7 +76,7 @@ class PostController extends Controller
     public function update(Post $post, StorePostRequest $request)
     {
         $this->authorize('post-edit');
-        if ($post->author !== auth()->user()->id && !auth()->user()->hasRole('super-user')) {
+        if ($post->author !== auth()->user()->id && !auth()->user()->hasRole('admin')) {
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own posts']);
         } else {
 
@@ -90,7 +90,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('post-delete');
-        if ($post->user_id !== auth()->user()->id && !auth()->user()->hasRole('super-user')) {
+        if ($post->user_id !== auth()->user()->id && !auth()->user()->hasRole('admin')) {
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only delete your own posts']);
         } else {
             $post->delete();
