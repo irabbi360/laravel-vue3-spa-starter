@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Exception;
 
 class PostController extends Controller
 {
+
     public function index()
     {
         $orderColumn = request('order_column', 'created_at');
@@ -21,7 +25,7 @@ class PostController extends Controller
         if (!in_array($orderDirection, ['asc', 'desc'])) {
             $orderDirection = 'desc';
         }
-        $posts = Post::whereHas('categories')
+        $posts = Post::with('media')->whereHas('categories')
             ->whereHas('categories', function ($query) {
                 if (request('search_category')) {
                     $categories = explode(",", request('search_category'));
@@ -32,16 +36,16 @@ class PostController extends Controller
                 $query->where('id', request('search_id'));
             })
             ->when(request('search_title'), function ($query) {
-                $query->where('title', 'like', '%'.request('search_title').'%');
+                $query->where('title', 'like', '%' . request('search_title') . '%');
             })
             ->when(request('search_content'), function ($query) {
-                $query->where('content', 'like', '%'.request('search_content').'%');
+                $query->where('content', 'like', '%' . request('search_content') . '%');
             })
             ->when(request('search_global'), function ($query) {
-                $query->where(function($q) {
+                $query->where(function ($q) {
                     $q->where('id', request('search_global'))
-                        ->orWhere('title', 'like', '%'.request('search_global').'%')
-                        ->orWhere('content', 'like', '%'.request('search_global').'%');
+                        ->orWhere('title', 'like', '%' . request('search_global') . '%')
+                        ->orWhere('content', 'like', '%' . request('search_global') . '%');
 
                 });
             })
@@ -56,17 +60,21 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $this->authorize('post-create');
-        if ($request->hasFile('thumbnail')) {
-            $filename = $request->file('thumbnail')->getClientOriginalName();
-            info($filename);
-        }
+
 
         $validatedData = $request->validated();
         $validatedData['user_id'] = auth()->id();
-
         $post = Post::create($validatedData);
-        $category = Category::findMany($request->categories);
+
+
+        $categories = explode(",", $request->categories);
+        $category = Category::findMany($categories);
         $post->categories()->attach($category);
+
+        if ($request->hasFile('thumbnail')) {
+            $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('images');
+        }
+
         return new PostResource($post);
     }
 
@@ -88,6 +96,7 @@ class PostController extends Controller
         } else {
             $post->update($request->validated());
 //            error_log(json_encode($request->categories));
+
             $category = Category::findMany($request->categories);
             $post->categories()->sync($category);
             return new PostResource($post);
@@ -124,5 +133,13 @@ class PostController extends Controller
         $post = Post::with('categories', 'user')->findOrFail($id);
 
         return $post;
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Manipulations::FIT_CROP, 300, 300)
+            ->nonQueued();
     }
 }
