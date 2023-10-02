@@ -10,7 +10,7 @@ return [
     * Route where request docs will be served from laravel app.
     * localhost:8080/request-docs
     */
-    'url' => 'request-docs',
+    'url' => 'api-docs',
     'middlewares' => [
         // \Rakutentech\LaravelRequestDocs\NotFoundWhenProduction::class,
     ],
