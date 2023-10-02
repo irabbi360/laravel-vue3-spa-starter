@@ -21,9 +21,12 @@ class PostController extends Controller
         if (!in_array($orderDirection, ['asc', 'desc'])) {
             $orderDirection = 'desc';
         }
-        $posts = Post::with('categories')
-            ->when(request('search_category'), function ($query) {
-                $query->where('category_id', request('search_category'));
+        $posts = Post::whereHas('categories')
+            ->whereHas('categories', function ($query) {
+                if (request('search_category')) {
+                    $categories = explode(",", request('search_category'));
+                    $query->whereIn('categories.id', $categories);
+                }
             })
             ->when(request('search_id'), function ($query) {
                 $query->where('id', request('search_id'));
@@ -42,7 +45,7 @@ class PostController extends Controller
 
                 });
             })
-            ->when(!auth()->user()->hasAnyRole(['admin']), function ($query) {
+            ->when(!auth()->user()->hasPermissionTo('post-all'), function ($query) {
                 $query->where('user_id', auth()->user()->id);
             })
             ->orderBy($orderColumn, $orderDirection)
@@ -70,17 +73,21 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $this->authorize('post-edit');
-        return new PostResource($post);
+        if ($post->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('post-all')) {
+            return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own posts']);
+        } else {
+            return new PostResource($post);
+        }
     }
 
     public function update(Post $post, StorePostRequest $request)
     {
         $this->authorize('post-edit');
-        if ($post->author !== auth()->user()->id && !auth()->user()->hasRole('admin')) {
+        if ($post->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('post-all')) {
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own posts']);
         } else {
-
             $post->update($request->validated());
+//            error_log(json_encode($request->categories));
             $category = Category::findMany($request->categories);
             $post->categories()->sync($category);
             return new PostResource($post);
@@ -90,7 +97,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('post-delete');
-        if ($post->user_id !== auth()->user()->id && !auth()->user()->hasRole('admin')) {
+        if ($post->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('post-all')) {
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only delete your own posts']);
         } else {
             $post->delete();

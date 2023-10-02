@@ -24,7 +24,15 @@ class CreateAdminUserSeeder extends Seeder
             'password' => bcrypt('12345678')
         ]);
 
-        $role = Role::create(['name' => 'Admin']);
+        $role = Role::create(['name' => 'admin']);
+        $role2 = Role::create(['name' => 'user']);
+        $permissions = [
+            'post-list',
+            'post-create',
+            'post-edit',
+            'post-delete'
+            ];
+        $role2->syncPermissions($permissions);
         Category::create(['name' => 'Vue.js']);
 
         $permissions = Permission::pluck('id','id')->all();

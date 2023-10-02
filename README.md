@@ -9,6 +9,7 @@ A simple and clean boilerplate to start a new SPA project with authentication, u
 - [Vuex](https://vuex.vuejs.org/)
 - [Bootstrap](https://getbootstrap.com/)
 - [Vue I18n](https://vue-i18n.intlify.dev)
+- [Laravel Request Docs](https://github.com/rakutentech/laravel-request-docs)
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
@@ -33,6 +34,7 @@ The following Sanctum features are implemented in this Vue SPA:
 - ✅ Posts Management
 - ✅ Frontend Blog
 - ✅ Bootstrap 5
+- ✅ Automatic Api Documentation  -- route  /api-docs
 
 ## How To Use
 #### Clone the repository
