@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class PostController extends Controller
         if (!in_array($orderDirection, ['asc', 'desc'])) {
             $orderDirection = 'desc';
         }
-        $posts = Post::with('category')
+        $posts = Post::with('categories')
             ->when(request('search_category'), function ($query) {
                 $query->where('category_id', request('search_category'));
             })
@@ -41,6 +42,9 @@ class PostController extends Controller
 
                 });
             })
+            ->when(!auth()->user()->hasAnyRole(['super-user', 'admin']), function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })
             ->orderBy($orderColumn, $orderDirection)
             ->paginate(50);
         return PostResource::collection($posts);
@@ -58,7 +62,8 @@ class PostController extends Controller
         $validatedData['user_id'] = auth()->id();
 
         $post = Post::create($validatedData);
-
+        $category = Category::findMany($request->categories);
+        $post->categories()->attach($category);
         return new PostResource($post);
     }
 
@@ -71,35 +76,45 @@ class PostController extends Controller
     public function update(Post $post, StorePostRequest $request)
     {
         $this->authorize('post-edit');
-        $post->update($request->validated());
+        if ($post->author !== auth()->user()->id && !auth()->user()->hasRole('super-user')) {
+            return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own posts']);
+        } else {
 
-        return new PostResource($post);
+            $post->update($request->validated());
+            $category = Category::findMany($request->categories);
+            $post->categories()->sync($category);
+            return new PostResource($post);
+        }
     }
 
-    public function destroy(Post $post) {
+    public function destroy(Post $post)
+    {
         $this->authorize('post-delete');
-        $post->delete();
-
-        return response()->noContent();
+        if ($post->user_id !== auth()->user()->id && !auth()->user()->hasRole('super-user')) {
+            return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only delete your own posts']);
+        } else {
+            $post->delete();
+            return response()->noContent();
+        }
     }
 
     public function getPosts()
     {
-        $posts = Post::latest()->paginate();
+        $posts = Post::with('categories')->latest()->paginate();
 
         return $posts;
     }
 
     public function getCategoryByPosts($id)
     {
-        $posts = Post::latest()->where('category_id', $id)->paginate();
+        $posts = Post::whereRelation('categories', 'category_id', '=', $id)->paginate();
 
         return $posts;
     }
 
     public function getPost($id)
     {
-        $post = Post::with('category', 'user')->findOrFail($id);
+        $post = Post::with('categories', 'user')->findOrFail($id);
 
         return $post;
     }
