@@ -70,11 +70,13 @@ class PostController extends Controller
         $categories = explode(",", $request->categories);
         $category = Category::findMany($categories);
         $post->categories()->attach($category);
-
+//        try {
         if ($request->hasFile('thumbnail')) {
             $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('images');
         }
-
+//        } catch (Exception $e) {
+//            error_log($e->getMessage());
+//        }
         return new PostResource($post);
     }
 
@@ -116,16 +118,16 @@ class PostController extends Controller
 
     public function getPosts()
     {
-        $posts = Post::with('categories')->latest()->paginate();
+        $posts = Post::with('categories')->with('media')->latest()->paginate();
+        return PostResource::collection($posts);
 
-        return $posts;
     }
 
     public function getCategoryByPosts($id)
     {
         $posts = Post::whereRelation('categories', 'category_id', '=', $id)->paginate();
 
-        return $posts;
+        return PostResource::collection($posts);
     }
 
     public function getPost($id)
@@ -133,13 +135,5 @@ class PostController extends Controller
         $post = Post::with('categories', 'user')->findOrFail($id);
 
         return $post;
-    }
-
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
     }
 }

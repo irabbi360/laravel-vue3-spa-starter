@@ -12,8 +12,7 @@
                         <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }" class="stretched-link">Continue reading</router-link>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
+                        <img :src="getImageUrl(post)" />
                     </div>
                 </div>
             </div>
@@ -27,6 +26,15 @@ import { ref, onMounted } from 'vue'
 
     const posts = ref();
 
+function getImageUrl(post) {
+    let image
+    if(post.resized_image.length>0){
+        image = post.resized_image
+    }else{
+       image = post.original_image
+    }
+    return new URL(image, import.meta.url).href
+}
     onMounted(() => {
         axios.get('/api/get-posts').then(({ data }) => {
             posts.value = data;
