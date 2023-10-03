@@ -12,8 +12,7 @@
                         <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }" class="stretched-link">Continue reading</router-link>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
+                        <img :src="getImageUrl(post)" />
                     </div>
                 </div>
             </div>
@@ -28,7 +27,9 @@ import { useRoute } from "vue-router";
 
     const route = useRoute();
     const posts = ref();
-
+function getImageUrl(post) {
+    return new URL(post.thumbnail, import.meta.url).href
+}
     onMounted(() => {
         axios.get('/api/get-category-posts/' + route.params.id).then(({ data }) => {
             posts.value = data;

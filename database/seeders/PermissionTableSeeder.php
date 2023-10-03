@@ -31,6 +31,7 @@ class PermissionTableSeeder extends Seeder
             'post-list',
             'post-create',
             'post-edit',
+            'post-all',
             'post-delete',
             'category-list',
             'category-create',

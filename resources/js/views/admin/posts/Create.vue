@@ -39,12 +39,12 @@
                             <label for="post-category" class="form-label">
                                 Category
                             </label>
-                            <v-select v-model="post.category_id" :options="categoryList" :reduce="category => category.id" label="name" class="form-control" />
+                            <v-select multiple v-model="post.categories" :options="categoryList" :reduce="category => category.id" label="name" class="form-control" />
                             <div class="text-danger mt-1">
-                                {{ errors.category_id }}
+                                {{ errors.categories }}
                             </div>
                             <div class="text-danger mt-1">
-                                <div v-for="message in validationErrors?.category_id">
+                                <div v-for="message in validationErrors?.categories">
                                     {{ message }}
                                 </div>
                             </div>
@@ -87,20 +87,20 @@
     const schema = {
         title: 'required|min:5',
         content: 'required|min:50',
-        category_id: 'required'
+        categories: 'required'
     }
     // Create a form context with the validation schema
     const { validate, errors } = useForm({ validationSchema: schema })
     // Define actual fields for validation
     const { value: title } = useField('title', null, { initialValue: '' });
     const { value: content } = useField('content', null, { initialValue: '' });
-    const { value: category_id } = useField('category_id', null, { initialValue: '', label: 'category' });
+    const { value: categories } = useField('categories', null, { initialValue: '', label: 'category' });
     const { categoryList, getCategoryList } = useCategories()
     const { storePost, validationErrors, isLoading } = usePosts()
     const post = reactive({
         title,
         content,
-        category_id,
+        categories,
         thumbnail: ''
     })
     function submitForm() {

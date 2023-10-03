@@ -1,6 +1,6 @@
 import { ref, reactive, inject } from 'vue'
 import { useRouter } from "vue-router";
-import { AbilityBuilder, Ability } from '@casl/ability';
+import { AbilityBuilder, createMongoAbility } from '@casl/ability';
 import { ABILITY_TOKEN } from '@casl/vue';
 import store from '../store'
 
@@ -182,7 +182,7 @@ export default function useAuth() {
         await axios.get('/api/abilities')
             .then(response => {
                 const permissions = response.data
-                const { can, rules } = new AbilityBuilder(Ability)
+                const { can, rules } = new AbilityBuilder(createMongoAbility)
 
                 can(permissions)
 

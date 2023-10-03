@@ -1,5 +1,5 @@
-import { ref, inject } from 'vue'
-import { useRouter } from 'vue-router'
+import {ref, inject} from 'vue'
+import {useRouter} from 'vue-router'
 
 export default function useRoles() {
     const roles = ref([])
@@ -7,7 +7,7 @@ export default function useRoles() {
         name: ''
     })
     const roleList = ref([])
-
+    const rolePermissionList = ref([])
     const router = useRouter()
     const validationErrors = ref({})
     const isLoading = ref(false)
@@ -38,7 +38,13 @@ export default function useRoles() {
                 role.value = response.data.data;
             })
     }
+    const getRolePermissions = async (id) => {
 
+        axios.get('/api/role-permissions/' + id)
+            .then(response => {
+                rolePermissionList.value = response.data.data;
+            })
+    }
     const storeRole = async (role) => {
         if (isLoading.value) return;
 
@@ -82,6 +88,31 @@ export default function useRoles() {
             })
             .finally(() => isLoading.value = false)
     }
+
+    const updateRolePermissions = async (role, permissions) => {
+        if (isLoading.value) return;
+
+        isLoading.value = true
+        validationErrors.value = {}
+        axios.put('/api/role-permissions', {permissions: JSON.stringify(permissions), role_id: role.id})
+            // .then(response => {
+            //     router.push({name: 'roles.index'})
+            //     swal({
+            //         icon: 'success',
+            //         title: 'Role updated successfully'
+            //     })
+            // })
+            .catch(error => {
+                if (error.response?.data) {
+                    validationErrors.value = error.response.data.errors
+                }
+            })
+            .finally(() => {
+                isLoading.value = false
+                updateRole(role)
+            })
+    }
+
 
     const deleteRole = async (id) => {
         swal({
@@ -129,9 +160,12 @@ export default function useRoles() {
         roleList,
         getRoleList,
         getRoles,
+        rolePermissionList,
+        getRolePermissions,
         getRole,
         storeRole,
         updateRole,
+        updateRolePermissions,
         deleteRole,
         validationErrors,
         isLoading

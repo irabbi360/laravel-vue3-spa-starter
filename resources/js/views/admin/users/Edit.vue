@@ -45,7 +45,7 @@
                             <label for="user-category" class="form-label">
                                 Role
                             </label>
-                            <v-select v-model="user.role_id" :options="roleList" :reduce="role => role.id" label="name" class="form-control" />
+                            <v-select multiple  v-model="user.role_id" :options="roleList" :reduce="role => role.id" label="name" class="form-control" />
                             <div class="text-danger mt-1">
                                 {{ errors.role_id }}
                             </div>

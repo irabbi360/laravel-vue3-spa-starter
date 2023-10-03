@@ -28,8 +28,8 @@
                                            placeholder="Filter by Title">
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left">
-                                    <v-select v-model="search_category" :options="categoryList"
-                                              :reduce="category => category.id" label="text" class="form-control w-100"/>
+                                    <v-select multiple v-model="search_category" :options="categoryList"
+                                              :reduce="category => category.id" label="name" class="form-control w-100"/>
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left">
                                     <input v-model="search_content" type="text"
@@ -117,7 +117,9 @@
                                     {{ post.title }}
                                 </td>
                                 <td class="px-6 py-4 text-sm">
-                                    {{ post.category }}
+                                    <div v-for="category in post.categories">
+                                        {{ category.name }}
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4 text-sm">
                                     {{ post.content }}

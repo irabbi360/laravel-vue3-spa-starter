@@ -57,7 +57,11 @@ export default function usePosts() {
             }
         }
 
-        axios.post('/api/posts', serializedPost)
+        axios.post('/api/posts', serializedPost,{
+            headers: {
+                "content-type": "multipart/form-data"
+            }
+        })
             .then(response => {
                 router.push({name: 'posts.index'})
                 swal({

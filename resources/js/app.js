@@ -1,7 +1,7 @@
 import './bootstrap';
 
 import { createApp } from 'vue';
-import LaravelVuePagination from 'laravel-vue-pagination';
+import { Bootstrap5Pagination } from 'laravel-vue-pagination';
 import store from './store'
 import router from './routes/index'
 import VueSweetalert2 from "vue-sweetalert2";
@@ -30,6 +30,6 @@ app.use(store)
 app.use(VueSweetalert2)
 app.use(i18n)
 app.use(abilitiesPlugin, ability)
-app.component('Pagination', LaravelVuePagination)
+app.component('Pagination', Bootstrap5Pagination)
 app.component("v-select", vSelect);
 app.mount('#app')
