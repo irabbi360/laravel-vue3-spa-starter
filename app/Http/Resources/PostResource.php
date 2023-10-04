@@ -23,7 +23,6 @@ class PostResource extends JsonResource
                 $image = $this->getMedia('*')[0]->getUrl();
             }
         } catch (Exception $e) {
-//           error_log($e->getMessage());
             $image = "";
         }
         return [

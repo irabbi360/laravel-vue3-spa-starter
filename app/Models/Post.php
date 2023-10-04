@@ -8,8 +8,6 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-//use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
 
 class Post extends Model implements HasMedia
 {
@@ -32,12 +30,6 @@ class Post extends Model implements HasMedia
     {
         return $this->belongsToMany(Category::class, 'category_post');
     }
-
-
-//    public function media(): \Illuminate\Database\Eloquent\Relations\MorphMany
-//    {
-//        return $this->morphMany(Media::class, 'model');
-//    }
 
     public function registerMediaCollections(): void
     {
