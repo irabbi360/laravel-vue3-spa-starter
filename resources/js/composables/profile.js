@@ -16,10 +16,6 @@ export default function useProfile() {
 
     const getProfile = async () => {
         profile.value = store.getters["auth/user"]
-        // axios.get('/api/user')
-        //     .then(({data}) => {
-        //         profile.value = data.data;
-        //     })
     }
 
     const updateProfile = async (profile) => {

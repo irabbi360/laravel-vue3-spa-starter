@@ -38,8 +38,7 @@ class ProfileController extends Controller
 
     public function user(Request $request)
     {
-        $user = $request->user();
-    ;
+        $user = $request->user();;
         try {
             if (env('RESIZE_AVATAR') === true) {
                 $avatar = $user->getMedia('*')[0]->getUrl('resized-avatar');;
@@ -48,8 +47,7 @@ class ProfileController extends Controller
             }
             $user->setAttribute('avatar', $avatar);
         } catch (Exception $e) {
-//           error_log($e->getMessage());
-//            $avatar = "";
+            $avatar = "";
         }
 
         return $this->successResponse($user, 'User found');

@@ -105,13 +105,6 @@ export default function usePosts() {
         isLoading.value = true
         validationErrors.value = {}
 
-        // let serializedPost = new FormData()
-        // for (let item in post) {
-        //     if (post.hasOwnProperty(item)) {
-        //         serializedPost.append(item, post[item])
-        //     }
-        // }
-
         //axios automatically serilaizes into form if content type form or use putForm
         //https://axios-http.com/docs/multipart
         axios.postForm('/api/update-posts/' + post.id, post)

@@ -99,10 +99,8 @@ class PostController extends Controller
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own posts']);
         } else {
             $post->update($request->validated());
-//            error_log(json_encode($request->categories));
 
             $category = Category::findMany($request->categories);
-//            error_log(json_encode($category));
             $post->categories()->sync($category);
 
             if ($request->hasFile('thumbnail')) {
