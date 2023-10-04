@@ -3,13 +3,14 @@
         <div class="row g-5 mt-4">
             <div class="col-md-8">
             <h3 class="pb-4 mb-4 fst-italic border-bottom">
-                From the Firehose
+                {{ post?.title }}
             </h3>
+            <p class="blog-post-meta">January 1, 2021 by <a href="#">{{ post?.user?.name}}</a></p>
 
             <article class="blog-post">
-                <h2 class="blog-post-title mb-1">{{ post?.title }}</h2>
-                <p class="blog-post-meta">January 1, 2021 by <a href="#">{{ post?.user?.name}}</a></p>
-
+                <div v-for="image in post?.media">
+                    <img :src="image.original_url" alt="image" class="img-fluid">
+                </div>
                 <p>{{ post?.content }}</p>
             </article>
 

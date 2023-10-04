@@ -78,6 +78,13 @@
                                         </div>
                                     </div>
                                 </th>
+                                <th class="px-6 py-3 text-left">
+                                    <div class="flex flex-row">
+                                        <div class="font-medium text-uppercase">
+                                            Thumbnail
+                                        </div>
+                                    </div>
+                                </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left">
                                     <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Category</span>
                                 </th>
@@ -110,11 +117,14 @@
                             </thead>
                             <tbody>
                             <tr v-for="post in posts.data" :key="post.id">
-                                <td class="px-6 py-4 text-sm">
+                                <td class="px-6 py-4 text-sm" width="20">
                                     {{ post.id }}
                                 </td>
                                 <td class="px-6 py-4 text-sm">
                                     {{ post.title }}
+                                </td>
+                                <td class="px-6 py-4 text-sm">
+                                    <img :src="post.original_image" alt="image" height="70">
                                 </td>
                                 <td class="px-6 py-4 text-sm">
                                     <div v-for="category in post.categories">
