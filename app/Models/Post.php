@@ -14,13 +14,9 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Post extends Model implements HasMedia
 {
-    use HasFactory;
-    use InteractsWithMedia;
-
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = ['title', 'content', 'user_id'];
-
-
 
     public function user()
     {
@@ -32,21 +28,11 @@ class Post extends Model implements HasMedia
      */
     public function categories()
     {
-        return $this->belongsToMany(Category::class,'category_post');
+        return $this->belongsToMany(Category::class, 'category_post');
     }
-
-
-//    public function media(): \Illuminate\Database\Eloquent\Relations\MorphMany
-//    {
-//        return $this->morphMany(Media::class, 'model');
-//    }
 
     public function registerMediaCollections(): void
     {
-//        $this->addMediaCollection('avatars')
-//        ->useFallbackUrl('/images/placeholder.jpg')
-//        ->useFallbackPath(public_path('/images/placeholder.jpg'));
-
         $this->addMediaCollection('images')
             ->useFallbackUrl('/images/placeholder.jpg')
             ->useFallbackPath(public_path('/images/placeholder.jpg'));
@@ -54,18 +40,11 @@ class Post extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null): void
     {
-        if(env('RESIZE_IMAGE') === true){
+        if (env('RESIZE_IMAGE') === true) {
 
-        $this->addMediaConversion('resized-image')
-            ->width(env('IMAGE_WIDTH', 300))
-            ->height(env('IMAGE_HEIGHT',300));
+            $this->addMediaConversion('resized-image')
+                ->width(env('IMAGE_WIDTH', 300))
+                ->height(env('IMAGE_HEIGHT', 300));
         }
-
-//        $this
-//            ->addMediaConversion('image-crop')
-//            ->fit(Manipulations::FIT_CROP, env('IMAGE_WIDTH',300), env('IMAGE_HEIGHT', 300))
-//            ->nonQueued();
-
-
-        }
+    }
 }
