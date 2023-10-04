@@ -1,5 +1,5 @@
-import { ref, inject } from 'vue'
-import { useRouter } from 'vue-router'
+import {ref, inject} from 'vue'
+import {useRouter} from 'vue-router'
 
 export default function usePosts() {
     const posts = ref({})
@@ -37,6 +37,29 @@ export default function usePosts() {
             })
     }
 
+    const getDisplayPosts = async (
+        page = 1,
+        search_category = '',
+        search_id = '',
+        search_title = '',
+        search_content = '',
+        search_global = '',
+        order_column = 'created_at',
+        order_direction = 'desc'
+    ) => {
+        axios.get('/api/get-posts?page=' + page +
+            '&search_category=' + search_category +
+            '&search_id=' + search_id +
+            '&search_title=' + search_title +
+            '&search_content=' + search_content +
+            '&search_global=' + search_global +
+            '&order_column=' + order_column +
+            '&order_direction=' + order_direction)
+            .then(response => {
+                posts.value = response.data;
+            })
+    }
+
     const getPost = async (id) => {
         axios.get('/api/posts/' + id)
             .then(response => {
@@ -57,7 +80,7 @@ export default function usePosts() {
             }
         }
 
-        axios.post('/api/posts', serializedPost,{
+        axios.post('/api/posts', serializedPost, {
             headers: {
                 "content-type": "multipart/form-data"
             }
@@ -79,11 +102,19 @@ export default function usePosts() {
 
     const updatePost = async (post) => {
         if (isLoading.value) return;
-
         isLoading.value = true
         validationErrors.value = {}
 
-        axios.put('/api/posts/' + post.id, post)
+        // let serializedPost = new FormData()
+        // for (let item in post) {
+        //     if (post.hasOwnProperty(item)) {
+        //         serializedPost.append(item, post[item])
+        //     }
+        // }
+
+        //axios automatically serilaizes into form if content type form or use putForm
+        //https://axios-http.com/docs/multipart
+        axios.postForm('/api/update-posts/' + post.id, post)
             .then(response => {
                 router.push({name: 'posts.index'})
                 swal({
@@ -141,6 +172,7 @@ export default function usePosts() {
         storePost,
         updatePost,
         deletePost,
+        getDisplayPosts,
         validationErrors,
         isLoading
     }

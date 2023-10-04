@@ -82,6 +82,9 @@ npm run dev or yarn dev
 npm run build or yarn build
 ```
 
+## Roles Permissions
+The seeder creates two users and roles, admin and user.  Admin role gets all permissions and user gets post-list, create, edit, delete.  Users are restricted to viewing, editing and deleting their own post.  If you add permission post-all then that user can view/change any post. 
+
 ## Image Uploads
 
 You will need to link your public/storage folder run

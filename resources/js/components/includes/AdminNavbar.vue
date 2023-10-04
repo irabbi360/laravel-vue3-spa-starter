@@ -20,6 +20,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
+                            <img v-if="user.avatar" :src="getImageUrl(user)" alt="Avatar" class="avatar"/>
                             Hi, {{ user.name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm">
@@ -47,6 +48,11 @@ import LocaleSwitcher from "../../components/LocaleSwitcher.vue";
     const store = useStore();
     const user = computed(() => store.state.auth.user)
     const {processing, logout} = useAuth();
+function getImageUrl(user) {
+    let avatar
+    avatar = user.avatar
+    return new URL(avatar, import.meta.url).href
+}
 </script>
 
 <style scoped>

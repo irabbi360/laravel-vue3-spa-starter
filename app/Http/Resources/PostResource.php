@@ -15,19 +15,23 @@ class PostResource extends JsonResource
      */
     public function toArray($request)
     {
-        //if no resize image
+
         try {
-            $resized_image = $this->getMedia('*')[0]->getUrl('resized-image');
+            if (env('RESIZE_IMAGE') === true) {
+                $image = $this->getMedia('*')[0]->getUrl('resized-image');
+            } else {
+                $image = $this->getMedia('*')[0]->getUrl();
+            }
         } catch (Exception $e) {
-            $resized_image="";
+//           error_log($e->getMessage());
+            $image = "";
         }
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'categories' => $this->categories,
+            'categories' => $this->categories()->select('id', 'name')->get(),
             'content' => substr($this->content, 0, 50) . '...',
-            'original_image' => $this->getMedia('*')[0]->getUrl(),
-            'resized_image' => $resized_image,
+            'image' => $image,
             'created_at' => $this->created_at->toDateString()
         ];
     }
