@@ -59,6 +59,9 @@
                                     {{ message }}
                                 </div>
                             </div>
+                            <div>
+                                <img :src="post.thumbnail" alt="" height="100">
+                            </div>
                         </div>
                         <!-- Buttons -->
                         <div class="mt-4">
@@ -80,7 +83,7 @@
     import useCategories from "@/composables/categories";
     import usePosts from "@/composables/posts";
     import { useForm, useField, defineRule } from "vee-validate";
-    import { required, min } from "../../../validation/rules"
+    import { required, min } from "@/validation/rules"
     defineRule('required', required)
     defineRule('min', min);
 
@@ -117,6 +120,7 @@
         post.id = postData.value.id
         post.title = postData.value.title
         post.content = postData.value.content
+        post.thumbnail = postData.value.original_image
         post.categories = postData.value.categories
     })
 </script>

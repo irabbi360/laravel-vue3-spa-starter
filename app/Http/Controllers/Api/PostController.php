@@ -7,13 +7,10 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Post;
-use Exception;
-use Illuminate\Http\Request;
 
 
 class PostController extends Controller
 {
-
     public function index()
     {
         $orderColumn = request('order_column', 'created_at');
@@ -24,11 +21,11 @@ class PostController extends Controller
         if (!in_array($orderDirection, ['asc', 'desc'])) {
             $orderDirection = 'desc';
         }
-        $posts = Post::with('media')->whereHas('categories')
+        $posts = Post::with('media')
             ->whereHas('categories', function ($query) {
                 if (request('search_category')) {
                     $categories = explode(",", request('search_category'));
-                    $query->whereIn('categories.id', $categories);
+                    $query->whereIn('id', $categories);
                 }
             })
             ->when(request('search_id'), function ($query) {
@@ -49,7 +46,7 @@ class PostController extends Controller
                 });
             })
             ->when(!auth()->user()->hasPermissionTo('post-all'), function ($query) {
-                $query->where('user_id', auth()->user()->id);
+                $query->where('user_id', auth()->id());
             })
             ->orderBy($orderColumn, $orderDirection)
             ->paginate(50);
@@ -58,14 +55,13 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-
+      
         $this->authorize('post-create');
-
+      
         $validatedData = $request->validated();
-
         $validatedData['user_id'] = auth()->id();
         $post = Post::create($validatedData);
-//        error_log($request->categories);
+
         $categories = explode(",", $request->categories);
         $category = Category::findMany($categories);
         $post->categories()->attach($category);
@@ -89,13 +85,11 @@ class PostController extends Controller
         }
     }
 
-    public function update($id, StorePostRequest $request)
+    public function update(Post $post, StorePostRequest $request)
     {
 
         $this->authorize('post-edit');
-        $post = Post::findOrFail($id);
-
-        if ($post->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('post-all')) {
+        if ($post->user_id !== auth()->id() && !auth()->user()->hasPermissionTo('post-all')) {
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own posts']);
         } else {
             $post->update($request->validated());
@@ -114,7 +108,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('post-delete');
-        if ($post->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('post-all')) {
+        if ($post->user_id !== auth()->id() && !auth()->user()->hasPermissionTo('post-all')) {
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only delete your own posts']);
         } else {
             $post->delete();
@@ -171,8 +165,6 @@ class PostController extends Controller
 
     public function getPost($id)
     {
-        $post = Post::with('categories', 'user')->findOrFail($id);
-
-        return $post;
+        return Post::with('categories', 'user', 'media')->findOrFail($id);
     }
 }

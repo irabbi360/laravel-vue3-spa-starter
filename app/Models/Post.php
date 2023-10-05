@@ -11,9 +11,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Post extends Model implements HasMedia
 {
-    use HasFactory;
-    use InteractsWithMedia;
-
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = ['title', 'content', 'user_id'];
 
@@ -33,7 +31,6 @@ class Post extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-
         $this->addMediaCollection('images')
             ->useFallbackUrl('/images/placeholder.jpg')
             ->useFallbackPath(public_path('/images/placeholder.jpg'))
