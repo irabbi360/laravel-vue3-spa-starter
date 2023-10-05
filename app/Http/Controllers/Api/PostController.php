@@ -128,7 +128,7 @@ class PostController extends Controller
         if (!in_array($orderDirection, ['asc', 'desc'])) {
             $orderDirection = 'desc';
         }
-        $posts = Post::with('media')->whereHas('categories')
+        $posts = Post::with('categories', 'user', 'media')
             ->whereHas('categories', function ($query) {
                 if (request('search_category')) {
                     $categories = explode(",", request('search_category'));

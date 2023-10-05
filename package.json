@@ -19,6 +19,7 @@
     "dependencies": {
         "@casl/ability": "^6.5.0",
         "@casl/vue": "^2.2.1",
+        "dayjs": "^1.11.10",
         "js-cookie": "^3.0.5",
         "laravel-vue-pagination": "^4.1.1",
         "vee-validate": "^4.11.7",

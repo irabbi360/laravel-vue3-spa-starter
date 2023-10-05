@@ -48,7 +48,7 @@
                             {{ category.name }}
                         </strong>
                         <h3 class="mb-0">{{ post.title }}</h3>
-                        <div class="mb-1 text-muted">Nov 12</div>
+                        <p class="blog-post-meta">Posted: {{formatDate(post.created_at)}} By: <a href="#">{{ post?.user?.name}}</a></p>
                         <p class="card-text mb-auto">{{ post.content.substring(0, 90) + "..." }}</p>
                         <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }"
                                      class="stretched-link">Continue reading
@@ -67,6 +67,7 @@ import {ref, onMounted, watch} from 'vue'
 import usePosts from "@/composables/posts";
 import _ from "lodash";
 import useCategories from "@/composables/categories";
+import dayjs from "dayjs";
 
 const search_category = ref('')
 const search_id = ref('')
@@ -81,17 +82,24 @@ const {categoryList, getCategoryList} = useCategories()
 
 const sortColumnsOptions = ['title', 'created_at']
 const sortOrderOptions = ['asc', 'desc']
-function getImageUrl(post) {
-    let image
-    image = post.image
-    return new URL(image, import.meta.url).href
-}
+
 
 onMounted(() => {
     getDisplayPosts()
     getCategoryList()
 })
 
+function formatDate(dateString) {
+    const date = dayjs(dateString);
+    // Then specify how you want your dates to be formatted
+    return date.format('dddd MMMM D, YYYY');
+}
+
+function getImageUrl(post) {
+    let image
+    image = post.image
+    return new URL(image, import.meta.url).href
+}
 const updateOrdering = () => {
     console.log(orderDirection.value)
     console.log(orderColumn.value)

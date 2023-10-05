@@ -31,6 +31,7 @@ class PostResource extends JsonResource
             'categories' => $this->categories()->select('id', 'name')->get(),
             'content' => substr($this->content, 0, 50) . '...',
             'image' => $image,
+            'user' => $this->user,
             'created_at' => $this->created_at->toDateString()
         ];
     }

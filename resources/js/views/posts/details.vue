@@ -5,9 +5,8 @@
             <h3 class="pb-4 mb-4 fst-italic border-bottom">
                 {{ post?.title }}
             </h3>
-            <p class="blog-post-meta">January 1, 2021 by <a href="#">{{ post?.user?.name}}</a></p>
-
-            <article class="blog-post">
+                <p class="blog-post-meta">Posted: {{formatDate(post?.created_at)}} By: <a href="#">{{ post?.user?.name}}</a></p>
+                <article class="blog-post">
                 <div v-for="image in post?.media">
                     <img :src="image.original_url" alt="image" class="img-fluid">
                 </div>
@@ -36,23 +35,6 @@
                             </li>
                         </ol>
                     </div>
-                    <!-- <div class="p-4">
-                        <h4 class="fst-italic">Archives</h4>
-                        <ol class="list-unstyled mb-0">
-                            <li><a href="#">March 2021</a></li>
-                            <li><a href="#">February 2021</a></li>
-                            <li><a href="#">January 2021</a></li>
-                            <li><a href="#">December 2020</a></li>
-                            <li><a href="#">November 2020</a></li>
-                            <li><a href="#">October 2020</a></li>
-                            <li><a href="#">September 2020</a></li>
-                            <li><a href="#">August 2020</a></li>
-                            <li><a href="#">July 2020</a></li>
-                            <li><a href="#">June 2020</a></li>
-                            <li><a href="#">May 2020</a></li>
-                            <li><a href="#">April 2020</a></li>
-                        </ol>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -63,6 +45,7 @@
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import { useRoute } from "vue-router";
+import dayjs from "dayjs";
 
 
     const post = ref();
@@ -77,4 +60,10 @@ import { useRoute } from "vue-router";
             categories.value = data.data
         })
     })
+
+function formatDate(dateString) {
+    const date = dayjs(dateString);
+    // Then specify how you want your dates to be formatted
+    return date.format('dddd MMMM D, YYYY');
+}
 </script>
