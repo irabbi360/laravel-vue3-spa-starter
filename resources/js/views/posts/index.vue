@@ -40,7 +40,7 @@
                     class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 
                     <div class="col-auto d-none d-lg-block d-md-block">
-                        <img :src="getImageUrl(post)" class="img-fluid"/>
+                        <img v-if="post.image" :src="getImageUrl(post)" class="img-fluid"/>
                     </div>
 
                     <div class="col p-4 d-flex flex-column position-static">

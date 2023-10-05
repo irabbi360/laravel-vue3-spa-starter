@@ -55,9 +55,9 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-      
+
         $this->authorize('post-create');
-      
+
         $validatedData = $request->validated();
         $validatedData['user_id'] = auth()->id();
         $post = Post::create($validatedData);
@@ -85,10 +85,12 @@ class PostController extends Controller
         }
     }
 
-    public function update(Post $post, StorePostRequest $request)
+    public function update($id, StorePostRequest $request)
     {
 
         $this->authorize('post-edit');
+        $post = Post::findOrFail($id);
+
         if ($post->user_id !== auth()->id() && !auth()->user()->hasPermissionTo('post-all')) {
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own posts']);
         } else {
