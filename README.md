@@ -82,6 +82,19 @@ npm run dev or yarn dev
 npm run build or yarn build
 ```
 
+## Roles Permissions
+The seeder creates two users and roles, admin and user.  Admin role gets all permissions and user gets post-list, create, edit, delete.  Users are restricted to viewing, editing and deleting their own post.  If you add permission post-all then that user can view/change any post. 
+
+## Image Uploads
+
+You will need to link your public/storage folder run
+
+`php artisan storage:link`
+
+You can also enable resizing images, look in the .env for resize. Adjust height and width to your needs.
+
+If you set resize to true then you need to enable gd in your php.ini, un-comment or add/install `extension=gd`
+
 ## Email Verification
 
 To enable email verification make sure that your `App\User` model implements the `Illuminate\Contracts\Auth\MustVerifyEmail` contract.

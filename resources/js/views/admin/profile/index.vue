@@ -30,6 +30,17 @@
                     </div>
                 </div>
                 <div class="mb-3">
+                    <label for="avatar" class="form-label">
+                        Avatar
+                    </label>
+                    <input @change="profile.avatar = $event.target.files[0]" type="file" class="form-control" id="avatar" />
+                    <div class="text-danger mt-1">
+                        <div v-for="message in validationErrors?.avatar">
+                            {{ message }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
                     <button :disabled="isLoading" class="btn btn-primary">
                         <div v-show="isLoading" class=""></div>
                         <span v-if="isLoading">Processing...</span>
@@ -62,7 +73,8 @@ defineRule('min', min);
     const { profile: profileData, getProfile, updateProfile, validationErrors, isLoading } = useProfile()
     const profile = reactive({
         name,
-        email
+        email,
+        avatar:''
     })
     function submitForm() {
         validate().then(form => { if (form.valid) updateProfile(profile) })

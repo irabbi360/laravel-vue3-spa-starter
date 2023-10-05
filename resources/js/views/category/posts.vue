@@ -8,6 +8,7 @@
                     <div class="col-auto d-none d-lg-block d-md-block">
                         <img :src="getImageUrl(post)" class="img-fluid"/>
                     </div>
+
                     <div class="col p-4 d-flex flex-column position-static">
                         <strong v-for="category in post.categories" class="d-inline-block mb-2 text-primary">
                             {{ category.name }}
@@ -18,6 +19,11 @@
                         <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }"
                                      class="stretched-link">Continue reading
                         </router-link>
+
+                    </div>
+                    <div v-if="post.image" class="col-auto d-none d-lg-block">
+                        <img :src="getImageUrl(post)"/>
+
                     </div>
                 </div>
             </div>
@@ -35,11 +41,8 @@ const posts = ref();
 
 function getImageUrl(post) {
     let image
-    if (post.resized_image.length > 0) {
-        image = post.resized_image
-    } else {
-        image = post.original_image
-    }
+    image = post.image
+
     return new URL(image, import.meta.url).href
 }
 

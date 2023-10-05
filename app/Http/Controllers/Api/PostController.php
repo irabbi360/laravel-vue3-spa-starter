@@ -8,6 +8,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Post;
 
+
 class PostController extends Controller
 {
     public function index()
@@ -54,6 +55,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
+
         $this->authorize('post-create');
 
         $validatedData = $request->validated();
@@ -83,17 +85,24 @@ class PostController extends Controller
         }
     }
 
-    public function update(Post $post, StorePostRequest $request)
+    public function update($id, StorePostRequest $request)
     {
+
         $this->authorize('post-edit');
+        $post = Post::findOrFail($id);
+
         if ($post->user_id !== auth()->id() && !auth()->user()->hasPermissionTo('post-all')) {
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own posts']);
         } else {
             $post->update($request->validated());
-//            error_log(json_encode($request->categories));
 
             $category = Category::findMany($request->categories);
             $post->categories()->sync($category);
+
+            if ($request->hasFile('thumbnail')) {
+                error_log('has file');
+                $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('images');
+            }
             return new PostResource($post);
         }
     }
@@ -111,9 +120,42 @@ class PostController extends Controller
 
     public function getPosts()
     {
-        $posts = Post::with('categories')->with('media')->latest()->paginate();
-        return PostResource::collection($posts);
+        $orderColumn = request('order_column', 'created_at');
+        if (!in_array($orderColumn, ['id', 'title', 'created_at'])) {
+            $orderColumn = 'created_at';
+        }
+        $orderDirection = request('order_direction', 'desc');
+        if (!in_array($orderDirection, ['asc', 'desc'])) {
+            $orderDirection = 'desc';
+        }
+        $posts = Post::with('categories', 'user', 'media')
+            ->whereHas('categories', function ($query) {
+                if (request('search_category')) {
+                    $categories = explode(",", request('search_category'));
+                    $query->whereIn('categories.id', $categories);
+                }
+            })
+            ->when(request('search_id'), function ($query) {
+                $query->where('id', request('search_id'));
+            })
+            ->when(request('search_title'), function ($query) {
+                $query->where('title', 'like', '%' . request('search_title') . '%');
+            })
+            ->when(request('search_content'), function ($query) {
+                $query->where('content', 'like', '%' . request('search_content') . '%');
+            })
+            ->when(request('search_global'), function ($query) {
+                $query->where(function ($q) {
+                    $q->where('id', request('search_global'))
+                        ->orWhere('title', 'like', '%' . request('search_global') . '%')
+                        ->orWhere('content', 'like', '%' . request('search_global') . '%');
 
+                });
+            })
+            ->orderBy($orderColumn, $orderDirection)
+            ->latest()
+            ->paginate(50);
+        return PostResource::collection($posts);
     }
 
     public function getCategoryByPosts($id)

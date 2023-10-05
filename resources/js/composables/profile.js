@@ -6,6 +6,7 @@ export default function useProfile() {
     const profile = ref({
         name: '',
         email: '',
+        avatar: ''
     })
 
     const router = useRouter()
@@ -15,10 +16,6 @@ export default function useProfile() {
 
     const getProfile = async () => {
         profile.value = store.getters["auth/user"]
-        // axios.get('/api/user')
-        //     .then(({data}) => {
-        //         profile.value = data.data;
-        //     })
     }
 
     const updateProfile = async (profile) => {
@@ -27,10 +24,13 @@ export default function useProfile() {
         isLoading.value = true
         validationErrors.value = {}
 
-        axios.put('/api/user', profile)
+        //axios automatically serilaizes into form if content type form or use putForm
+        //https://axios-http.com/docs/multipart
+        axios.postForm('/api/profile', profile)
             .then(({data}) => {
                 if (data.success) {
                     store.commit('auth/SET_USER', data.data)
+                    router.push({name: 'admin.index'})
                     // router.push({name: 'profile.index'})
                     swal({
                         icon: 'success',

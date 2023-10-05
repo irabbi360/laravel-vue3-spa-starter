@@ -27,7 +27,11 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::apiResource('permissions', PermissionController::class);
     Route::get('category-list', [CategoryController::class, 'getList']);
     Route::get('/user', [ProfileController::class, 'user']);
-    Route::put('/user', [ProfileController::class, 'update']);
+    Route::post('update-posts/{id}', [PostController::class, 'update']);
+
+    //php doesn't recognize miltipart form except using post method so when we
+    //want to update we still use post method -- really still a prob in 2023
+    Route::post('/profile', [ProfileController::class, 'update']);
 
     Route::get('abilities', function(Request $request) {
         return $request->user()->roles()->with('permissions')

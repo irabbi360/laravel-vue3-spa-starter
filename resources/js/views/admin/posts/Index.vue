@@ -124,7 +124,7 @@
                                     {{ post.title }}
                                 </td>
                                 <td class="px-6 py-4 text-sm">
-                                    <img :src="post.original_image" alt="image" height="70">
+                                    <img v-if="post.image" :src="getImageUrl(post)" alt="image" height="70">
                                 </td>
                                 <td class="px-6 py-4 text-sm">
                                     <div v-for="category in post.categories">
@@ -179,6 +179,12 @@
         getPosts()
         getCategoryList()
     })
+
+    function getImageUrl(post) {
+        let image
+        image = post.image
+        return new URL(image, import.meta.url).href
+    }
     const updateOrdering = (column) => {
         orderColumn.value = column;
         orderDirection.value = (orderDirection.value === 'asc') ? 'desc' : 'asc';
