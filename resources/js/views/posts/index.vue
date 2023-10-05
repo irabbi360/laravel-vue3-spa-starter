@@ -78,11 +78,6 @@ const orderDirection = ref('desc')
 const {posts, getDisplayPosts} = usePosts()
 const {categoryList, getCategoryList} = useCategories()
 
-=======
-import {ref, onMounted} from 'vue'
-
-const posts = ref();
-
 
 const sortColumnsOptions = ['title', 'created_at']
 const sortOrderOptions = ['asc', 'desc']
@@ -93,7 +88,6 @@ function getImageUrl(post) {
 }
 
 onMounted(() => {
-
     getDisplayPosts()
     getCategoryList()
 })
@@ -162,8 +156,5 @@ watch(search_global, _.debounce((current, previous) => {
         current
     )
 }, 200))
-    axios.get('/api/get-posts').then(({data}) => {
-        posts.value = data;
-    })
-})
+
 </script>
