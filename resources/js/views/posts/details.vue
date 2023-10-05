@@ -5,7 +5,7 @@
             <h3 class="pb-4 mb-4 fst-italic border-bottom">
                 {{ post?.title }}
             </h3>
-                <p class="blog-post-meta">Posted: {{formatDate(post?.created_at)}} By: <a href="#">{{ post?.user?.name}}</a></p>
+                <p class="blog-post-meta">Posted: {{formatDate(post?.created_at)}} By: {{ post?.user?.name}}</p>
                 <article class="blog-post">
                 <div v-for="image in post?.media">
                     <img :src="image.original_url" alt="image" class="img-fluid">

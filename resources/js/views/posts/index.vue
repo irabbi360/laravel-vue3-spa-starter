@@ -48,7 +48,7 @@
                             {{ category.name }}
                         </strong>
                         <h3 class="mb-0">{{ post.title }}</h3>
-                        <p class="blog-post-meta">Posted: {{formatDate(post.created_at)}} By: <a href="#">{{ post?.user?.name}}</a></p>
+                        <p class="blog-post-meta">Posted: {{formatDate(post.created_at)}} By: {{ post?.user?.name}}</p>
                         <p class="card-text mb-auto">{{ post.content.substring(0, 90) + "..." }}</p>
                         <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }"
                                      class="stretched-link">Continue reading
