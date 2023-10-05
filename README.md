@@ -37,6 +37,14 @@ The following Sanctum features are implemented in this Vue SPA:
 - ✅ Automatic Api Documentation  -- route  /api-docs
 
 ## How To Use
+## Requeriments
+
+| --- | Mínimum | Recommended |
+| --- | --- | --- |
+| Node JS | 18.x | 1720.x |
+| PHP | 8.1 | 8.2 |
+| Composer|
+| Mysql |
 #### Clone the repository
 
 ```bash
@@ -80,6 +88,15 @@ npm run dev or yarn dev
 
 ```bash
 npm run build or yarn build
+```
+
+Access credentials
+
+```bash
+usuario: admin@demo.com
+senha: 12345678
+role: admin
+
 ```
 
 ## Email Verification
