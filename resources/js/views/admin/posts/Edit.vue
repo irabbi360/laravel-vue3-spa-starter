@@ -24,7 +24,7 @@
                             <label for="post-content" class="form-label">
                                 Content
                             </label>
-                            <textarea v-model="post.content" id="post-content" class="form-control"></textarea>
+                            <TextEditorComponent v-model="post.content" />
                             <div class="text-danger mt-1">
                                 {{ errors.content }}
                             </div>
@@ -84,6 +84,7 @@
     import usePosts from "@/composables/posts";
     import { useForm, useField, defineRule } from "vee-validate";
     import { required, min } from "@/validation/rules"
+    import TextEditorComponent from "@/components/TextEditorComponent.vue";
     defineRule('required', required)
     defineRule('min', min);
 
