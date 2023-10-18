@@ -132,7 +132,7 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 text-sm">
-                                    {{ post.content }}
+                                    <div v-html="post.content.slice(0, 100) + '...'"></div>
                                 </td>
                                 <td class="px-6 py-4 text-sm">
                                     {{ post.created_at }}

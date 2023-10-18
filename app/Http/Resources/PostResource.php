@@ -25,7 +25,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'categories' => $this->categories,
-            'content' => substr($this->content, 0, 50) . '...',
+            'content' => $this->content,
             'original_image' => count($this->getMedia('*')) > 0 ? $this->getMedia('*')[0]->getUrl() : null,
             'resized_image' => $resized_image,
             'created_at' => $this->created_at->toDateString()

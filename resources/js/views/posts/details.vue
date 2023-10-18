@@ -11,7 +11,7 @@
                 <div v-for="image in post?.media">
                     <img :src="image.original_url" alt="image" class="img-fluid">
                 </div>
-                <p>{{ post?.content }}</p>
+                <div class="mt-4" v-html="post?.content"></div>
             </article>
 
             <nav class="blog-pagination" aria-label="Pagination">

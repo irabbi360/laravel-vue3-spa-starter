@@ -24,7 +24,7 @@
                             <label for="post-content" class="form-label">
                                 Content
                             </label>
-                            <textarea v-model="post.content" id="post-content" class="form-control"></textarea>
+                            <TextEditorComponent v-model="post.content" />
                             <div class="text-danger mt-1">
                                 {{ errors.content }}
                             </div>
@@ -76,6 +76,7 @@
 </template>
 <script setup>
     import { onMounted, reactive } from "vue";
+    import TextEditorComponent from "@/components/TextEditorComponent.vue";
     import useCategories from "@/composables/categories";
     import usePosts from "@/composables/posts";
     import { useForm, useField, defineRule } from "vee-validate";
