@@ -2,6 +2,15 @@
 
 A simple and clean boilerplate to start a new SPA project with authentication, user, roles, permissions management and more features. This boilerplate uses the following tools:
 
+## Screenshots
+- Blog Post UI
+  ![Alt text](screenshots/posts-edit.png?raw=true "Blog Post")
+
+
+- API Documents
+  ![Alt text](screenshots/api-docs.png?raw=true "Blog Post")
+
+
 - [Laravel 10.x](https://github.com/laravel/laravel)
 - [Laravel Sanctum](https://laravel.com/docs/10.x/sanctum)
 - [Vue 3](https://github.com/vuejs/vue)
