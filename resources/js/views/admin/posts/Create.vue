@@ -90,6 +90,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <DropZone paramName="thefile"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -97,8 +100,9 @@
     </form>
 </template>
 <script setup>
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import TextEditorComponent from "@/components/TextEditorComponent.vue";
+import DropZone from "@/components/DropZone.vue";
 import useCategories from "@/composables/categories";
 import usePosts from "@/composables/posts";
 import {useForm, useField, defineRule} from "vee-validate";
@@ -106,6 +110,8 @@ import {required, min} from "@/validation/rules"
 
 defineRule('required', required)
 defineRule('min', min);
+
+const dropZoneActive = ref(true)
 
 // Define a validation schema
 const schema = {
@@ -137,4 +143,5 @@ function submitForm() {
 onMounted(() => {
     getCategoryList()
 })
+
 </script>

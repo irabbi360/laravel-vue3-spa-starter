@@ -21,6 +21,7 @@
         "@casl/vue": "^2.2.1",
         "@ckeditor/ckeditor5-build-classic": "^40.0.0",
         "@ckeditor/ckeditor5-vue": "^5.1.0",
+        "dropzone": "^6.0.0-beta.2",
         "js-cookie": "^3.0.5",
         "laravel-vue-pagination": "^4.1.1",
         "vee-validate": "^4.11.7",
