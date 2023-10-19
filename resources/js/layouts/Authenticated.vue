@@ -2,7 +2,7 @@
     <AdminNavbar />
     <div class="d-flex align-items-stretch w-100">
         <AdminSidebar />
-        <div class="container">
+        <div class="container-fluid">
             <Breadcrumb class="row justify-content-center mt-4" :crumbs="crumbs" @selected="selected" />
             <!-- <h2 class="fw-semibold">
                 {{ crumbs }}

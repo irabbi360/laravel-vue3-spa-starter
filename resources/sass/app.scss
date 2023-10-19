@@ -2,10 +2,14 @@
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
 // Variables
-@import 'variables';
+//@import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+body {
+    background-color: #f0f2fc !important;
+}
 
 a {
     text-decoration: none !important;
