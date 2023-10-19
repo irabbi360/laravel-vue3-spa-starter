@@ -26,12 +26,12 @@
             <div v-else>Drop files here or <u>click here</u> to upload.</div>
         </label>
 
-        <div class="preview-container mt-4" v-if="thumbnail.length">
-            <div v-for="(file, index) in thumbnail" :key="file.name" class="preview-card">
+        <div class="preview-container mt-4" v-if="thumbnail || modelValue">
+            <div :key="thumbnail.name" class="preview-card">
                 <div>
-                    <img class="preview-img" :src="generateThumbnail(file)"/>
-                    <p :title="file.name">
-                        {{ makeName(file.name) }}
+                    <img class="preview-img" :src="generateThumbnail(thumbnail)"/>
+                    <p :title="thumbnail.name">
+                        {{ makeName(thumbnail.name) }}
                     </p>
                 </div>
                 <div>
@@ -57,7 +57,7 @@ const props = defineProps({
     modelValue: String
 });
 
-const thumbnail = ref([])
+const thumbnail = ref('')
 const isDragging = ref(false)
 const refFiles = ref(null)
 
@@ -68,19 +68,25 @@ const onChange = (() => {
 })
 
 const generateThumbnail = ((file) => {
-    let fileSrc = URL.createObjectURL(file);
-    setTimeout(() => {
-        URL.revokeObjectURL(fileSrc);
-    }, 1000);
-    return fileSrc;
+    if (props.modelValue) {
+        return props.modelValue
+    } else  {
+        let fileSrc = URL.createObjectURL(file);
+        setTimeout(() => {
+            URL.revokeObjectURL(fileSrc);
+        }, 1000);
+        return fileSrc;
+    }
 })
 
 const makeName = ((name) => {
-    return (
-        name.split(".")[0].substring(0, 3) +
-        "..." +
-        name.split(".")[name.split(".").length - 1]
-    );
+    if (!props.modelValue) {
+        return (
+            name.split(".")[0].substring(0, 3) +
+            "..." +
+            name.split(".")[name.split(".").length - 1]
+        );
+    }
 })
 
 const remove = ((i) => {
