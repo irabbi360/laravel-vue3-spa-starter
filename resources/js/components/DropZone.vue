@@ -1,91 +1,141 @@
 <template>
-    <div>
-        <div ref="dropRef" class="dropzone custom-dropzone"></div>
-        <div class="dropzone preview-container"></div>
+    <div class="main">
+        <div
+            class="dropzone-container"
+            @dragover="dragover"
+            @dragleave="dragleave"
+            @drop="drop"
+        >
+            <input
+                type="file"
+                multiple
+                name="file"
+                id="fileInput"
+                class="hidden-input"
+                @change="onChange"
+                ref="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+            />
+
+            <label for="fileInput" class="file-label text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+                </svg>
+                <div v-if="isDragging">Release to drop files here.</div>
+                <div v-else>Drop files here or <u>click here</u> to upload.</div>
+            </label>
+
+            <div class="preview-container mt-4" v-if="files.length">
+                <div v-for="file in files" :key="file.name" class="preview-card">
+                    <div>
+                        <img class="preview-img" :src="generateThumbnail(file)" />
+                        <p :title="file.name">
+                            {{ makeName(file.name) }}
+                        </p>
+                    </div>
+                    <div>
+                        <a
+                            href="javascript:void(0)"
+                            class="ml-2"
+                            type="button"
+                            @click="remove(files.indexOf(file))"
+                            title="Remove file"
+                        >
+                            <b>&times;</b>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-
-import { ref, onMounted, defineComponent } from 'vue'
-import { Dropzone } from 'dropzone'
-import { useStore } from 'vuex'
-
-export default defineComponent({
-    name: 'Dropzone',
-    props:['paramName'],
-    setup(props) {
-        //using vuex
-        const store = useStore()
-
-        //getting the div container
-        const dropRef = ref(null)
-
-        //creating html custom preview for uploading files
-        const customPreview = `
-        <div class="d-flex flex-wrap dz-preview dz-processing dz-image-preview dz-complete mt-3">
-          <div class="dz-image">
-            <img data-dz-thumbnail>
-          </div>
-          <div class="dz-details">
-            <div class="dz-size"><span data-dz-size></span></div>
-              <div class="dz-filename"><span data-dz-name></span></div>
-            </div>
-            <div class="dz-progress">
-              <span class="dz-upload" data-dz-uploadprogress></span>
-            </div>
-            <div class="dz-error-message"><span data-dz-errormessage></span></div>
-            <div class="dz-success-mark">
-                <i class="bi bi-check-circle-fill" style="font-size: 2rem; color: green;"></i>
-            </div>
-            <div class="dz-error-mark">
-                <i class="bi bi-exclamation-circle-fill" style="font-size: 2rem; color: red;"></i>
-          </div>
-        </div>
-      `
-
-        onMounted(() => {
-            // Configuring Dropzone and Adding to div element
-            if(dropRef.value !== null) {
-                new Dropzone(dropRef.value, {
-                    url: 'https://backendUrl/uploadFile/',//backend url
-                    method: 'POST',
-                    headers:{Authorization: 'Bearer ' + store.state.token,}, // getting API access token form vuex store to be sent with request
-                    maxFiles: 1,
-                    paramName:props.paramName, // input name
-                    acceptedFiles:".jpg,.png,.jpeg,.webp, .gif", // accepted files
-                    previewTemplate: customPreview,
-                    previewsContainer: dropRef.value.parentElement.querySelector('.preview-container'),
-                })
-                // customizing the input field of dropzone
-                if(dropRef.value.querySelector('.dz-default')) {
-                    dropRef.value.querySelector('.dz-default').innerHTML = `
-              <div style="display: flex; justify-content: center;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cloud-arrow-up" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2z"/>
-                  <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
-                </svg>
-              </div>
-              <p style="text-align: center; margin: 0;">Drag and drop thumbnail to upload</p>
-            `
-                }
-            }
-        })
-
+export default {
+    data() {
         return {
-            dropRef
-        }
-    }
-})
+            isDragging: false,
+            files: [],
+        };
+    },
+    methods: {
+        onChange() {
+            this.files = [...this.$refs.file.files];
+        },
+
+        generateThumbnail(file) {
+            let fileSrc = URL.createObjectURL(file);
+            setTimeout(() => {
+                URL.revokeObjectURL(fileSrc);
+            }, 1000);
+            return fileSrc;
+        },
+
+        makeName(name) {
+            return (
+                name.split(".")[0].substring(0, 3) +
+                "..." +
+                name.split(".")[name.split(".").length - 1]
+            );
+        },
+
+        remove(i) {
+            this.files.splice(i, 1);
+        },
+
+        dragover(e) {
+            e.preventDefault();
+            this.isDragging = true;
+        },
+
+        dragleave() {
+            this.isDragging = false;
+        },
+
+        drop(e) {
+            e.preventDefault();
+            this.$refs.file.files = e.dataTransfer.files;
+            this.onChange();
+            this.isDragging = false;
+        },
+    },
+};
 </script>
 
 <style scoped>
-.custom-dropzone {
-    border-style: dashed;
-    border-width: 1px;
-    padding: 20px;
-    color:rgb(114, 114, 114);
+.dropzone-container {
+    padding: 4rem;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+}
+.hidden-input {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+}
+.file-label {
+    font-size: 20px;
+    display: block;
     cursor: pointer;
 }
-
+.preview-container {
+    display: flex;
+    margin-top: 2rem;
+}
+.preview-card {
+    display: flex;
+    border: 1px solid #a2a2a2;
+    padding: 5px;
+    margin-left: 5px;
+}
+.preview-img {
+    width: 50px;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid #a2a2a2;
+    background-color: #a2a2a2;
+}
 </style>

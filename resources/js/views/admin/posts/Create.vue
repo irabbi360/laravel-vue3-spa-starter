@@ -134,6 +134,8 @@ const post = reactive({
     thumbnail: ''
 })
 
+const thefile = ref('')
+
 function submitForm() {
     validate().then(form => {
         if (form.valid) storePost(post)
