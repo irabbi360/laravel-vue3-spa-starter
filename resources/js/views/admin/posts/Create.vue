@@ -91,7 +91,7 @@
                             </div>
                         </div>
                         <div>
-                            <DropZone paramName="thefile"/>
+                            <DropZone v-model="post.thumbnail"/>
                         </div>
                     </div>
                 </div>
