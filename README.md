@@ -2,6 +2,10 @@
 
 A simple and clean boilerplate to start a new SPA project with authentication, user, roles, permissions management and more features. This boilerplate uses the following tools:
 
+[![](https://img.shields.io/badge/vue.js-v3.3-04C690.svg)](https://vuejs.org)
+[![](https://img.shields.io/badge/Laravel-v10.26.2-ff2e21.svg)](https://laravel.com)
+
+
 ## Screenshots
 - Blog Post UI
   ![Alt text](screenshots/posts-edit.png?raw=true "Blog Post")
