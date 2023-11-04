@@ -6,15 +6,6 @@ A simple and clean boilerplate to start a new SPA project with authentication, u
 [![](https://img.shields.io/badge/Laravel-v10.26.2-ff2e21.svg)](https://laravel.com)
 
 
-## Screenshots
-- Blog Post UI
-  ![Alt text](screenshots/posts-edit.png?raw=true "Blog Post")
-
-
-- API Documents
-  ![Alt text](screenshots/api-docs.png?raw=true "Blog Post")
-
-
 - [Laravel 10.x](https://github.com/laravel/laravel)
 - [Laravel Sanctum](https://laravel.com/docs/10.x/sanctum)
 - [Vue 3](https://github.com/vuejs/vue)
