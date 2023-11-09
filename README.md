@@ -4,7 +4,9 @@ A simple and clean boilerplate to start a new SPA project with authentication, u
 
 [![](https://img.shields.io/badge/vue.js-v3.3-04C690.svg)](https://vuejs.org)
 [![](https://img.shields.io/badge/Laravel-v10.26.2-ff2e21.svg)](https://laravel.com)
-
+[![](https://img.shields.io/badge/bootstrap-v5.3-712cf9.svg)](https://getbootstrap.com)
+[![](https://img.shields.io/badge/axios-v1.5-5A29E4.svg)](https://axios-http.com)
+[![](https://img.shields.io/badge/vite-v4.4-646cff.svg)](https://vitejs.dev)
 
 - [Laravel 10.x](https://github.com/laravel/laravel)
 - [Laravel Sanctum](https://laravel.com/docs/10.x/sanctum)
