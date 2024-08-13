@@ -17,20 +17,20 @@
 
 <script setup>
 import {computed} from "vue";
-import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 import { loadMessages } from '@/plugins/i18n'
+import {useLangStore} from "@/store/lang";
 
-const store = useStore();
+const store = useLangStore();
 const i18n = useI18n({useScope: "global"});
 
-const locale = computed(() => store.getters["lang/locale"])
-const locales = computed(() => store.getters["lang/locales"])
+const locale = computed(() => store.langLocale)
+const locales = computed(() => store.langLocales)
 
 function setLocale(locale) {
     if (i18n.locale !== locale) {
         loadMessages(locale)
-        store.dispatch('lang/setLocale', { locale })
+        store.setLocale(locale)
     }
 }
 

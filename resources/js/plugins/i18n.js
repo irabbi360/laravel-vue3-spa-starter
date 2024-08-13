@@ -1,5 +1,5 @@
-import { createI18n } from 'vue-i18n'
-import store from '../store'
+import {createI18n} from 'vue-i18n'
+import {useLangStore} from "@/store/lang";
 
 const i18n = createI18n({
     legacy: false, // you must set `false`, to use Composition API
@@ -13,7 +13,7 @@ const i18n = createI18n({
 /**
  * @param {String} locale
  */
-export async function loadMessages (locale) {
+export async function loadMessages(locale) {
     if (Object.keys(i18n.global.getLocaleMessage(locale)).length === 0) {
         const messages = await import(/* webpackChunkName: '' */ `../lang/${locale}.json`);
         i18n.global.setLocaleMessage(locale, messages);
@@ -24,8 +24,21 @@ export async function loadMessages (locale) {
     }
 }
 
-;(async function () {
-    await loadMessages(store.getters['lang/locale'])
-})()
+(async () => {
+    try {
+        // Load initial locale message (e.g., 'en')
+        await loadMessages('en');
+
+        const store = await useLangStore();
+        const { langLocale } = store;
+
+        // Update messages based on store locale
+        if (langLocale !== i18n.locale) {
+            await loadMessages(langLocale);
+        }
+    } catch (error) {
+        console.error('Error loading messages:', error);
+    }
+})();
 
 export default i18n;
