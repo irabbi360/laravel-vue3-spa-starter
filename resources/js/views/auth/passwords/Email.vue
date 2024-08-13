@@ -9,7 +9,7 @@
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">{{ $t('email') }}</label>
-                                    <input v-model="forgotForm.email" id="email" type="email" class="form-control" required autofocus autocomplete="username">
+                                    <input v-model="forgotForm.email" id="email" type="email" class="form-control" autofocus autocomplete="username">
                                     <!-- Validation Errors -->
                                     <div class="text-danger mt-1">
                                         <div v-for="message in validationErrors?.email">

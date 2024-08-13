@@ -35,7 +35,7 @@
                                     </label>
                                     <input v-model="registerForm.password" id="password" type="password" class="form-control" autocomplete="current-password">
                                     <!-- Validation Errors -->
-                                    <div class="text-danger-600 mt-1">
+                                    <div class="text-danger mt-1">
                                         <div v-for="message in validationErrors?.password">
                                             {{ message }}
                                         </div>
