@@ -30,8 +30,6 @@
         "vue-multiselect-listbox": "^0.4.5",
         "vue-router": "^4.2.5",
         "vue-select": "^4.0.0-beta.5",
-        "vue-sweetalert2": "^5.0.5",
-        "vuex": "^4.1.0",
-        "vuex-persistedstate": "^4.1.0"
+        "vue-sweetalert2": "^5.0.5"
     }
 }

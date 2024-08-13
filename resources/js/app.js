@@ -4,7 +4,6 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { Bootstrap5Pagination } from 'laravel-vue-pagination';
-import store from './store'
 import router from './routes/index'
 import VueSweetalert2 from "vue-sweetalert2";
 import { abilitiesPlugin } from '@casl/vue';
@@ -31,7 +30,6 @@ app.component('example-component', ExampleComponent);
 
 app.use(pinia)
 app.use(router)
-app.use(store)
 app.use(VueSweetalert2)
 app.use(i18n)
 app.use(abilitiesPlugin, ability)
