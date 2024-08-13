@@ -107,7 +107,8 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role) {
+    public function destroy(Role $role)
+    {
         $this->authorize('role-delete');
         $role->delete();
 

@@ -63,13 +63,11 @@ class PostController extends Controller
         $categories = explode(",", $request->categories);
         $category = Category::findMany($categories);
         $post->categories()->attach($category);
-//        try {
+
         if ($request->hasFile('thumbnail')) {
             $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('images');
         }
-//        } catch (Exception $e) {
-//            error_log($e->getMessage());
-//        }
+
         return new PostResource($post);
     }
 
@@ -90,7 +88,6 @@ class PostController extends Controller
             return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own posts']);
         } else {
             $post->update($request->validated());
-//            error_log(json_encode($request->categories));
 
             $category = Category::findMany($request->categories);
             $post->categories()->sync($category);
