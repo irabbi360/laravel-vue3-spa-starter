@@ -1,30 +1,21 @@
 import Cookies from 'js-cookie'
+import {defineStore} from "pinia";
+import {ref} from "vue";
 
-const { locale, locales } = window.config
+export const useLangStore = defineStore('lang', () => {
+    const { locale, locales } = window.config
+    const langLocale = ref(getLocale(locales, locale))
+    const langLocales = locales
 
-export default {
-    namespaced: true,
-    state: {
-        locale: getLocale(locales, locale),
-        locales: locales
-    },
-    getters: {
-        locale: state => state.locale,
-        locales: state => state.locales
-    },
-    mutations: {
-        SET_LOCALE(state, { locale }) {
-            state.locale = locale
-        }
-    },
-    actions: {
-        setLocale ({ commit }, { locale }) {
-            commit('SET_LOCALE', { locale })
-
-            Cookies.set('locale', locale, { expires: 365 })
-        }
+    const setLocale = (newLocale) => {
+        langLocale.value = newLocale
+        Cookies.set('locale', newLocale, { expires: 365 })
     }
-}
+
+    return { langLocale, langLocales, setLocale }
+}, {
+    persist: true
+})
 
 /**
  * @param  {String[]} locales

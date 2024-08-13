@@ -23,13 +23,13 @@
         "@ckeditor/ckeditor5-vue": "^5.1.0",
         "js-cookie": "^3.0.5",
         "laravel-vue-pagination": "^4.1.1",
+        "pinia": "^2.2.1",
+        "pinia-plugin-persistedstate": "^3.2.1",
         "vee-validate": "^4.11.7",
         "vue-i18n": "^9.4.1",
         "vue-multiselect-listbox": "^0.4.5",
         "vue-router": "^4.2.5",
         "vue-select": "^4.0.0-beta.5",
-        "vue-sweetalert2": "^5.0.5",
-        "vuex": "^4.1.0",
-        "vuex-persistedstate": "^4.1.0"
+        "vue-sweetalert2": "^5.0.5"
     }
 }

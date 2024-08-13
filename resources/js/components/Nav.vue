@@ -44,12 +44,12 @@
 </template>
 
 <script setup>
-import { useStore} from "vuex";
 import useAuth from "@/composables/auth";
 import {computed} from "vue";
 import LocaleSwitcher from "../components/LocaleSwitcher.vue";
+import {useAuthStore} from "@/store/auth";
+const auth = useAuthStore()
 
-    const store = useStore();
-    const user = computed(() => store.getters["auth/user"])
-    const { processing, logout } = useAuth();
+const user = computed(() => auth.user);
+const { processing, logout } = useAuth();
 </script>
