@@ -9,7 +9,7 @@
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">{{ $t('email') }}</label>
-                                    <input v-model="resetForm.email" id="email" type="email" class="form-control" required autofocus autocomplete="email" readonly disabled>
+                                    <input v-model="resetForm.email" id="email" type="email" class="form-control" autofocus autocomplete="email" readonly disabled>
                                     <!-- Validation Errors -->
                                     <div class="text-danger mt-1">
                                         <div v-for="message in validationErrors?.email">
@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">{{ $t('password') }}</label>
-                                    <input v-model="resetForm.password" id="password" type="password" class="form-control" required>
+                                    <input v-model="resetForm.password" id="password" type="password" class="form-control">
                                     <!-- Validation Errors -->
                                     <div class="text-danger mt-1">
                                         <div v-for="message in validationErrors?.password">
@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">{{ $t('confirm_password') }}</label>
-                                    <input v-model="resetForm.password_confirmation" id="password_confirmation" type="password" class="form-control" required>
+                                    <input v-model="resetForm.password_confirmation" id="password_confirmation" type="password" class="form-control">
                                     <!-- Validation Errors -->
                                     <div class="text-danger mt-1">
                                         <div v-for="message in validationErrors?.password_confirmation">

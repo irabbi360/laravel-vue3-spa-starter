@@ -9,7 +9,7 @@
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">{{ $t('email') }}</label>
-                                    <input v-model="loginForm.email" id="email" type="email" class="form-control" required autofocus autocomplete="username">
+                                    <input v-model="loginForm.email" id="email" type="email" class="form-control" autofocus autocomplete="username">
                                     <!-- Validation Errors -->
                                     <div class="text-danger mt-1">
                                         <div v-for="message in validationErrors?.email">
@@ -22,9 +22,9 @@
                                     <label for="password" class="form-label">
                                         {{ $t('password') }}
                                     </label>
-                                    <input v-model="loginForm.password" id="password" type="password" class="form-control" required autocomplete="current-password">
+                                    <input v-model="loginForm.password" id="password" type="password" class="form-control" autocomplete="current-password">
                                     <!-- Validation Errors -->
-                                    <div class="text-danger-600 mt-1">
+                                    <div class="text-danger mt-1">
                                         <div v-for="message in validationErrors?.password">
                                             {{ message }}
                                         </div>
