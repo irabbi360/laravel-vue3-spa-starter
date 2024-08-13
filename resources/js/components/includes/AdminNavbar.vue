@@ -16,14 +16,16 @@
                             Posts
                         </router-link>
                     </li> -->
-                    <LocaleSwitcher />
+                    <LocaleSwitcher/>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
                             Hi, {{ user.name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm">
-                            <li><router-link :to="{ name: 'profile.index' }" class="dropdown-item">Profile</router-link></li>
+                            <li>
+                                <router-link :to="{ name: 'profile.index' }" class="dropdown-item">Profile</router-link>
+                            </li>
                             <li><a class="dropdown-item" href="#">Setting</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -40,13 +42,14 @@
 
 <script setup>
 import {computed} from "vue";
-import { useStore } from 'vuex';
 import useAuth from "@/composables/auth";
 import LocaleSwitcher from "../../components/LocaleSwitcher.vue";
+import {useAuthStore} from "@/store/auth";
 
-    const store = useStore();
-    const user = computed(() => store.state.auth.user)
-    const {processing, logout} = useAuth();
+const auth = useAuthStore()
+
+const user = computed(() => auth.user)
+const {processing, logout} = useAuth();
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@ import { ref, reactive, inject } from 'vue'
 import { useRouter } from "vue-router";
 import { AbilityBuilder, createMongoAbility } from '@casl/ability';
 import { ABILITY_TOKEN } from '@casl/vue';
-import store from '../store'
+import {useAuthStore} from "@/store/auth";
 
 let user = reactive({
     name: '',
@@ -10,6 +10,7 @@ let user = reactive({
 })
 
 export default function useAuth() {
+    const authStore = useAuthStore();
     const processing = ref(false)
     const validationErrors = ref({})
     const router = useRouter()
@@ -48,7 +49,8 @@ export default function useAuth() {
 
         await axios.post('/login', loginForm)
             .then(async response => {
-                await store.dispatch('auth/getUser')
+                await authStore.getUser()
+                // await authStore.dispatch('auth/getUser')
                 await loginUser()
                 swal({
                     icon: 'success',
@@ -141,14 +143,14 @@ export default function useAuth() {
     }
 
     const loginUser = () => {
-        user = store.state.auth.user
+        user = authStore.user
         // Cookies.set('loggedIn', true)
         getAbilities()
     }
 
     const getUser = async () => {
-        if (store.getters['auth/authenticated']) {
-            await store.dispatch('auth/getUser')
+        if (authStore.authenticated) {
+            await authStore.getUser()
             await loginUser()
         }
     }
@@ -162,7 +164,7 @@ export default function useAuth() {
             .then(response => {
                 user.name = ''
                 user.email = ''
-                store.dispatch('auth/logout')
+                authStore.logout()
                 router.push({ name: 'auth.login' })
             })
             .catch(error => {

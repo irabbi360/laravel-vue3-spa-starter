@@ -1,6 +1,8 @@
 import './bootstrap';
 
 import { createApp } from 'vue';
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { Bootstrap5Pagination } from 'laravel-vue-pagination';
 import store from './store'
 import router from './routes/index'
@@ -14,6 +16,9 @@ import i18n from "./plugins/i18n";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-select/dist/vue-select.css';
 
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
+
 const app = createApp({
     created() {
         useAuth().getUser()
@@ -24,7 +29,7 @@ import ExampleComponent from './components/ExampleComponent.vue';
 
 app.component('example-component', ExampleComponent);
 
-
+app.use(pinia)
 app.use(router)
 app.use(store)
 app.use(VueSweetalert2)

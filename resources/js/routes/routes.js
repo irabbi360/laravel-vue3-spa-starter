@@ -1,5 +1,4 @@
-import Cookies from 'js-cookie'
-import store from "../store";
+import {useAuthStore} from "@/store/auth";
 
 const AuthenticatedLayout = () => import('../layouts/Authenticated.vue')
 const GuestLayout = ()  => import('../layouts/Guest.vue');
@@ -9,8 +8,9 @@ const PostsCreate  = ()  => import('../views/admin/posts/Create.vue');
 const PostsEdit  = ()  => import('../views/admin/posts/Edit.vue');
 
 function requireLogin(to, from, next) {
+    const auth = useAuthStore()
     let isLogin = false;
-    isLogin = !!store.state.auth.authenticated;
+    isLogin = !!auth.authenticated;
 
     if (isLogin) {
         next()
@@ -20,8 +20,9 @@ function requireLogin(to, from, next) {
 }
 
 function guest(to, from, next) {
+    const auth = useAuthStore()
     let isLogin;
-    isLogin = !!store.state.auth.authenticated;
+    isLogin = !!auth.authenticated;
 
     if (isLogin) {
         next('/')
