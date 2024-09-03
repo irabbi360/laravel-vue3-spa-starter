@@ -12,7 +12,7 @@ A simple and clean boilerplate to start a new SPA project with authentication, u
 - [Laravel Sanctum](https://laravel.com/docs/10.x/sanctum)
 - [Vue 3](https://github.com/vuejs/vue)
 - [Vue Router](https://router.vuejs.org/)
-- [Vuex](https://vuex.vuejs.org/)
+- [Pinia](https://pinia.vuejs.org/)
 - [Bootstrap](https://getbootstrap.com/)
 - [Vue I18n](https://vue-i18n.intlify.dev)
 - [Laravel Request Docs](https://github.com/rakutentech/laravel-request-docs)
