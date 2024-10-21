@@ -1,4 +1,4 @@
-## Laravel Vue.js 3 SPA Starter Boilerplate
+## Laravel 11 Vue.js 3 SPA Starter Boilerplate
 
 A simple and clean boilerplate to start a new SPA project with authentication, user, roles, permissions management and more features. This boilerplate uses the following tools:
 
@@ -8,8 +8,8 @@ A simple and clean boilerplate to start a new SPA project with authentication, u
 [![](https://img.shields.io/badge/axios-v1.5-5A29E4.svg)](https://axios-http.com)
 [![](https://img.shields.io/badge/vite-v4.4-646cff.svg)](https://vitejs.dev)
 
-- [Laravel 10.x](https://github.com/laravel/laravel)
-- [Laravel Sanctum](https://laravel.com/docs/10.x/sanctum)
+- [Laravel 11.x](https://github.com/laravel/laravel)
+- [Laravel Sanctum](https://laravel.com/docs/11.x/sanctum)
 - [Vue 3](https://github.com/vuejs/vue)
 - [Vue Router](https://router.vuejs.org/)
 - [Pinia](https://pinia.vuejs.org/)
@@ -23,7 +23,7 @@ Laravel is accessible, and powerful, and provides tools required for large, robu
 
 The following Sanctum features are implemented in this Vue SPA:
 
-- ✅ Laravel 10
+- ✅ Laravel 11
 - ✅ Vue 3
 - ✅ VueRouter
 - ✅ Pinia
@@ -92,6 +92,10 @@ npm run build or yarn build
 ## Email Verification
 
 To enable email verification, ensure your `App\User` model implements the `Illuminate\Contracts\Auth\MustVerifyEmail` contract.
+
+## N.B
+
+If you want to use Laravel 10 or 9 version, please use laravel_10 or laravel_9 branch.
 
 ## Contributing
 
