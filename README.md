@@ -2,11 +2,11 @@
 
 A simple and clean boilerplate to start a new SPA project with authentication, user, roles, permissions management and more features. This boilerplate uses the following tools:
 
-[![](https://img.shields.io/badge/vue.js-v3.3-04C690.svg)](https://vuejs.org)
-[![](https://img.shields.io/badge/Laravel-v10.26.2-ff2e21.svg)](https://laravel.com)
+[![](https://img.shields.io/badge/vue.js-v3.5-04C690.svg)](https://vuejs.org)
+[![](https://img.shields.io/badge/Laravel-v11.x-ff2e21.svg)](https://laravel.com)
 [![](https://img.shields.io/badge/bootstrap-v5.3-712cf9.svg)](https://getbootstrap.com)
-[![](https://img.shields.io/badge/axios-v1.5-5A29E4.svg)](https://axios-http.com)
-[![](https://img.shields.io/badge/vite-v4.4-646cff.svg)](https://vitejs.dev)
+[![](https://img.shields.io/badge/axios-v1.7-5A29E4.svg)](https://axios-http.com)
+[![](https://img.shields.io/badge/vite-v5.0-646cff.svg)](https://vitejs.dev)
 
 - [Laravel 11.x](https://github.com/laravel/laravel)
 - [Laravel Sanctum](https://laravel.com/docs/11.x/sanctum)
