@@ -193,6 +193,12 @@ export default [
                 component: () => import('../views/admin/users/Edit.vue'),
                 meta: { breadCrumb: 'User Edit' }
             },
+            {
+                name: 'browser_sessions.index',
+                path: 'browser-sessions',
+                component: () => import('../views/admin/browser-sessions/Index.vue'),
+                meta: { breadCrumb: 'Browser Sessions' }
+            },
         ]
     },
     {
