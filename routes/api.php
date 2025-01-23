@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BrowserSessionController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\PostController;
@@ -28,6 +29,10 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('category-list', [CategoryController::class, 'getList']);
     Route::get('/user', [ProfileController::class, 'user']);
     Route::put('/user', [ProfileController::class, 'update']);
+
+    // Browser Sessions
+    Route::get('browser-sessions', [BrowserSessionController::class, 'index']);
+    Route::post('logout-other-devices', [BrowserSessionController::class, 'logoutOtherDevices']);
 
     Route::get('abilities', function(Request $request) {
         return $request->user()->roles()->with('permissions')

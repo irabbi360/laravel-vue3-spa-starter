@@ -61,6 +61,14 @@
                         <span class="d-none d-sm-inline ps-2">Categories</span>
                     </router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link :to="{ name: 'browser_sessions.index' }" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                        <span class="d-none d-sm-inline ps-2">Browser Sessions</span>
+                    </router-link>
+                </li>
             </ul>
         </div>
     </nav>
