@@ -40,6 +40,13 @@ class AuthenticatedSessionController extends Controller
 //        $token = $request->session()->regenerate();
         $token = $request->user()->createToken($request->userAgent())->plainTextToken;
 
+        activity()
+            ->performedOn($request->user())
+            ->causedBy(auth()->user())
+            ->event('login')
+            ->withProperties(['ip' => $request->ip()])
+            ->log('User login successfully');
+
         if ($request->wantsJson()) {
             return response()->json(['user' => $request->user(), 'token' => $token]);
         }
@@ -55,6 +62,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function logout(Request $request)
     {
+        activity()
+            ->performedOn($request->user())
+            ->causedBy(auth()->user())
+            ->event('logout')
+            ->withProperties(['ip' => $request->ip()])
+            ->log('User logout successfully');
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ActivityLogController;
 use App\Http\Controllers\Api\BrowserSessionController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\PermissionController;
@@ -33,6 +34,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     // Browser Sessions
     Route::get('browser-sessions', [BrowserSessionController::class, 'index']);
     Route::post('logout-other-devices', [BrowserSessionController::class, 'logoutOtherDevices']);
+
+    // Activity log
+    Route::get('activity-logs', ActivityLogController::class);
 
     Route::get('abilities', function(Request $request) {
         return $request->user()->roles()->with('permissions')
