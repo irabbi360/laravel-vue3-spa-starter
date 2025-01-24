@@ -7,31 +7,55 @@
                         <!-- Header -->
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h4 class="mb-0">Activity Logs</h4>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-outline-secondary btn-sm">
-                                    <i class="fas fa-download me-2"></i>Export
-                                </button>
-                                <button class="btn btn-primary btn-sm">
-                                    <i class="fas fa-filter me-2"></i>Filter
-                                </button>
-                            </div>
                         </div>
 
                         <!-- Search and Filter -->
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
-                                <div class="search-box bg-white">
+                                <div class="border-1 bg-white">
                                     <i class="fas fa-search text-muted me-2"></i>
-                                    <input type="text" class="border-0 w-75" placeholder="Search activities...">
+                                    <input type="text" v-model="searchTerm" class="search-box" placeholder="Search activities..."
+                                           @input="applyFilters"
+                                    >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="d-flex gap-2 flex-wrap">
-                                    <span class="badge filter-badge active px-3 py-2">All</span>
-                                    <span class="badge filter-badge px-3 py-2">User</span>
-                                    <span class="badge filter-badge px-3 py-2">Security</span>
-                                    <span class="badge filter-badge px-3 py-2">System</span>
-                                    <span class="badge filter-badge px-3 py-2">Error</span>
+                                      <span
+                                          class="badge filter-badge px-3 py-2"
+                                          :class="{ active: activeFilter === 'all' }"
+                                          @click="updateFilter('all')"
+                                      >
+                                        All
+                                      </span>
+                                    <span
+                                        class="badge filter-badge px-3 py-2"
+                                        :class="{ active: activeFilter === 'created' }"
+                                        @click="updateFilter('created')"
+                                    >
+                                        Created
+                                    </span>
+                                    <span
+                                        class="badge filter-badge px-3 py-2"
+                                        :class="{ active: activeFilter === 'updated' }"
+                                        @click="updateFilter('updated')"
+                                    >
+                                        Updated
+                                    </span>
+                                    <span
+                                        class="badge filter-badge px-3 py-2"
+                                        :class="{ active: activeFilter === 'login' }"
+                                        @click="updateFilter('login')"
+                                    >
+                                        Login
+                                    </span>
+                                    <span
+                                        class="badge filter-badge px-3 py-2"
+                                        :class="{ active: activeFilter === 'logout' }"
+                                        @click="updateFilter('logout')"
+                                    >
+                                        Logout
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -74,22 +98,44 @@
                         </div>
 
                         <!-- Pagination -->
+                        <!-- Pagination -->
                         <div class="d-flex justify-content-between align-items-center mt-4">
-                            <span class="text-muted small">Showing 1-4 of 256 activities</span>
+                            <span class="text-muted small">
+                              Showing {{ rangeStart }}-{{ rangeEnd }} of {{ total }}
+                            </span>
                             <nav>
                                 <ul class="pagination pagination-sm mb-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
+                                    <!-- Previous Button -->
+                                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                        <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+                                            </svg>
+                                        </a>
                                     </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+
+                                    <!-- Page Numbers -->
+                                    <li
+                                        v-for="page in totalPages"
+                                        :key="page"
+                                        class="page-item"
+                                        :class="{ active: page === currentPage }"
+                                    >
+                                        <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
+                                    </li>
+
+                                    <!-- Next Button -->
+                                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                                        <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
+                                            </svg>
+                                        </a>
                                     </li>
                                 </ul>
                             </nav>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -99,26 +145,80 @@
 
 <script setup>
 import axios from 'axios';
-import {ref, onMounted} from 'vue'
-import {useRoute} from "vue-router";
+import {ref, onMounted, watch, computed} from 'vue'
+import {useRoute, useRouter} from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 const activities = ref();
+const activeFilter = ref(route.query.filter || 'all');
+const searchTerm = ref(route.query.search || '');
 
-function getImageUrl(post) {
-    let image
-    if (post.resized_image.length > 0) {
-        image = post.resized_image
-    } else {
-        image = post.original_image
-    }
-    return new URL(image, import.meta.url).href
-}
+// Pagination
+const currentPage = ref(parseInt(route.query.page) || 1); // Current page
+const perPage = ref(15); // Items per page
+const total = ref(0); // Total number of items
 
-onMounted(() => {
-    axios.get('/api/activity-logs')
+// Pagination Helpers
+const totalPages = computed(() => Math.ceil(total.value / perPage.value));
+const rangeStart = computed(() => (currentPage.value - 1) * perPage.value + 1);
+const rangeEnd = computed(() =>
+    Math.min(currentPage.value * perPage.value, total.value)
+);
+
+const loadActivityLogs = (() => {
+    const params = {
+        filter: activeFilter.value !== 'all' ? activeFilter.value : undefined,
+        search: searchTerm.value || undefined,
+        page: currentPage.value,
+        per_page: perPage.value,
+    };
+
+    axios.get(`/api/activity-logs/`, { params })
         .then(({data}) => {
             activities.value = data;
+            total.value = data.meta.total
         })
+});
+
+// Update query parameters and refetch data when page changes
+const changePage = (page) => {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page;
+        applyFilters();
+    }
+};
+
+const updateFilter = (filter) => {
+    activeFilter.value = filter;
+    applyFilters();
+};
+
+const applyFilters = () => {
+    router.push({
+        query: {
+            filter: activeFilter.value !== 'all' ? activeFilter.value : undefined,
+            search: searchTerm.value || undefined,
+            page: currentPage.value,
+        },
+    });
+};
+
+watch(
+    () => route.query,
+    (newQuery) => {
+        activeFilter.value = newQuery?.filter || 'all';
+        searchTerm.value = newQuery?.search || '';
+        currentPage.value = parseInt(newQuery.page) || 1;
+        loadActivityLogs(activeFilter.value)
+    },
+    {
+        deep: true,
+        immediate: true
+    }
+);
+
+onMounted(() => {
+    loadActivityLogs()
 })
 </script>
