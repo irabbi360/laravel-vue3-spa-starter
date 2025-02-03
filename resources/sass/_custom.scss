@@ -1,0 +1,83 @@
+.activity-timeline {
+    position: relative;
+}
+
+.activity-item {
+    padding: 1.5rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+}
+
+.activity-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.activity-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.activity-user img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.filter-badge {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #ba9bc2;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.filter-badge:hover {
+    background-color: #e9ecef;
+}
+
+.filter-badge.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.search-box {
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.75rem 1rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.bg-success-soft {
+    background-color: #d1e7dd;
+}
+
+.bg-danger-soft {
+    background-color: #f8d7da;
+}
+
+.bg-warning-soft {
+    background-color: #fff3cd;
+}
+
+.bg-info-soft {
+    background-color: #cff4fc;
+}

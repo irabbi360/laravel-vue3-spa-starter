@@ -42,6 +42,8 @@ The following Sanctum features are implemented in this Vue SPA:
 - ✅ Frontend Blog
 - ✅ Bootstrap 5
 - ✅ Automatic Api Documentation  -- route  /api-docs
+- ✅ Browser Sessions - Other Device Logout
+- ✅ User Activity Logs
 
 ## How To Use
 #### Clone the repository
