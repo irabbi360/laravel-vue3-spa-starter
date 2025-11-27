@@ -3,7 +3,7 @@
         <div class="row justify-content-center my-5">
             <div class="col-md-8">
                 <div class="card border-0 shadow-sm">
-                    <div class="card-header">{{ $t('Verify Your Email Address') }}</div>
+                    <div class="card-header">{{ $t('verify_your_email_address') }}</div>
 
                     <div class="card-body">
                         <!-- Loading State -->
@@ -34,10 +34,10 @@
 
                             <p>{{ $t('before_proceeding_check_email') }}</p>
                             <p>
-                                {{ $t('if_not_received_email') }}
-                                <button type="button" @click="resendVerificationEmail" class="btn btn-link p-0 m-0 align-baseline" :disabled="processing">
-                                    {{ $t('click_here_request_another') }}
-                                </button>.
+                                {{ $t('if_you_did_not_receive_the_email') }}
+                                <button type="button" @click="resendVerificationEmail" class="btn btn-primary align-baseline" :disabled="processing">
+                                    {{ $t('click_here_to_request_another') }}
+                                </button>
                             </p>
                         </div>
                     </div>

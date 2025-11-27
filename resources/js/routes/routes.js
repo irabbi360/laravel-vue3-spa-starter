@@ -13,7 +13,12 @@ function requireLogin(to, from, next) {
     isLogin = !!auth.authenticated;
 
     if (isLogin) {
-        next()
+        // Check if user email is verified
+        if (auth.user && auth.user.email_verified_at) {
+            next()
+        } else {
+            next('/email/verify/' + (auth.user ? auth.user.id : '') + '/' + (auth.user ? auth.user.email_verification_hash : ''))
+        }
     } else {
         next('/login')
     }
