@@ -21,7 +21,7 @@ Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('
 
 // Email Verification Routes (API)
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
-    ->middleware(\App\Http\Middleware\HandleInvalidSignature::class)
+    ->middleware(['auth:sanctum', \App\Http\Middleware\HandleInvalidSignature::class])
     ->name('verification.verify');
 
 Route::middleware('auth:sanctum')->group(function () {

@@ -50,9 +50,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import {useAuthStore} from "@/store/auth";
 
 const route = useRoute();
 const router = useRouter();
+const authStore = useAuthStore();
 
 const loading = ref(true);
 const verified = ref(false);
@@ -81,6 +83,7 @@ const verifyEmail = async () => {
         });
         
         if (response.status === 200) {
+            await authStore.getUser();
             verified.value = true;
             // Redirect to dashboard after 2 seconds
             setTimeout(() => {

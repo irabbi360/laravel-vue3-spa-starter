@@ -22,9 +22,25 @@ class HandleInvalidSignature
             $userId = $request->route('id');
             $user = \App\Models\User::find($userId);
 
+            // Check if user exists
+            if (!$user) {
+                return response()->json([
+                    'message' => 'User not found.',
+                ], 404);
+            }
+
+            // Check if authenticated user matches the user being verified
+            if ($request->user() && $request->user()->id != $userId) {
+                return response()->json([
+                    'message' => 'Unauthorized. You can only verify your own email.',
+                ], 403);
+            }
+
             // If user is already verified, skip signature validation
-            if ($user && $user->hasVerifiedEmail()) {
-                return $next($request);
+            if ($user->hasVerifiedEmail()) {
+                return response()->json([
+                    'message' => 'Email already verified.',
+                ], 200);
             }
 
             // Check if signature is valid
