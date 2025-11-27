@@ -100,6 +100,9 @@ class AuthenticatedSessionController extends Controller
             'name' => $request['name'],
         ]);
 
-        return $this->successResponse($user, 'Registration Successfully');
+        // Send verification email
+        $user->sendEmailVerificationNotification();
+
+        return $this->successResponse($user, 'Registration Successful. Please verify your email to activate your account.');
     }
 }

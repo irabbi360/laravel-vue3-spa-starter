@@ -81,6 +81,12 @@ export default [
                 component: () => import('../views/auth/passwords/Reset.vue'),
                 beforeEnter: guest,
             },
+            {
+                path: 'email/verify/:id/:hash',
+                name: 'auth.verify-email',
+                component: () => import('../views/auth/Verify.vue'),
+                //beforeEnter: requireLogin,
+            },
         ]
     },
     {
