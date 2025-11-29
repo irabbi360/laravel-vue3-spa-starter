@@ -100,8 +100,8 @@ class AuthenticatedSessionController extends Controller
             'name' => $request['name'],
         ]);
 
-        // Send verification email
-        $user->sendEmailVerificationNotification();
+        // Trigger Registered event which will send verification email
+        event(new \Illuminate\Auth\Events\Registered($user));
 
         return $this->successResponse($user, 'Registration Successful. Please verify your email to activate your account.');
     }

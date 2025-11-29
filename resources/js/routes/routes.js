@@ -13,12 +13,13 @@ function requireLogin(to, from, next) {
     isLogin = !!auth.authenticated;
 
     if (isLogin) {
+        next()
         // Check if user email is verified
-        if (auth.user && auth.user.email_verified_at) {
+        /*if (auth.user && auth.user.email_verified_at) {
             next()
         } else {
             next('/email/verify/' + (auth.user ? auth.user.id : '') + '/' + (auth.user ? auth.user.email_verification_hash : ''))
-        }
+        }*/
     } else {
         next('/login')
     }
@@ -90,7 +91,7 @@ export default [
                 path: 'email/verify/:id/:hash',
                 name: 'auth.verify-email',
                 component: () => import('../views/auth/Verify.vue'),
-                beforeEnter: requireLogin,
+                // beforeEnter: requireLogin,
             },
         ]
     },
