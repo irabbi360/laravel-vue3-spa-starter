@@ -30,7 +30,12 @@ Route::middleware('auth:sanctum')->group(function () {
         ->name('verification.resend');
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function() {
+// Protected routes requiring authentication AND verified email
+// NOTE: Previous array syntax was incorrect: 'verified' was a stray element and ignored.
+Route::group(['middleware' => ['auth:sanctum','verified.api']], function() {
+
+    Route::group(['middleware' => ['verified.api']], function() {});
+
     Route::apiResource('users', UserController::class);
     Route::apiResource('posts', PostController::class);
     Route::apiResource('categories', CategoryController::class);
