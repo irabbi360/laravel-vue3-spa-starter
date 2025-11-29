@@ -18,7 +18,15 @@ window.axios.defaults.withCredentials = true
 window.axios.interceptors.response.use(
     response => response,
     error => {
-        if (error.response?.status === 401 || error.response?.status === 403 || error.response?.status === 419) {
+        // Check for email verification required (403 with email_verified: false)
+        // if (error.response?.status === 403 && error.response?.data?.email_verified === false) {
+        //     if (location.pathname !== '/verify') {
+        //         location.assign('/verify')
+        //     }
+        //     return Promise.reject(error)
+        // }
+        
+        if (error.response?.status === 401 || error.response?.status === 419) {
             if (location.pathname !== '/login'){
                 location.assign('/login')
             }

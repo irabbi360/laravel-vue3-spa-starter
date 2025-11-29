@@ -14,12 +14,6 @@ function requireLogin(to, from, next) {
 
     if (isLogin) {
         next()
-        // Check if user email is verified
-        /*if (auth.user && auth.user.email_verified_at) {
-            next()
-        } else {
-            next('/email/verify/' + (auth.user ? auth.user.id : '') + '/' + (auth.user ? auth.user.email_verification_hash : ''))
-        }*/
     } else {
         next('/login')
     }
@@ -86,6 +80,11 @@ export default [
                 name: 'auth.reset-password',
                 component: () => import('../views/auth/passwords/Reset.vue'),
                 beforeEnter: guest,
+            },
+            {
+                path: 'verify',
+                name: 'auth.verify',
+                component: () => import('../views/auth/Verify.vue'),
             },
             {
                 path: 'email/verify/:id/:hash',

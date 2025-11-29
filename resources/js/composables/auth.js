@@ -52,13 +52,25 @@ export default function useAuth() {
                 await authStore.getUser()
                 // await authStore.dispatch('auth/getUser')
                 await loginUser()
-                swal({
-                    icon: 'success',
-                    title: 'Login successfully',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                await router.push({ name: 'admin.index' })
+                
+                // Check if email verification is required
+                if (response.data.email_verified === false) {
+                    swal({
+                        icon: 'warning',
+                        title: 'Email Verification Required',
+                        text: 'Please verify your email address to continue.',
+                        showConfirmButton: true,
+                    })
+                    await router.push({ name: 'auth.verify' })
+                } else {
+                    swal({
+                        icon: 'success',
+                        title: 'Login successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    await router.push({ name: 'admin.index' })
+                }
             })
             .catch(error => {
                 if (error.response?.data) {

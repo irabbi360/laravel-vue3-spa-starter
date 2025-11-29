@@ -27,7 +27,7 @@
                         </div>
 
                         <!-- Resend Form -->
-                        <div v-if="error">
+                        <div v-if="error || showResendOnly">
                             <div v-if="resent" class="alert alert-success" role="alert">
                                 {{ $t('fresh_verification_link_sent') }}
                             </div>
@@ -61,15 +61,23 @@ const verified = ref(false);
 const error = ref(null);
 const resent = ref(false);
 const processing = ref(false);
+const showResendOnly = ref(false);
 
 const verifyEmail = async () => {
+    const { id, hash } = route.params;
+    
+    // If no parameters, just show the resend form (user was redirected here)
+    if (!id || !hash) {
+        loading.value = false;
+        showResendOnly.value = true;
+        return;
+    }
+    
     try {
         loading.value = true;
-        const { id, hash } = route.params;
-
         const { expires, signature } = route.query;
         
-        if (!id || !hash || !expires || !signature) {
+        if (!expires || !signature) {
             error.value = 'Invalid verification link.';
             loading.value = false;
             return;
