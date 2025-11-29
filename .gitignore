@@ -18,3 +18,4 @@ package-lock.json
 composer.lock
 yarn.lock
 /storage/media-library/temp
+.DS_Store

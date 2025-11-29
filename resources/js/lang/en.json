@@ -36,5 +36,14 @@
     "send_verification_link": "Send Verification Link",
     "resend_verification_link": "Resend Verification Link ?",
     "failed_to_verify_email": "Failed to verify email.",
-    "verify_email_address": "We sent you an email with an the verification link."
+    "verify_email_address": "We sent you an email with an the verification link.",
+    "verify_your_email_address": "Verify Your Email Address",
+    "fresh_verification_link_sent": "A fresh verification link has been sent to your email address.",
+    "before_proceeding_check_email": "Before proceeding, please check your email for a verification link.",
+    "if_you_did_not_receive_the_email": "If you did not receive the email",
+    "click_here_to_request_another": "click here to request another",
+    "verifying_email": "Verifying your email...",
+    "email_verified_successfully": "Your email has been verified successfully!",
+    "redirecting_to_dashboard": "Redirecting to dashboard...",
+    "verification_link_invalid": "The verification link is invalid or has expired."
 }

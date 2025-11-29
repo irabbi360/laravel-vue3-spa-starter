@@ -48,7 +48,16 @@ class AuthenticatedSessionController extends Controller
             ->log('User login successfully');
 
         if ($request->wantsJson()) {
-            return response()->json(['user' => $request->user(), 'token' => $token]);
+            $user = $request->user();
+            
+            // Check if email verification is required and if email is verified
+            $emailVerified = !($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail) || $user->hasVerifiedEmail();
+            
+            return response()->json([
+                'user' => $user,
+                'token' => $token,
+                'email_verified' => $emailVerified
+            ]);
         }
 
         return redirect()->intended(RouteServiceProvider::HOME);
@@ -100,6 +109,11 @@ class AuthenticatedSessionController extends Controller
             'name' => $request['name'],
         ]);
 
-        return $this->successResponse($user, 'Registration Successfully');
+        // Trigger Registered event which will send verification email
+        if($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail) {
+            event(new \Illuminate\Auth\Events\Registered($user));
+        }
+
+        return $this->successResponse($user, 'Registration Successful. Please verify your email to activate your account.');
     }
 }

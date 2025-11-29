@@ -53,6 +53,15 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Check if email is verified
+        // $user = Auth::user();
+        // if (! $user->hasVerifiedEmail()) {
+        //     Auth::logout();
+        //     throw ValidationException::withMessages([
+        //         'email' => 'Your email address is not verified. Please check your email to verify your account.',
+        //     ]);
+        // }
+
         RateLimiter::clear($this->throttleKey());
     }
 
