@@ -8,11 +8,11 @@
         "php": "^8.2",
         "cjmellor/browser-sessions": "^1.3",
         "guzzlehttp/guzzle": "^7.2",
+        "irabbi360/laravel-api-inspector": "^1.1",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.2",
-        "rakutentech/laravel-request-docs": "^2.41",
         "spatie/laravel-activitylog": "^4.9",
         "spatie/laravel-medialibrary": "^11.9.2",
         "spatie/laravel-permission": "^6.9"

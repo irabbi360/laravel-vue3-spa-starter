@@ -15,7 +15,7 @@ A simple and clean boilerplate to start a new SPA project with authentication, u
 - [Pinia](https://pinia.vuejs.org/)
 - [Bootstrap](https://getbootstrap.com/)
 - [Vue I18n](https://vue-i18n.intlify.dev)
-- [Laravel Request Docs](https://github.com/rakutentech/laravel-request-docs)
+- [Laravel API Inspector - API Docs](https://github.com/irabbi360/laravel-api-inspector)
 
 Laravel is accessible, and powerful, and provides tools required for large, robust applications.
 
