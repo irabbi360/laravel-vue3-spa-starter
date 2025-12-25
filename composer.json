@@ -12,7 +12,6 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.2",
-        "rakutentech/laravel-request-docs": "^2.41",
         "spatie/laravel-activitylog": "^4.9",
         "spatie/laravel-medialibrary": "^11.9.2",
         "spatie/laravel-permission": "^6.9"
