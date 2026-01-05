@@ -7,9 +7,15 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Post;
+use App\Helpers\Misc;
 
 class PostController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     * @LAPIresponsesSchema PostResource
+     * @LAPIpagination
+    */
     public function index()
     {
         $orderColumn = request('order_column', 'created_at');
@@ -49,6 +55,7 @@ class PostController extends Controller
             })
             ->orderBy($orderColumn, $orderDirection)
             ->paginate(50);
+
         return PostResource::collection($posts);
     }
 
@@ -71,7 +78,7 @@ class PostController extends Controller
         return new PostResource($post);
     }
 
-    public function show(Post $post)
+    public function show(Post $post): PostResource
     {
         $this->authorize('post-edit');
         if ($post->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('post-all')) {
@@ -106,11 +113,13 @@ class PostController extends Controller
         }
     }
 
+    /*
+     * Display a listing of the resource.
+    */
     public function getPosts()
     {
-        $posts = Post::with('categories')->with('media')->latest()->paginate();
+        $posts = Post::with('categories')->with('media')->latest()->paginate(1);
         return PostResource::collection($posts);
-
     }
 
     public function getCategoryByPosts($id)
