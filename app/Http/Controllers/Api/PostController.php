@@ -15,6 +15,7 @@ class PostController extends Controller
      * Display a listing of the resource.
      * @LAPIresponsesSchema PostResource
      * @LAPIpagination
+     * @LAPIQueryParams search_title, page, per_page, order_column, order_direction, search_category, search_id, search_content, search_global
     */
     public function index()
     {
